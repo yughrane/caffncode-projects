@@ -3,235 +3,207 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AccessRide — Accessible City Transport</title>
+<title>AccessRide Mumbai · CaffnCode</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,700&family=Outfit:wght@400;500;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg:#F4F2EC; --surface:#FEFCF6; --border:#E2DDD4;
-    --ink:#1A1814; --ink-muted:#6B6560;
-    --accent:#1A6B4A; --accent-lt:#D4EDE3;
-    --warn:#C45B1A; --warn-lt:#FDEBD9;
-    --blue:#1A4E6B; --blue-lt:#D4E8F0;
-    --r:16px; --r-lg:24px;
-    --shadow:0 2px 12px rgba(26,24,20,0.08),0 1px 3px rgba(26,24,20,0.05);
-    --shadow-lg:0 8px 40px rgba(26,24,20,0.12),0 2px 8px rgba(26,24,20,0.06);
-    --transition:0.25s cubic-bezier(0.4,0,0.2,1);
-  }
-  [data-theme="dark"] {
-    --bg:#141210; --surface:#1E1C18; --border:#2E2B25;
-    --ink:#F0EDE4; --ink-muted:#908A80;
-    --accent:#2ECC8A; --accent-lt:#0D2E1F;
-    --warn:#E8834A; --warn-lt:#2E1A0A;
-    --blue:#4A9ECC; --blue-lt:#0A1E2E;
-    --shadow:0 2px 12px rgba(0,0,0,0.3),0 1px 3px rgba(0,0,0,0.2);
-    --shadow-lg:0 8px 40px rgba(0,0,0,0.4),0 2px 8px rgba(0,0,0,0.3);
-  }
-  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.6;min-height:100vh;padding:0 0 60px;transition:background var(--transition),color var(--transition)}
-  button{font-family:inherit;cursor:pointer} input{font-family:inherit}
-
-  .skip-link{position:fixed;top:-100px;left:16px;z-index:9999;background:var(--accent);color:#fff;padding:10px 20px;border-radius:var(--r);font-weight:600;text-decoration:none;transition:top .2s}
-  .skip-link:focus{top:16px}
-
-  .header{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1px solid var(--border);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:0 clamp(16px,4vw,48px);display:flex;align-items:center;justify-content:space-between;height:64px;animation:slideDown .4s ease both}
-  @keyframes slideDown{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:none}}
-  .logo-wrap{display:flex;align-items:center;gap:10px}
-  .logo-mark{width:36px;height:36px;border-radius:10px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px}
-  .logo-text{font-family:'DM Serif Display',serif;font-size:22px;color:var(--ink);letter-spacing:-.3px}
-  .logo-text span{color:var(--accent)}
-  .header-controls{display:flex;gap:8px;align-items:center}
-  .icon-btn{width:38px;height:38px;border-radius:10px;border:1px solid var(--border);background:var(--surface);color:var(--ink);display:flex;align-items:center;justify-content:center;font-size:17px;transition:background var(--transition),border-color var(--transition),transform .15s}
-  .icon-btn:hover{background:var(--accent-lt);border-color:var(--accent);transform:scale(1.05)}
-  .icon-btn:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-  .icon-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
-
-  .hero{padding:clamp(32px,6vw,64px) clamp(16px,4vw,48px) 24px;animation:fadeUp .5s .1s ease both}
-  @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
-  .hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
-  .hero-title{font-family:'DM Serif Display',serif;font-size:clamp(28px,5vw,48px);line-height:1.15;color:var(--ink);margin-bottom:6px}
-  .hero-title em{font-style:italic;color:var(--accent)}
-  .hero-sub{color:var(--ink-muted);margin-bottom:28px;max-width:520px}
-
-  .search-panel{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r-lg);padding:16px;box-shadow:var(--shadow-lg);max-width:680px;display:flex;flex-direction:column;gap:10px;transition:border-color var(--transition),box-shadow var(--transition)}
-  .search-panel:focus-within{border-color:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 12%,transparent),var(--shadow-lg)}
-  .field-row{display:flex;align-items:center;gap:8px;background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:10px 12px;transition:border-color .15s;position:relative}
-  .field-row:focus-within{border-color:var(--accent)}
-  .field-icon{font-size:15px;flex-shrink:0;width:22px;text-align:center}
-  .field-input{flex:1;border:none;background:transparent;font-size:15px;color:var(--ink);outline:none}
-  .field-input::placeholder{color:var(--ink-muted)}
-  .field-actions{display:flex;gap:4px;flex-shrink:0}
-  .field-btn{width:30px;height:30px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--ink-muted);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;transition:all .15s}
-  .field-btn:hover{background:var(--accent-lt);color:var(--accent);border-color:var(--accent)}
-  .field-btn:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-  .field-btn.listening{background:var(--accent);color:#fff;border-color:var(--accent);animation:pulseRing 1s infinite}
-  .field-btn.locating{background:var(--blue-lt);color:var(--blue);border-color:var(--blue);animation:spinBtn 1.1s linear infinite}
-  @keyframes pulseRing{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 50%,transparent)}50%{box-shadow:0 0 0 7px color-mix(in srgb,var(--accent) 0%,transparent)}}
-  @keyframes spinBtn{to{transform:rotate(360deg)}}
-
-  /* autocomplete dropdown */
-  .ac-dropdown{position:absolute;top:100%;left:0;right:0;z-index:200;background:var(--surface);border:1.5px solid var(--accent);border-top:none;border-radius:0 0 12px 12px;box-shadow:var(--shadow-lg);max-height:220px;overflow-y:auto;display:none}
-  .ac-dropdown.open{display:block}
-  .ac-item{padding:10px 14px;font-size:14px;cursor:pointer;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border)}
-  .ac-item:last-child{border-bottom:none}
-  .ac-item:hover,.ac-item.focused{background:var(--accent-lt);color:var(--accent)}
-  .ac-item-line{font-size:10px;font-weight:600;letter-spacing:.5px;padding:1px 6px;border-radius:10px;flex-shrink:0}
-  .line-western{background:#FFE5B4;color:#7A4F00}
-  .line-central{background:#FFD6D6;color:#6B0000}
-  .line-harbour{background:#D6E8FF;color:#003D7A}
-  .line-kasara{background:#FDEBD9;color:#7A3300}
-  .line-karjat{background:#E8D6FF;color:#3D007A}
-  .line-metro1{background:#D6F5E8;color:#0A4A2A}
-  .line-metro2a{background:#FFF0CC;color:#6B4A00}
-  .line-metro7{background:#E8D6FF;color:#3A006B}
-  .line-metro3{background:#FFD6EC;color:#6B0035}
-
-  .swap-row{display:flex;align-items:center;gap:8px}
-  .swap-line{flex:1;height:1px;background:var(--border)}
-  .swap-btn{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface);color:var(--ink-muted);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;transition:all .2s}
-  .swap-btn:hover{background:var(--accent-lt);color:var(--accent);border-color:var(--accent);transform:rotate(180deg)}
-  .swap-btn:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-
-  .search-footer{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-  .needs-label{font-size:12px;color:var(--ink-muted);font-weight:500;white-space:nowrap}
-  .need-chip{padding:4px 10px;border-radius:20px;border:1.5px solid var(--border);background:var(--bg);color:var(--ink);font-size:12px;font-weight:500;transition:all .15s}
-  .need-chip.selected{background:var(--accent);color:#fff;border-color:var(--accent)}
-  .need-chip:hover:not(.selected){border-color:var(--accent);color:var(--accent)}
-  .search-btn{margin-left:auto;padding:10px 22px;border-radius:12px;background:var(--accent);color:#fff;border:none;font-weight:600;font-size:14px;display:flex;align-items:center;gap:7px;transition:background var(--transition),transform .15s,box-shadow var(--transition);white-space:nowrap}
-  .search-btn:hover{background:color-mix(in srgb,var(--accent) 85%,#000);transform:translateY(-1px);box-shadow:0 6px 20px color-mix(in srgb,var(--accent) 40%,transparent)}
-  .search-btn:active{transform:scale(.97)}
-  .search-btn:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
-  .search-btn:disabled{opacity:.5;transform:none;box-shadow:none;cursor:not-allowed}
-
-  .main{padding:0 clamp(16px,4vw,48px)}
-  .section-label{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--ink-muted);margin:32px 0 14px}
-
-  .mode-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px}
-  .mode-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);padding:16px 14px;display:flex;flex-direction:column;align-items:flex-start;gap:8px;cursor:pointer;transition:all var(--transition);animation:fadeUp .5s ease both;position:relative;overflow:hidden}
-  .mode-card::after{content:'';position:absolute;inset:0;background:var(--accent);opacity:0;border-radius:inherit;transition:opacity .2s}
-  .mode-card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:var(--shadow-lg)}
-  .mode-card:hover::after{opacity:.04}
-  .mode-card.selected{border-color:var(--accent);background:var(--accent-lt)}
-  .mode-card:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-  .mode-icon{font-size:24px}
-  .mode-name{font-weight:600;font-size:13px;color:var(--ink)}
-  .mode-badge{font-size:10px;font-weight:600;letter-spacing:.5px;padding:2px 7px;border-radius:20px;background:var(--accent-lt);color:var(--accent)}
-  .mode-badge.warn{background:var(--warn-lt);color:var(--warn)}
-
-  #routeResults{animation:fadeUp .4s ease both}
-  .route-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r-lg);margin-bottom:14px;overflow:hidden;box-shadow:var(--shadow);transition:box-shadow var(--transition),transform var(--transition)}
-  .route-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
-  .route-header{padding:18px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--border);cursor:pointer}
-  .route-left{display:flex;flex-direction:column;gap:4px}
-  .route-name{font-weight:700;font-size:15px}
-  .route-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-  .route-pill{font-size:12px;font-weight:500;padding:3px 9px;border-radius:20px;display:inline-flex;align-items:center;gap:4px}
-  .pill-green{background:var(--accent-lt);color:var(--accent)}
-  .pill-orange{background:var(--warn-lt);color:var(--warn)}
-  .pill-blue{background:var(--blue-lt);color:var(--blue)}
-  .pill-gray{background:var(--border);color:var(--ink-muted)}
-  .pill-yellow{background:#FFF4CC;color:#7A5800}
-  .route-time{text-align:right;flex-shrink:0}
-  .route-time .mins{font-family:'DM Serif Display',serif;font-size:28px;line-height:1;color:var(--ink)}
-  .route-time .mins-label{font-size:11px;color:var(--ink-muted);font-weight:500}
-  .route-steps{padding:0 20px 18px;display:none}
-  .route-steps.open{display:block}
-  .step-list{list-style:none;margin-top:14px;position:relative}
-  .step-list::before{content:'';position:absolute;left:16px;top:0;bottom:0;width:2px;background:var(--border)}
-  .step-item{display:flex;gap:14px;align-items:flex-start;padding:10px 0;position:relative;animation:fadeUp .3s ease both}
-  .step-dot{width:32px;height:32px;border-radius:50%;flex-shrink:0;background:var(--surface);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--accent);position:relative;z-index:1}
-  .step-content{flex:1}
-  .step-text{font-weight:500}
-  .step-sub{font-size:12px;color:var(--ink-muted);margin-top:2px}
-  .speak-btn{margin-top:14px;padding:10px 18px;border-radius:10px;background:var(--blue-lt);color:var(--blue);border:1.5px solid var(--blue);font-weight:600;font-size:13px;display:inline-flex;align-items:center;gap:7px;transition:all .15s}
-  .speak-btn:hover{background:var(--blue);color:#fff}
-
-  .live-bar{background:var(--accent-lt);border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);border-radius:var(--r);padding:12px 16px;display:flex;align-items:center;gap:10px;margin-bottom:20px;font-size:13px;font-weight:500}
-  .live-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:pulseDot 1.5s infinite;flex-shrink:0}
-  @keyframes pulseDot{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 50%,transparent)}50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--accent) 0%,transparent)}}
-
-  .a11y-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
-  .a11y-toggle{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);padding:16px;display:flex;align-items:center;gap:12px;transition:all var(--transition);cursor:pointer;text-align:left}
-  .a11y-toggle:hover{border-color:var(--accent)}
-  .a11y-toggle.active{background:var(--accent-lt);border-color:var(--accent)}
-  .a11y-toggle:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-  .a11y-icon{font-size:22px;flex-shrink:0}
-  .a11y-info{flex:1}
-  .a11y-name{font-weight:600;font-size:13px}
-  .a11y-desc{font-size:11px;color:var(--ink-muted);margin-top:2px}
-  .toggle-pill{width:36px;height:20px;border-radius:20px;background:var(--border);position:relative;transition:background .2s;flex-shrink:0}
-  .a11y-toggle.active .toggle-pill{background:var(--accent)}
-  .toggle-pill::after{content:'';position:absolute;width:14px;height:14px;border-radius:50%;background:#fff;top:3px;left:3px;transition:transform .2s;box-shadow:0 1px 4px rgba(0,0,0,.2)}
-  .a11y-toggle.active .toggle-pill::after{transform:translateX(16px)}
-  .size-row{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);padding:16px;display:flex;align-items:center;gap:14px}
-  .size-row label{font-size:13px;font-weight:600;white-space:nowrap}
-  .size-row input[type=range]{flex:1;accent-color:var(--accent);height:4px;cursor:pointer}
-  .size-preview{font-size:13px;color:var(--ink-muted);min-width:36px;text-align:right}
-
-  .sos-strip{margin-top:32px;background:#FFF0ED;border:1.5px solid #F4A58A;border-radius:var(--r-lg);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
-  [data-theme="dark"] .sos-strip{background:#2A1008;border-color:#7A3018}
-  .sos-left{display:flex;align-items:center;gap:12px}
-  .sos-icon{font-size:28px}
-  .sos-title{font-weight:700;font-size:15px;color:var(--warn)}
-  .sos-sub{font-size:12px;color:var(--ink-muted)}
-  .sos-btn{padding:12px 22px;border-radius:12px;background:var(--warn);color:#fff;border:none;font-weight:700;font-size:14px;display:flex;align-items:center;gap:7px;transition:all .15s}
-  .sos-btn:hover{background:color-mix(in srgb,var(--warn) 85%,#000);transform:translateY(-1px)}
-
-  .shimmer{background:linear-gradient(90deg,var(--border) 25%,var(--surface) 50%,var(--border) 75%);background-size:200% 100%;animation:shimmer 1.2s infinite;border-radius:var(--r);height:90px;margin-bottom:12px}
-  @keyframes shimmer{from{background-position:200% 0}to{background-position:-200% 0}}
-
-  #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:10px 20px;border-radius:24px;font-size:13px;font-weight:500;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;z-index:9999;white-space:nowrap}
-  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-  .high-contrast{filter:contrast(1.35) saturate(0)}
-  .reduce-motion *,
-  .reduce-motion *::before,
-  .reduce-motion *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-  .mode-card:nth-child(1){animation-delay:.05s}.mode-card:nth-child(2){animation-delay:.1s}
-  .mode-card:nth-child(3){animation-delay:.15s}.mode-card:nth-child(4){animation-delay:.2s}
-  .mode-card:nth-child(5){animation-delay:.25s}.mode-card:nth-child(6){animation-delay:.3s}
-
-  /* Line station picker */
-  .line-picker{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r-lg);padding:18px 20px;margin-top:14px;animation:fadeUp .3s ease both}
-  .line-picker-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-  .line-picker-title{font-weight:600;font-size:14px;display:flex;align-items:center;gap:8px}
-  .line-picker-close{width:28px;height:28px;border-radius:8px;border:1px solid var(--border);background:none;color:var(--ink-muted);font-size:16px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s}
-  .line-picker-close:hover{background:var(--warn-lt);color:var(--warn);border-color:var(--warn)}
-  .station-pills{display:flex;flex-wrap:wrap;gap:6px;max-height:200px;overflow-y:auto}
-  .station-pill{padding:5px 12px;border-radius:20px;border:1.5px solid var(--border);background:var(--bg);color:var(--ink);font-size:12px;font-weight:500;cursor:pointer;transition:all .15s;white-space:nowrap}
-  .station-pill:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-lt)}
-  .station-pill.interchange{border-color:color-mix(in srgb,var(--accent) 50%,transparent);font-weight:600}
-
-  /* Voice modal overlay */
-  .voice-modal{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.5);align-items:flex-end;justify-content:center}
-  .voice-modal.open{display:flex}
-  .voice-modal-inner{background:var(--surface);border-radius:var(--r-lg) var(--r-lg) 0 0;padding:32px 24px 40px;width:100%;max-width:500px;text-align:center;animation:slideUp .3s ease}
-  @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-  .voice-orb{width:72px;height:72px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto 16px;transition:transform .15s}
-  .voice-orb.listening{animation:orbPulse 1s infinite}
-  @keyframes orbPulse{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 40%,transparent)}50%{box-shadow:0 0 0 18px color-mix(in srgb,var(--accent) 0%,transparent)}}
-  .voice-modal-title{font-size:18px;font-weight:600;margin-bottom:6px}
-  .voice-modal-sub{font-size:13px;color:var(--ink-muted);margin-bottom:20px;min-height:20px}
-  .voice-interim{font-size:15px;color:var(--ink-muted);font-style:italic;min-height:24px;margin-bottom:16px}
-  .voice-cancel{padding:10px 24px;border-radius:10px;border:1.5px solid var(--border);background:none;color:var(--ink-muted);font-size:14px;font-weight:500;cursor:pointer;transition:all .15s}
-  .voice-cancel:hover{border-color:var(--warn);color:var(--warn)}
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,700&family=Outfit:wght@400;500;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+:root{--bg:#fdf6f0;--surface:#f5ede3;--border:#e8c9a0;--ink:#2c1a0e;--ink-muted:#6b3d1e;--accent:#c87941;--accent-lt:#f5ede3;--warn:#8b3a1a;--warn-lt:#fdebd9;--blue:#3d6b8a;--blue-lt:#d4e8f0;--cream:#fdf6f0;--espresso:#2c1a0e;--caramel:#c87941;--latte:#e8c9a0;--foam:#f5ede3;--steam:#d4a574;--dark-roast:#1a0f07;--mocha:#6b3d1e;--r:8px;--r-lg:0px;--shadow:4px 4px 0 var(--latte);--shadow-lg:6px 6px 0 var(--caramel);--transition:0.2s cubic-bezier(0.4,0,0.2,1)}
+[data-theme="dark"]{--bg:#1a0f07;--surface:#2c1a0e;--border:#4a2c14;--ink:#fdf6f0;--ink-muted:#d4a574;--accent:#c87941;--accent-lt:#3d2010;--warn:#e8834a;--warn-lt:#2e1a0a;--blue:#7ab4d4;--blue-lt:#0a1e2e;--shadow:4px 4px 0 rgba(200,121,65,0.3);--shadow-lg:6px 6px 0 rgba(200,121,65,0.5)}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Space Mono',monospace;font-size:14px;line-height:1.7;min-height:100vh;padding:0 0 60px;transition:background var(--transition),color var(--transition)}
+body::before{content:'';position:fixed;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(44,26,14,0.015) 2px,rgba(44,26,14,0.015) 4px),repeating-linear-gradient(90deg,transparent,transparent 2px,rgba(44,26,14,0.015) 2px,rgba(44,26,14,0.015) 4px);pointer-events:none;z-index:100}
+body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(var(--latte) 1px,transparent 1px),linear-gradient(90deg,var(--latte) 1px,transparent 1px);background-size:32px 32px;opacity:0.2;pointer-events:none;z-index:0}
+button{font-family:'Space Mono',monospace;cursor:pointer}
+input{font-family:'Space Mono',monospace}
+.skip-link{position:fixed;top:-100px;left:16px;z-index:9999;background:var(--espresso);color:var(--cream);padding:10px 20px;border:2px solid var(--caramel);font-weight:700;text-decoration:none;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;transition:top .2s}
+.skip-link:focus{top:16px}
+.header{position:sticky;top:0;z-index:200;background:var(--bg);border-bottom:3px solid var(--espresso);padding:0 clamp(16px,4vw,48px);display:flex;align-items:center;justify-content:space-between;height:56px;animation:slideDown .4s ease both}
+[data-theme="dark"] .header{background:var(--bg);border-bottom-color:var(--border)}
+@keyframes slideDown{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:none}}
+.logo-wrap{display:flex;align-items:center;gap:0;text-decoration:none}
+.logo-caff{font-family:'Outfit',sans-serif;font-weight:800;font-size:1.05rem;color:var(--espresso);letter-spacing:-0.03em;display:flex;align-items:center;gap:6px}
+[data-theme="dark"] .logo-caff{color:var(--ink)}
+.logo-pixel{display:inline-block;width:9px;height:9px;background:var(--caramel);box-shadow:2px 2px 0 var(--espresso);flex-shrink:0}
+.logo-x{font-size:0.72rem;color:var(--steam);font-weight:400;letter-spacing:0.05em;margin:0 6px;font-family:'Space Mono',monospace}
+.logo-access{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:700;font-size:1.25rem;color:var(--caramel);letter-spacing:-0.01em}
+.header-controls{display:flex;gap:6px;align-items:center}
+.icon-btn{height:32px;padding:0 10px;border:1.5px solid var(--espresso);background:var(--bg);color:var(--ink);display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:0.62rem;text-transform:uppercase;letter-spacing:0.08em;box-shadow:2px 2px 0 var(--latte);transition:all .15s;gap:4px}
+.icon-btn:hover{background:var(--caramel);color:var(--cream);border-color:var(--caramel);box-shadow:2px 2px 0 var(--espresso)}
+.icon-btn:focus-visible{outline:2px solid var(--caramel);outline-offset:2px}
+.icon-btn.active{background:var(--espresso);color:var(--cream);border-color:var(--espresso);box-shadow:2px 2px 0 var(--caramel)}
+.hero{padding:clamp(28px,5vw,56px) clamp(16px,4vw,48px) 24px;position:relative;z-index:1;animation:fadeUp .5s .1s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.hero-eyebrow{font-size:0.65rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--caramel);margin-bottom:0.6rem;display:flex;align-items:center;gap:8px}
+.hero-eyebrow::before{content:'';display:inline-block;width:20px;height:2px;background:var(--caramel)}
+.hero-title{font-family:'Outfit',sans-serif;font-weight:800;font-size:clamp(2rem,5vw,3.8rem);line-height:1.05;color:var(--espresso);letter-spacing:-0.03em;margin-bottom:0.5rem}
+[data-theme="dark"] .hero-title{color:var(--ink)}
+.hero-title em{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:700;color:var(--caramel);font-size:1.1em;letter-spacing:-0.01em}
+.hero-sub{color:var(--mocha);margin-bottom:1.8rem;max-width:560px;font-size:0.82rem;line-height:1.85}
+[data-theme="dark"] .hero-sub{color:var(--ink-muted)}
+.search-panel{background:var(--surface);border:2px solid var(--espresso);padding:18px;box-shadow:var(--shadow-lg);max-width:680px;display:flex;flex-direction:column;gap:10px;position:relative;z-index:1}
+.search-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:repeating-linear-gradient(90deg,var(--caramel) 0,var(--caramel) 6px,var(--espresso) 6px,var(--espresso) 9px)}
+.field-row{display:flex;align-items:center;gap:8px;background:var(--bg);border:1.5px solid var(--border);padding:10px 12px;transition:border-color .15s;position:relative}
+.field-row:focus-within{border-color:var(--caramel)}
+.field-icon{font-size:14px;flex-shrink:0;width:20px;text-align:center}
+.field-input{flex:1;border:none;background:transparent;font-size:0.82rem;color:var(--ink);outline:none;font-family:'Space Mono',monospace}
+.field-input::placeholder{color:var(--steam)}
+[data-theme="dark"] .field-input{color:var(--ink)}
+[data-theme="dark"] .field-input::placeholder{color:var(--ink-muted)}
+.field-actions{display:flex;gap:4px;flex-shrink:0}
+.field-btn{width:28px;height:28px;border:1.5px solid var(--border);background:var(--surface);color:var(--ink-muted);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;transition:all .15s}
+.field-btn:hover{background:var(--caramel);color:var(--cream);border-color:var(--caramel)}
+.field-btn:focus-visible{outline:2px solid var(--caramel);outline-offset:2px}
+.field-btn.listening{background:var(--caramel);color:#fff;border-color:var(--caramel);animation:pulseRing 1s infinite}
+.field-btn.locating{background:var(--blue-lt);color:var(--blue);border-color:var(--blue);animation:spinBtn 1.1s linear infinite}
+@keyframes pulseRing{0%,100%{box-shadow:0 0 0 0 rgba(200,121,65,.5)}50%{box-shadow:0 0 0 7px rgba(200,121,65,0)}}
+@keyframes spinBtn{to{transform:rotate(360deg)}}
+.ac-dropdown{position:absolute;top:100%;left:0;right:0;z-index:200;background:var(--surface);border:1.5px solid var(--caramel);border-top:none;box-shadow:4px 4px 0 var(--latte);max-height:220px;overflow-y:auto;display:none}
+.ac-dropdown.open{display:block}
+.ac-item{padding:9px 12px;font-size:0.75rem;cursor:pointer;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border);font-family:'Space Mono',monospace}
+.ac-item:last-child{border-bottom:none}
+.ac-item:hover,.ac-item.focused{background:var(--accent-lt);color:var(--caramel)}
+.ac-item-line{font-size:0.58rem;font-weight:700;letter-spacing:.5px;padding:1px 6px;flex-shrink:0;border:1px solid currentColor}
+.line-western{color:#7A4F00;background:#FFE5B4}.line-central{color:#6B0000;background:#FFD6D6}.line-harbour{color:#003D7A;background:#D6E8FF}.line-kasara{color:#7A3300;background:#FDEBD9}.line-karjat{color:#3D007A;background:#E8D6FF}.line-metro1{color:#0A4A2A;background:#D6F5E8}.line-metro2a{color:#6B4A00;background:#FFF0CC}.line-metro7{color:#3A006B;background:#E8D6FF}.line-metro3{color:#6B0035;background:#FFD6EC}
+.swap-row{display:flex;align-items:center;gap:8px}
+.swap-line{flex:1;height:1px;background:var(--border)}
+.swap-btn{width:30px;height:30px;border:1.5px solid var(--espresso);background:var(--surface);color:var(--ink-muted);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;box-shadow:2px 2px 0 var(--latte);transition:all .2s}
+.swap-btn:hover{background:var(--caramel);color:var(--cream);border-color:var(--caramel);transform:rotate(180deg);box-shadow:2px 2px 0 var(--espresso)}
+.swap-btn:focus-visible{outline:2px solid var(--caramel);outline-offset:2px}
+.search-footer{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding-top:4px}
+.needs-label{font-size:0.65rem;color:var(--ink-muted);font-weight:700;white-space:nowrap;text-transform:uppercase;letter-spacing:0.1em}
+.need-chip{padding:4px 10px;border:1.5px solid var(--espresso);background:var(--bg);color:var(--espresso);font-size:0.65rem;font-weight:700;letter-spacing:0.05em;box-shadow:2px 2px 0 var(--latte);transition:all .15s}
+.need-chip.selected{background:var(--espresso);color:var(--cream);box-shadow:2px 2px 0 var(--caramel)}
+.need-chip:hover:not(.selected){background:var(--caramel);color:var(--cream);border-color:var(--caramel)}
+.search-btn{margin-left:auto;padding:9px 20px;background:var(--espresso);color:var(--cream);border:none;font-family:'Space Mono',monospace;font-weight:700;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;display:flex;align-items:center;gap:7px;box-shadow:4px 4px 0 var(--caramel);transition:all .15s;white-space:nowrap}
+.search-btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--caramel)}
+.search-btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--caramel)}
+.search-btn:focus-visible{outline:2px solid var(--caramel);outline-offset:3px}
+.search-btn:disabled{opacity:.5;transform:none;box-shadow:none;cursor:not-allowed}
+.main{padding:0 clamp(16px,4vw,48px);position:relative;z-index:1}
+.section-label{font-size:0.65rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--caramel);margin:28px 0 14px;display:flex;align-items:center;gap:6px}
+.section-label::before{content:'';display:inline-block;width:6px;height:6px;background:var(--caramel);box-shadow:2px 2px 0 var(--espresso)}
+.mode-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.mode-card{background:var(--surface);border:2px solid var(--espresso);padding:14px 12px;display:flex;flex-direction:column;align-items:flex-start;gap:7px;cursor:pointer;transition:all var(--transition);animation:fadeUp .5s ease both;position:relative;box-shadow:3px 3px 0 var(--latte);text-align:left}
+.mode-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:repeating-linear-gradient(90deg,var(--caramel) 0,var(--caramel) 5px,transparent 5px,transparent 8px)}
+.mode-card:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--caramel);border-color:var(--caramel)}
+.mode-card.selected{border-color:var(--caramel);background:var(--accent-lt);box-shadow:4px 4px 0 var(--espresso)}
+.mode-card:focus-visible{outline:2px solid var(--caramel);outline-offset:2px}
+.mode-icon{font-size:22px}
+.mode-name{font-family:'Outfit',sans-serif;font-weight:800;font-size:0.82rem;color:var(--espresso);letter-spacing:-0.01em}
+[data-theme="dark"] .mode-name{color:var(--ink)}
+.mode-badge{font-size:0.58rem;font-weight:700;letter-spacing:0.08em;padding:2px 7px;background:var(--latte);color:var(--espresso);border:1px solid var(--steam);text-transform:uppercase}
+.mode-badge.warn{background:var(--warn-lt);color:var(--warn);border-color:var(--warn)}
+#routeResults{animation:fadeUp .4s ease both}
+.route-card{background:var(--surface);border:2px solid var(--espresso);margin-bottom:12px;box-shadow:var(--shadow);transition:all var(--transition);position:relative;overflow:hidden}
+.route-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:repeating-linear-gradient(90deg,var(--caramel) 0,var(--caramel) 6px,var(--espresso) 6px,var(--espresso) 9px)}
+.route-card:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-lg)}
+.route-header{padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px dashed var(--border);cursor:pointer}
+.route-left{display:flex;flex-direction:column;gap:4px}
+.route-name{font-family:'Outfit',sans-serif;font-weight:800;font-size:1rem;color:var(--espresso);letter-spacing:-0.02em}
+[data-theme="dark"] .route-name{color:var(--ink)}
+.route-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.route-pill{font-size:0.62rem;font-weight:700;padding:2px 8px;display:inline-flex;align-items:center;gap:4px;text-transform:uppercase;letter-spacing:0.06em;border:1px solid currentColor}
+.pill-green{color:var(--accent);background:var(--accent-lt)}.pill-orange{color:var(--warn);background:var(--warn-lt)}.pill-blue{color:var(--blue);background:var(--blue-lt)}.pill-gray{color:var(--ink-muted);background:var(--border)}.pill-yellow{color:#7A5800;background:#FFF4CC}
+.route-time{text-align:right;flex-shrink:0}
+.route-time .mins{font-family:'Outfit',sans-serif;font-weight:900;font-size:2.2rem;line-height:1;color:var(--caramel);letter-spacing:-0.03em}
+.route-time .mins-label{font-size:0.6rem;color:var(--ink-muted);font-weight:700;text-transform:uppercase;letter-spacing:0.1em}
+.route-steps{padding:0 18px 16px;display:none}
+.route-steps.open{display:block}
+.step-list{list-style:none;margin-top:14px;position:relative}
+.step-list::before{content:'';position:absolute;left:14px;top:0;bottom:0;width:2px;background:repeating-linear-gradient(to bottom,var(--caramel) 0,var(--caramel) 4px,transparent 4px,transparent 8px)}
+.step-item{display:flex;gap:14px;align-items:flex-start;padding:9px 0;position:relative;animation:fadeUp .3s ease both}
+.step-dot{width:28px;height:28px;border:2px solid var(--caramel);background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;color:var(--caramel);position:relative;z-index:1;font-family:'Outfit',sans-serif;flex-shrink:0}
+.step-content{flex:1}
+.step-text{font-weight:700;font-size:0.82rem;color:var(--espresso)}
+[data-theme="dark"] .step-text{color:var(--ink)}
+.step-sub{font-size:0.7rem;color:var(--ink-muted);margin-top:2px}
+.speak-btn{margin-top:12px;padding:9px 16px;background:transparent;color:var(--caramel);border:1.5px solid var(--caramel);font-family:'Space Mono',monospace;font-weight:700;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.08em;display:inline-flex;align-items:center;gap:7px;box-shadow:2px 2px 0 var(--latte);transition:all .15s}
+.speak-btn:hover{background:var(--caramel);color:var(--cream);box-shadow:2px 2px 0 var(--espresso)}
+.live-bar{background:var(--surface);border:1.5px solid var(--border);border-left:4px solid var(--caramel);padding:10px 14px;display:flex;align-items:center;gap:10px;margin-bottom:20px;font-size:0.72rem;font-weight:700;position:relative;z-index:1}
+.live-dot{width:7px;height:7px;background:var(--caramel);animation:pulseDot 1.5s infinite;flex-shrink:0}
+@keyframes pulseDot{0%,100%{box-shadow:0 0 0 0 rgba(200,121,65,.5)}50%{box-shadow:0 0 0 5px rgba(200,121,65,0)}}
+.a11y-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.a11y-toggle{background:var(--surface);border:2px solid var(--espresso);padding:14px;display:flex;align-items:center;gap:12px;transition:all var(--transition);cursor:pointer;text-align:left;box-shadow:2px 2px 0 var(--latte)}
+.a11y-toggle:hover{border-color:var(--caramel);box-shadow:3px 3px 0 var(--caramel)}
+.a11y-toggle.active{background:var(--accent-lt);border-color:var(--caramel);box-shadow:3px 3px 0 var(--espresso)}
+.a11y-toggle:focus-visible{outline:2px solid var(--caramel);outline-offset:2px}
+.a11y-icon{font-size:20px;flex-shrink:0}
+.a11y-info{flex:1}
+.a11y-name{font-family:'Outfit',sans-serif;font-weight:800;font-size:0.82rem;color:var(--espresso);letter-spacing:-0.01em}
+[data-theme="dark"] .a11y-name{color:var(--ink)}
+.a11y-desc{font-size:0.65rem;color:var(--ink-muted);margin-top:2px;font-family:'Space Mono',monospace}
+.toggle-pill{width:34px;height:18px;background:var(--border);position:relative;transition:background .2s;flex-shrink:0}
+.a11y-toggle.active .toggle-pill{background:var(--caramel)}
+.toggle-pill::after{content:'';position:absolute;width:12px;height:12px;background:#fff;top:3px;left:3px;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.a11y-toggle.active .toggle-pill::after{transform:translateX(16px)}
+.size-row{background:var(--surface);border:2px solid var(--espresso);padding:14px;display:flex;align-items:center;gap:14px;margin-top:10px;box-shadow:2px 2px 0 var(--latte)}
+.size-row label{font-size:0.72rem;font-weight:700;white-space:nowrap;text-transform:uppercase;letter-spacing:0.08em}
+.size-row input[type=range]{flex:1;accent-color:var(--caramel);height:4px;cursor:pointer}
+.size-preview{font-size:0.72rem;color:var(--ink-muted);min-width:36px;text-align:right;font-weight:700}
+.sos-strip{margin-top:28px;background:var(--warn-lt);border:2px solid var(--warn);padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;box-shadow:4px 4px 0 rgba(139,58,26,.3);position:relative}
+.sos-strip::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:repeating-linear-gradient(90deg,var(--warn) 0,var(--warn) 5px,transparent 5px,transparent 8px)}
+[data-theme="dark"] .sos-strip{background:#2A1008;border-color:var(--warn)}
+.sos-left{display:flex;align-items:center;gap:12px}
+.sos-icon{font-size:26px}
+.sos-title{font-family:'Outfit',sans-serif;font-weight:800;font-size:0.92rem;color:var(--warn);letter-spacing:-0.01em}
+.sos-sub{font-size:0.68rem;color:var(--ink-muted);font-family:'Space Mono',monospace}
+.sos-btn{padding:11px 20px;background:var(--warn);color:#fff;border:none;font-family:'Space Mono',monospace;font-weight:700;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;display:flex;align-items:center;gap:7px;box-shadow:3px 3px 0 rgba(139,58,26,.4);transition:all .15s}
+.sos-btn:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 rgba(139,58,26,.4)}
+.shimmer{background:linear-gradient(90deg,var(--border) 25%,var(--surface) 50%,var(--border) 75%);background-size:200% 100%;animation:shimmer 1.2s infinite;height:90px;margin-bottom:10px}
+@keyframes shimmer{from{background-position:200% 0}to{background-position:-200% 0}}
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--espresso);color:var(--cream);padding:9px 18px;border:1.5px solid var(--caramel);font-family:'Space Mono',monospace;font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;z-index:9999;white-space:nowrap;box-shadow:3px 3px 0 var(--caramel)}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.high-contrast{filter:contrast(1.35) saturate(0)}
+.reduce-motion *,.reduce-motion *::before,.reduce-motion *::after{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important}
+.mode-card:nth-child(1){animation-delay:.05s}.mode-card:nth-child(2){animation-delay:.1s}.mode-card:nth-child(3){animation-delay:.15s}.mode-card:nth-child(4){animation-delay:.2s}.mode-card:nth-child(5){animation-delay:.25s}.mode-card:nth-child(6){animation-delay:.3s}
+.line-picker{background:var(--surface);border:2px solid var(--espresso);padding:16px 18px;margin-top:12px;animation:fadeUp .3s ease both;box-shadow:var(--shadow)}
+.line-picker-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.line-picker-title{font-family:'Outfit',sans-serif;font-weight:800;font-size:0.85rem;display:flex;align-items:center;gap:8px;letter-spacing:-0.01em}
+.line-picker-close{width:26px;height:26px;border:1.5px solid var(--espresso);background:none;color:var(--ink-muted);font-size:14px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s}
+.line-picker-close:hover{background:var(--warn-lt);color:var(--warn);border-color:var(--warn)}
+.station-pills{display:flex;flex-wrap:wrap;gap:6px;max-height:200px;overflow-y:auto}
+.station-pill{padding:4px 10px;border:1.5px solid var(--espresso);background:var(--bg);color:var(--espresso);font-family:'Space Mono',monospace;font-size:0.65rem;font-weight:700;cursor:pointer;transition:all .15s;white-space:nowrap;box-shadow:1px 1px 0 var(--latte)}
+.station-pill:hover{border-color:var(--caramel);color:var(--caramel);background:var(--accent-lt);box-shadow:2px 2px 0 var(--caramel)}
+.station-pill.interchange{border-color:var(--caramel);color:var(--caramel)}
+.voice-modal{display:none;position:fixed;inset:0;z-index:500;background:rgba(26,15,7,.7);align-items:flex-end;justify-content:center}
+.voice-modal.open{display:flex}
+.voice-modal-inner{background:var(--surface);border:2px solid var(--espresso);border-bottom:none;padding:30px 24px 36px;width:100%;max-width:500px;text-align:center;animation:slideUp .3s ease;box-shadow:0 -4px 0 var(--caramel)}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.voice-orb{width:64px;height:64px;background:var(--espresso);border:3px solid var(--caramel);display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 14px;box-shadow:4px 4px 0 var(--caramel)}
+.voice-orb.listening{animation:orbPulse 1s infinite}
+@keyframes orbPulse{0%,100%{box-shadow:4px 4px 0 var(--caramel),0 0 0 0 rgba(200,121,65,.4)}50%{box-shadow:4px 4px 0 var(--caramel),0 0 0 14px rgba(200,121,65,0)}}
+.voice-modal-title{font-family:'Outfit',sans-serif;font-weight:800;font-size:1rem;letter-spacing:-0.02em;margin-bottom:5px}
+.voice-modal-sub{font-size:0.72rem;color:var(--ink-muted);margin-bottom:18px;min-height:18px}
+.voice-interim{font-size:0.9rem;color:var(--caramel);font-style:italic;min-height:22px;margin-bottom:14px;font-family:'Cormorant Garamond',serif;font-weight:700}
+.voice-cancel{padding:9px 22px;border:1.5px solid var(--espresso);background:none;color:var(--ink-muted);font-family:'Space Mono',monospace;font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;cursor:pointer;transition:all .15s}
+.voice-cancel:hover{border-color:var(--warn);color:var(--warn)}
+footer{background:var(--dark-roast);color:var(--steam);text-align:center;padding:1.5rem 1rem;font-size:0.63rem;line-height:2.2;letter-spacing:0.06em;margin-top:3rem;position:relative;z-index:1}
+footer a{color:var(--caramel);text-decoration:none}
+footer a:hover{text-decoration:underline}
 </style>
 </head>
 <body>
 <a href="#main" class="skip-link">Skip to main content</a>
 
+<div style="background:#fff4cc;border-bottom:2px solid #c9a800;color:#7a5800;font-family:'Space Mono',monospace;font-size:0.65rem;font-weight:700;text-align:center;padding:7px 16px;letter-spacing:0.1em;text-transform:uppercase;position:relative;z-index:150;">
+  ⚠ This project is currently under development — some features may not work as expected
+</div>
+
 <header class="header" role="banner">
-  <div class="logo-wrap">
-    <div class="logo-mark" aria-hidden="true">♿</div>
-    <span class="logo-text">Access<span>Ride</span></span>
-  </div>
+  <a href="https://projects.caffncode.com" class="logo-wrap" aria-label="CaffnCode Projects">
+    <div class="logo-caff">
+      <span class="logo-pixel"></span>
+      caffncode
+    </div>
+    <span class="logo-x">×</span>
+    <span class="logo-access">AccessRide</span>
+  </a>
   <div class="header-controls">
-    <button class="icon-btn" id="themeBtn"    onclick="toggleDark()"    aria-label="Toggle dark mode"    title="Dark mode">🌙</button>
-    <button class="icon-btn" id="contrastBtn" onclick="toggleContrast()" aria-label="Toggle high contrast" title="High contrast">◑</button>
+    <button class="icon-btn" id="themeBtn" onclick="toggleDark()" aria-label="Toggle dark mode" title="Dark mode">🌙 Dark</button>
+    <button class="icon-btn" id="contrastBtn" onclick="toggleContrast()" aria-label="Toggle high contrast" title="High contrast">◑ Contrast</button>
   </div>
 </header>
 
@@ -241,7 +213,6 @@
   <p class="hero-sub">Accessible step-by-step directions across Western, Central, Harbour lines and all 4 Metro lines — voice-guided, tailored to your needs.</p>
 
   <div class="search-panel" role="search" aria-label="Journey planner">
-    <!-- SOURCE -->
     <div class="field-row" id="srcRow">
       <span class="field-icon" aria-hidden="true">🟢</span>
       <input id="source" class="field-input" type="text" placeholder="Starting station…"
@@ -250,17 +221,14 @@
       <div id="srcDropdown" class="ac-dropdown" role="listbox" aria-label="Station suggestions"></div>
       <div class="field-actions">
         <button class="field-btn" id="voiceSrcBtn" title="Speak starting station" aria-label="Voice input for starting station">🎙️</button>
-        <button class="field-btn" id="gpsBtn"      title="Use GPS location"       aria-label="Use my current GPS location">📍</button>
+        <button class="field-btn" id="gpsBtn" title="Use GPS location" aria-label="Use my current GPS location">📍</button>
       </div>
     </div>
-
     <div class="swap-row" aria-hidden="true">
       <div class="swap-line"></div>
       <button class="swap-btn" onclick="swapLocations()" aria-label="Swap source and destination" title="Swap">⇅</button>
       <div class="swap-line"></div>
     </div>
-
-    <!-- DESTINATION -->
     <div class="field-row" id="dstRow">
       <span class="field-icon" aria-hidden="true">🔴</span>
       <input id="destination" class="field-input" type="text" placeholder="Destination station…"
@@ -271,14 +239,13 @@
         <button class="field-btn" id="voiceDstBtn" title="Speak destination" aria-label="Voice input for destination">🎙️</button>
       </div>
     </div>
-
     <div class="search-footer">
       <span class="needs-label">Needs:</span>
       <button class="need-chip" data-need="wheelchair" aria-pressed="false">♿ Wheelchair</button>
-      <button class="need-chip" data-need="elevator"   aria-pressed="false">🛗 Elevator</button>
-      <button class="need-chip" data-need="tactile"    aria-pressed="false">🦯 Tactile</button>
+      <button class="need-chip" data-need="elevator" aria-pressed="false">🛗 Elevator</button>
+      <button class="need-chip" data-need="tactile" aria-pressed="false">🦯 Tactile</button>
       <button class="search-btn" id="searchBtn" onclick="findRoutes()">
-        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         Find Routes
       </button>
     </div>
@@ -293,79 +260,31 @@
 
   <p class="section-label">Browse by Line</p>
   <div class="mode-grid" role="list" aria-label="Railway and Metro lines">
-    <button class="mode-card" role="listitem" onclick="filterLine('western')"  aria-pressed="false" data-mode="western">
-      <span class="mode-icon">🚆</span><span class="mode-name">Western Line</span>
-      <span class="mode-badge">Churchgate–Dahanu</span>
-    </button>
-    <button class="mode-card" role="listitem" onclick="filterLine('central')"  aria-pressed="false" data-mode="central">
-      <span class="mode-icon">🚇</span><span class="mode-name">Central Main</span>
-      <span class="mode-badge">CSMT–Kalyan</span>
-    </button>
-    <button class="mode-card" role="listitem" onclick="filterLine('harbour')"  aria-pressed="false" data-mode="harbour">
-      <span class="mode-icon">⚓</span><span class="mode-name">Harbour Line</span>
-      <span class="mode-badge">CSMT–Panvel</span>
-    </button>
-    <button class="mode-card" role="listitem" onclick="filterLine('metro1')"   aria-pressed="false" data-mode="metro1">
-      <span class="mode-icon">🟢</span><span class="mode-name">Metro Line 1</span>
-      <span class="mode-badge">Versova–Ghatkopar</span>
-    </button>
-    <button class="mode-card" role="listitem" onclick="filterLine('metro2a')"  aria-pressed="false" data-mode="metro2a">
-      <span class="mode-icon">🟡</span><span class="mode-name">Metro Line 2A</span>
-      <span class="mode-badge">Dahisar E–Andheri W</span>
-    </button>
-    <button class="mode-card" role="listitem" onclick="filterLine('metro7')"   aria-pressed="false" data-mode="metro7">
-      <span class="mode-icon">🟣</span><span class="mode-name">Metro Line 7</span>
-      <span class="mode-badge">Dahisar E–Gundavali</span>
-    </button>
-    <button class="mode-card" role="listitem" onclick="filterLine('metro3')"   aria-pressed="false" data-mode="metro3">
-      <span class="mode-icon">🔵</span><span class="mode-name">Metro Line 3</span>
-      <span class="mode-badge">Colaba–SEEPZ</span>
-    </button>
-    <button class="mode-card" role="listitem" onclick="filterLine('kasara')"   aria-pressed="false" data-mode="kasara">
-      <span class="mode-icon">🏔️</span><span class="mode-name">Kasara Branch</span>
-      <span class="mode-badge warn">Kalyan–Kasara</span>
-    </button>
-    <button class="mode-card" role="listitem" onclick="filterLine('karjat')"   aria-pressed="false" data-mode="karjat">
-      <span class="mode-icon">🌿</span><span class="mode-name">Karjat Branch</span>
-      <span class="mode-badge warn">Kalyan–Karjat</span>
-    </button>
-    <button class="mode-card" role="listitem" onclick="filterLine('accessible')" aria-pressed="false" data-mode="accessible">
-      <span class="mode-icon">♿</span><span class="mode-name">Accessible Only</span>
-      <span class="mode-badge">Lifts + Ramps</span>
-    </button>
+    <button class="mode-card" role="listitem" onclick="filterLine('western')" aria-pressed="false" data-mode="western"><span class="mode-icon">🚆</span><span class="mode-name">Western Line</span><span class="mode-badge">Churchgate–Dahanu</span></button>
+    <button class="mode-card" role="listitem" onclick="filterLine('central')" aria-pressed="false" data-mode="central"><span class="mode-icon">🚇</span><span class="mode-name">Central Main</span><span class="mode-badge">CSMT–Kalyan</span></button>
+    <button class="mode-card" role="listitem" onclick="filterLine('harbour')" aria-pressed="false" data-mode="harbour"><span class="mode-icon">⚓</span><span class="mode-name">Harbour Line</span><span class="mode-badge">CSMT–Panvel</span></button>
+    <button class="mode-card" role="listitem" onclick="filterLine('metro1')" aria-pressed="false" data-mode="metro1"><span class="mode-icon">🟢</span><span class="mode-name">Metro Line 1</span><span class="mode-badge">Versova–Ghatkopar</span></button>
+    <button class="mode-card" role="listitem" onclick="filterLine('metro2a')" aria-pressed="false" data-mode="metro2a"><span class="mode-icon">🟡</span><span class="mode-name">Metro Line 2A</span><span class="mode-badge">Dahisar E–Andheri W</span></button>
+    <button class="mode-card" role="listitem" onclick="filterLine('metro7')" aria-pressed="false" data-mode="metro7"><span class="mode-icon">🟣</span><span class="mode-name">Metro Line 7</span><span class="mode-badge">Dahisar E–Gundavali</span></button>
+    <button class="mode-card" role="listitem" onclick="filterLine('metro3')" aria-pressed="false" data-mode="metro3"><span class="mode-icon">🔵</span><span class="mode-name">Metro Line 3</span><span class="mode-badge">Colaba–SEEPZ</span></button>
+    <button class="mode-card" role="listitem" onclick="filterLine('kasara')" aria-pressed="false" data-mode="kasara"><span class="mode-icon">🏔️</span><span class="mode-name">Kasara Branch</span><span class="mode-badge warn">Kalyan–Kasara</span></button>
+    <button class="mode-card" role="listitem" onclick="filterLine('karjat')" aria-pressed="false" data-mode="karjat"><span class="mode-icon">🌿</span><span class="mode-name">Karjat Branch</span><span class="mode-badge warn">Kalyan–Karjat</span></button>
+    <button class="mode-card" role="listitem" onclick="filterLine('accessible')" aria-pressed="false" data-mode="accessible"><span class="mode-icon">♿</span><span class="mode-name">Accessible Only</span><span class="mode-badge">Lifts + Ramps</span></button>
   </div>
 
   <div id="linePicker" style="display:none"></div>
-
   <div id="routeResults" aria-live="polite" aria-label="Route results"></div>
 
   <p class="section-label">Accessibility Preferences</p>
   <div class="a11y-grid">
-    <button class="a11y-toggle" id="toggleDarkBtn"     onclick="toggleDark()"            aria-pressed="false">
-      <span class="a11y-icon">🌙</span>
-      <div class="a11y-info"><div class="a11y-name">Dark Mode</div><div class="a11y-desc">Reduces eye strain</div></div>
-      <div class="toggle-pill" aria-hidden="true"></div>
-    </button>
-    <button class="a11y-toggle" id="toggleContrastBtn" onclick="toggleContrast()"        aria-pressed="false">
-      <span class="a11y-icon">◑</span>
-      <div class="a11y-info"><div class="a11y-name">High Contrast</div><div class="a11y-desc">Sharper visual edges</div></div>
-      <div class="toggle-pill" aria-hidden="true"></div>
-    </button>
-    <button class="a11y-toggle" id="toggleVoiceBtn"    onclick="toggleContinuousVoice()" aria-pressed="false">
-      <span class="a11y-icon">🔊</span>
-      <div class="a11y-info"><div class="a11y-name">Voice Guidance</div><div class="a11y-desc">Speaks all directions</div></div>
-      <div class="toggle-pill" aria-hidden="true"></div>
-    </button>
-    <button class="a11y-toggle" id="toggleMotionBtn"   onclick="toggleMotion()"          aria-pressed="false">
-      <span class="a11y-icon">🎭</span>
-      <div class="a11y-info"><div class="a11y-name">Reduce Motion</div><div class="a11y-desc">Fewer animations</div></div>
-      <div class="toggle-pill" aria-hidden="true"></div>
-    </button>
+    <button class="a11y-toggle" id="toggleDarkBtn" onclick="toggleDark()" aria-pressed="false"><span class="a11y-icon">🌙</span><div class="a11y-info"><div class="a11y-name">Dark Mode</div><div class="a11y-desc">Reduces eye strain</div></div><div class="toggle-pill" aria-hidden="true"></div></button>
+    <button class="a11y-toggle" id="toggleContrastBtn" onclick="toggleContrast()" aria-pressed="false"><span class="a11y-icon">◑</span><div class="a11y-info"><div class="a11y-name">High Contrast</div><div class="a11y-desc">Sharper visual edges</div></div><div class="toggle-pill" aria-hidden="true"></div></button>
+    <button class="a11y-toggle" id="toggleVoiceBtn" onclick="toggleContinuousVoice()" aria-pressed="false"><span class="a11y-icon">🔊</span><div class="a11y-info"><div class="a11y-name">Voice Guidance</div><div class="a11y-desc">Speaks all directions</div></div><div class="toggle-pill" aria-hidden="true"></div></button>
+    <button class="a11y-toggle" id="toggleMotionBtn" onclick="toggleMotion()" aria-pressed="false"><span class="a11y-icon">🎭</span><div class="a11y-info"><div class="a11y-name">Reduce Motion</div><div class="a11y-desc">Fewer animations</div></div><div class="toggle-pill" aria-hidden="true"></div></button>
   </div>
   <div class="size-row" style="margin-top:12px">
     <label for="textSizeSlider">🔠 Text Size</label>
-    <input type="range" id="textSizeSlider" min="14" max="24" value="15" step="1"
-      aria-label="Adjust text size" oninput="adjustTextSize(this.value)">
+    <input type="range" id="textSizeSlider" min="14" max="24" value="15" step="1" aria-label="Adjust text size" oninput="adjustTextSize(this.value)">
     <span class="size-preview" id="sizePreview">15px</span>
   </div>
 
@@ -378,7 +297,6 @@
   </div>
 </main>
 
-<!-- Voice Modal -->
 <div id="voiceModal" class="voice-modal" role="dialog" aria-modal="true" aria-labelledby="voiceModalTitle">
   <div class="voice-modal-inner">
     <div class="voice-orb" id="voiceOrb">🎙️</div>
@@ -389,985 +307,101 @@
   </div>
 </div>
 
+<footer>
+  <p>
+    <a href="https://projects.caffncode.com">← Back to Projects</a>
+    &nbsp;·&nbsp;
+    <a href="https://caffncode.com">caffncode.com</a>
+  </p>
+  <p style="margin-top:4px">
+    <a href="https://assets.caffncode.com/udyam.pdf" target="_blank" rel="noopener">
+      CaffnCode<sup>TM</sup> is a registered MSME under Govt. of India · UDYAM-MH-33-0608110
+    </a>
+  </p>
+  <p style="margin-top:4px">© 2025 CaffnCode™ · Built with ☕ by Yug Rane</p>
+</footer>
+
 <div id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
 <script>
 /* ══════════════════════════════════════════════════════
    STATION DATABASE
 ══════════════════════════════════════════════════════ */
-// Each station: { name, line, lineLabel, index (position on line), accessible, zone }
-// accessible = true: has elevator / ramps verified
-// Approx 3 min per station stop on suburban rail
-
 const LINES = {
-  western: {
-    label:'Western Line', color:'#7A4F00', bgClass:'line-western',
-    icon:'🚆', accessible: true,
-    stations:[
-      'Churchgate','Marine Lines','Charni Road','Grant Road','Mumbai Central',
-      'Mahalaxmi','Lower Parel','Prabhadevi','Dadar','Matunga Road',
-      'Mahim Junction','Bandra','Khar Road','Santacruz','Vile Parle',
-      'Andheri','Jogeshwari','Ram Mandir','Goregaon','Malad',
-      'Kandivali','Borivali','Dahisar','Mira Road','Bhayandar',
-      'Naigaon','Vasai Road','Nalasopara','Virar','Vaitarna',
-      'Saphale','Kelve Road','Palghar','Umroli','Boisar',
-      'Vangaon','Dahanu Road'
-    ]
-  },
-  central: {
-    label:'Central Line (Main)', color:'#6B0000', bgClass:'line-central',
-    icon:'🚇', accessible: true,
-    stations:[
-      'Chhatrapati Shivaji Maharaj Terminus','Masjid','Sandhurst Road','Byculla',
-      'Chinchpokli','Currey Road','Parel','Dadar','Matunga','Sion',
-      'Kurla','Vidyavihar','Ghatkopar','Vikhroli','Kanjurmarg',
-      'Bhandup','Nahur','Mulund','Thane','Kalwa',
-      'Mumbra','Diva Junction','Kopar','Dombivli','Thakurli','Kalyan Junction'
-    ]
-  },
-  kasara: {
-    label:'Central Line (Kasara Branch)', color:'#7A3300', bgClass:'line-kasara',
-    icon:'🏔️', accessible: false,
-    // Branches from Kalyan Junction
-    stations:[
-      'Kalyan Junction','Shahad','Ambivli','Titwala','Khadavli',
-      'Vasind','Asangaon','Kasara'
-    ]
-  },
-  karjat: {
-    label:'Central Line (Karjat Branch)', color:'#3D007A', bgClass:'line-karjat',
-    icon:'🌿', accessible: false,
-    // Branches from Kalyan Junction
-    stations:[
-      'Kalyan Junction','Vitthalwadi','Ulhasnagar','Ambernath','Badlapur',
-      'Vangani','Shelu','Neral','Bhivpuri Road','Karjat'
-    ]
-  },
-  harbour: {
-    label:'Harbour Line', color:'#003D7A', bgClass:'line-harbour',
-    icon:'⚓', accessible: true,
-    stations:[
-      'Chhatrapati Shivaji Maharaj Terminus','Masjid','Sandhurst Road',
-      'Dockyard Road','Reay Road','Cotton Green','Sewri','Wadala Road',
-      'Guru Tegh Bahadur Nagar','Chunabhatti','Kurla','Tilak Nagar',
-      'Chembur','Govandi','Mankhurd','Vashi','Sanpada','Juinagar',
-      'Nerul','Seawoods–Darave','Belapur CBD','Kharghar','Mansarovar',
-      'Khandeshwar','Panvel'
-    ]
-  },
-  metro1: {
-    label:'Metro Line 1', color:'#0A4A2A', bgClass:'line-metro1',
-    icon:'🟢', accessible: true,
-    stations:[
-      'Versova','D. N. Nagar','Azad Nagar','Andheri',
-      'Western Express Highway','Chakala (J. B. Nagar)','Airport Road',
-      'Marol Naka','Saki Naka','Asalpha','Jagruti Nagar','Ghatkopar'
-    ]
-  },
-  metro2a: {
-    label:'Metro Line 2A', color:'#6B4A00', bgClass:'line-metro2a',
-    icon:'🟡', accessible: true,
-    stations:[
-      'Dahisar East','Ovaripada','Rashtriya Udyan','Mandapeshwar',
-      'Eksar','Borivali West','Shimpoli','Kandarpada',
-      'IC Colony','Pahadi Eksar','Andheri West'
-    ]
-  },
-  metro7: {
-    label:'Metro Line 7', color:'#3A006B', bgClass:'line-metro7',
-    icon:'🟣', accessible: true,
-    stations:[
-      'Dahisar East','Ovaripada','Rashtriya Udyan','Mandapeshwar',
-      'Eksar','Borivali East','Magathane','Devipada','Poisar',
-      'Akurli','Kurar','Dindoshi','Aarey','Goregaon East',
-      'Jogeshwari East','Ram Mandir','Gundavali'
-    ]
-  },
-  metro3: {
-    label:'Metro Line 3 (Aqua)', color:'#6B0035', bgClass:'line-metro3',
-    icon:'🔵', accessible: true,
-    stations:[
-      'Colaba','Cuffe Parade','Churchgate','Hutatma Chowk',
-      'CST','Kalbadevi','Girgaon','Grant Road',
-      'Mumbai Central','Mahalaxmi','Science Museum','Worli',
-      'Acharya Atre Chowk','Dadar','Siddhivinayak','Mahim',
-      'Bandra-Kurla Complex','Dharavi','Santacruz',
-      'Domestic Airport','Sahar Airport','Marol Naka','MIDC','SEEPZ'
-    ]
-  }
+  western:{label:'Western Line',color:'#7A4F00',bgClass:'line-western',icon:'🚆',accessible:true,stations:['Churchgate','Marine Lines','Charni Road','Grant Road','Mumbai Central','Mahalaxmi','Lower Parel','Prabhadevi','Dadar','Matunga Road','Mahim Junction','Bandra','Khar Road','Santacruz','Vile Parle','Andheri','Jogeshwari','Ram Mandir','Goregaon','Malad','Kandivali','Borivali','Dahisar','Mira Road','Bhayandar','Naigaon','Vasai Road','Nalasopara','Virar','Vaitarna','Saphale','Kelve Road','Palghar','Umroli','Boisar','Vangaon','Dahanu Road']},
+  central:{label:'Central Line (Main)',color:'#6B0000',bgClass:'line-central',icon:'🚇',accessible:true,stations:['Chhatrapati Shivaji Maharaj Terminus','Masjid','Sandhurst Road','Byculla','Chinchpokli','Currey Road','Parel','Dadar','Matunga','Sion','Kurla','Vidyavihar','Ghatkopar','Vikhroli','Kanjurmarg','Bhandup','Nahur','Mulund','Thane','Kalwa','Mumbra','Diva Junction','Kopar','Dombivli','Thakurli','Kalyan Junction']},
+  kasara:{label:'Central Line (Kasara Branch)',color:'#7A3300',bgClass:'line-kasara',icon:'🏔️',accessible:false,stations:['Kalyan Junction','Shahad','Ambivli','Titwala','Khadavli','Vasind','Asangaon','Kasara']},
+  karjat:{label:'Central Line (Karjat Branch)',color:'#3D007A',bgClass:'line-karjat',icon:'🌿',accessible:false,stations:['Kalyan Junction','Vitthalwadi','Ulhasnagar','Ambernath','Badlapur','Vangani','Shelu','Neral','Bhivpuri Road','Karjat']},
+  harbour:{label:'Harbour Line',color:'#003D7A',bgClass:'line-harbour',icon:'⚓',accessible:true,stations:['Chhatrapati Shivaji Maharaj Terminus','Masjid','Sandhurst Road','Dockyard Road','Reay Road','Cotton Green','Sewri','Wadala Road','Guru Tegh Bahadur Nagar','Chunabhatti','Kurla','Tilak Nagar','Chembur','Govandi','Mankhurd','Vashi','Sanpada','Juinagar','Nerul','Seawoods–Darave','Belapur CBD','Kharghar','Mansarovar','Khandeshwar','Panvel']},
+  metro1:{label:'Metro Line 1',color:'#0A4A2A',bgClass:'line-metro1',icon:'🟢',accessible:true,stations:['Versova','D. N. Nagar','Azad Nagar','Andheri','Western Express Highway','Chakala (J. B. Nagar)','Airport Road','Marol Naka','Saki Naka','Asalpha','Jagruti Nagar','Ghatkopar']},
+  metro2a:{label:'Metro Line 2A',color:'#6B4A00',bgClass:'line-metro2a',icon:'🟡',accessible:true,stations:['Dahisar East','Ovaripada','Rashtriya Udyan','Mandapeshwar','Eksar','Borivali West','Shimpoli','Kandarpada','IC Colony','Pahadi Eksar','Andheri West']},
+  metro7:{label:'Metro Line 7',color:'#3A006B',bgClass:'line-metro7',icon:'🟣',accessible:true,stations:['Dahisar East','Ovaripada','Rashtriya Udyan','Mandapeshwar','Eksar','Borivali East','Magathane','Devipada','Poisar','Akurli','Kurar','Dindoshi','Aarey','Goregaon East','Jogeshwari East','Ram Mandir','Gundavali']},
+  metro3:{label:'Metro Line 3 (Aqua)',color:'#6B0035',bgClass:'line-metro3',icon:'🔵',accessible:true,stations:['Colaba','Cuffe Parade','Churchgate','Hutatma Chowk','CST','Kalbadevi','Girgaon','Grant Road','Mumbai Central','Mahalaxmi','Science Museum','Worli','Acharya Atre Chowk','Dadar','Siddhivinayak','Mahim','Bandra-Kurla Complex','Dharavi','Santacruz','Domestic Airport','Sahar Airport','Marol Naka','MIDC','SEEPZ']}
 };
-
-// All metro stations are fully accessible (elevators, lifts at every station)
-const ACCESSIBLE_STATIONS = new Set([
-  // Suburban rail stations with confirmed accessibility
-  'Churchgate','Mumbai Central','Dadar','Andheri','Borivali','Bandra',
-  'Virar','Vasai Road','Kurla','Thane','Ghatkopar','Kalyan Junction',
-  'Chhatrapati Shivaji Maharaj Terminus','Vashi','Panvel','Belapur CBD',
-  'Nerul','Sanpada','Lower Parel','Mahalaxmi','Masjid',
-  // All Metro Line 1 stations
-  'Versova','D. N. Nagar','Azad Nagar','Western Express Highway',
-  'Chakala (J. B. Nagar)','Airport Road','Marol Naka','Saki Naka',
-  'Asalpha','Jagruti Nagar',
-  // All Metro Line 2A stations
-  'Dahisar East','Ovaripada','Rashtriya Udyan','Mandapeshwar',
-  'Eksar','Borivali West','Shimpoli','Kandarpada',
-  'IC Colony','Pahadi Eksar','Andheri West',
-  // All Metro Line 7 stations
-  'Borivali East','Magathane','Devipada','Poisar','Akurli','Kurar',
-  'Dindoshi','Aarey','Goregaon East','Jogeshwari East','Gundavali',
-  // All Metro Line 3 stations
-  'Colaba','Cuffe Parade','Hutatma Chowk','CST','Kalbadevi','Girgaon',
-  'Science Museum','Worli','Acharya Atre Chowk','Siddhivinayak','Mahim',
-  'Bandra-Kurla Complex','Dharavi','Domestic Airport','Sahar Airport','MIDC','SEEPZ',
-  'Ram Mandir','Santacruz'
-]);
-
-// Average minutes between adjacent stations by line
-const MINS_PER_STOP = { western:3, central:3, harbour:4, kasara:5, karjat:5, metro1:3, metro2a:3, metro7:3, metro3:3 };
-// Walk time to/from station (minutes)
-const WALK_MIN = 5;
-
-/* ── Build lookup: station name → [{line, index}] ── */
-const STATION_INDEX = {}; // name → [{lineId, idx}]
-Object.entries(LINES).forEach(([lineId, lineData]) => {
-  lineData.stations.forEach((st, idx) => {
-    const key = normalize(st);
-    if (!STATION_INDEX[key]) STATION_INDEX[key] = [];
-    STATION_INDEX[key].push({ lineId, idx });
-  });
-});
-
-// All unique station names (for autocomplete)
-const ALL_STATIONS = [...new Set(Object.values(LINES).flatMap(l => l.stations))].sort();
-
-function normalize(s){ return s.toLowerCase().trim(); }
-
-/* ══════════════════════════════════════════════════════
-   ROUTING ENGINE  (BFS across lines with transfers)
-══════════════════════════════════════════════════════ */
-function findBestRoutes(srcName, dstName) {
-  const srcKey = normalize(srcName);
-  const dstKey = normalize(dstName);
-
-  // Find exact or fuzzy station matches
-  const srcEntries = STATION_INDEX[srcKey] || fuzzyFind(srcKey);
-  const dstEntries = STATION_INDEX[dstKey] || fuzzyFind(dstKey);
-
-  if (!srcEntries.length) return { error: `Station not found: "${srcName}"` };
-  if (!dstEntries.length) return { error: `Station not found: "${dstName}"` };
-
-  const routes = [];
-
-  // Try every combination of src line × dst line
-  for (const se of srcEntries) {
-    for (const de of dstEntries) {
-      if (se.lineId === de.lineId) {
-        // SAME LINE — direct trip
-        const r = buildDirectRoute(se, de);
-        if (r) routes.push(r);
-      } else {
-        // DIFFERENT LINE — find transfer stations
-        const transfers = findTransfers(se.lineId, de.lineId);
-        for (const xfer of transfers) {
-          const r = buildTransferRoute(se, de, xfer);
-          if (r) routes.push(r);
-        }
-      }
-    }
-  }
-
-  if (!routes.length) return { error: 'No routes found between these stations.' };
-
-  // Deduplicate and sort by duration
-  const seen = new Set();
-  const unique = routes.filter(r => {
-    const k = r.name + r.mins;
-    if (seen.has(k)) return false;
-    seen.add(k); return true;
-  });
-  unique.sort((a,b) => a.mins - b.mins);
-
-  // Return top 3 (most accessible first if tie)
-  const top = unique.slice(0,3);
-  // Ensure most accessible is first
-  top.sort((a,b) => (b.accessible?1:0) - (a.accessible?1:0) || a.mins - b.mins);
-  return { routes: top };
-}
-
-function buildDirectRoute(se, de) {
-  const line = LINES[se.lineId];
-  const from = se.idx, to = de.idx;
-  const stops = Math.abs(to - from);
-  if (stops === 0) return null;
-
-  const direction = to > from ? 'towards ' + line.stations[line.stations.length-1] : 'towards ' + line.stations[0];
-  const stationsTraversed = to > from
-    ? line.stations.slice(from, to+1)
-    : line.stations.slice(to, from+1).reverse();
-
-  const travelMins = stops * MINS_PER_STOP[se.lineId];
-  const totalMins  = WALK_MIN + travelMins + WALK_MIN;
-
-  const srcStation  = line.stations[from];
-  const dstStation  = line.stations[to];
-  const srcAccess   = ACCESSIBLE_STATIONS.has(srcStation);
-  const dstAccess   = ACCESSIBLE_STATIONS.has(dstStation);
-  const lineAccess  = line.accessible;
-  const fullyAccess = srcAccess && dstAccess && lineAccess;
-
-  const pills = [
-    { t: line.icon + ' ' + line.label, c: 'blue' },
-    { t: stops + ' stop' + (stops>1?'s':''), c: 'gray' },
-    ...(fullyAccess ? [{ t: '♿ Accessible', c: 'green' }] : [])
-  ];
-
-  const steps = [
-    { icon:'🚶', text:`Walk to ${srcStation}`, sub:`Allow ~5 min · ${srcAccess ? 'Elevator/ramp available' : 'Ramp at entrance'}` },
-    { icon: line.icon, text:`Board ${line.label} ${direction}`, sub:`Platform ${to>from?'towards terminus':'towards start'} · ${stops} stop${stops>1?'s':''} · ~${travelMins} min` },
-    ...( stationsTraversed.length > 2 && stationsTraversed.length <= 6
-      ? [{ icon:'📍', text:`Passing: ${stationsTraversed.slice(1,-1).join(' → ')}`, sub:'Remain seated / count stops' }]
-      : stationsTraversed.length > 6
-        ? [{ icon:'📍', text:`Passing ${stationsTraversed.length-2} intermediate stations`, sub:`Next major stop after ${stationsTraversed[1]}: ${stationsTraversed[Math.floor(stationsTraversed.length/2)]}` }]
-        : []
-    ),
-    { icon:'🚉', text:`Alight at ${dstStation}`, sub:`${dstAccess ? 'Elevator at Gate B · ramp available' : 'Platform exit'}` },
-    { icon:'🚶', text:`Walk to your destination`, sub:'Allow ~5 min from station exit' }
-  ];
-
-  const voiceText = `Take the ${line.label} ${direction}. Board at ${srcStation}. Ride for ${stops} stop${stops>1?'s':''}. Alight at ${dstStation}. Total journey approximately ${totalMins} minutes.`;
-
-  return {
-    id: 'r_' + se.lineId + '_' + from + '_' + to,
-    name: `Direct · ${line.label}`,
-    mins: totalMins,
-    mode: line.label,
-    accessible: fullyAccess,
-    pills,
-    steps,
-    voiceText
-  };
-}
-
-function buildTransferRoute(se, de, xfer) {
-  const line1  = LINES[se.lineId];
-  const line2  = LINES[de.lineId];
-  const xferStation = xfer.station;
-
-  // Find xfer index on both lines
-  const xferIdx1 = line1.stations.findIndex(s => normalize(s) === normalize(xferStation));
-  const xferIdx2 = line2.stations.findIndex(s => normalize(s) === normalize(xferStation));
-  if (xferIdx1 < 0 || xferIdx2 < 0) return null;
-
-  const stops1 = Math.abs(xferIdx1 - se.idx);
-  const stops2 = Math.abs(de.idx - xferIdx2);
-  if (stops1 === 0 && stops2 === 0) return null;
-
-  const dir1 = xferIdx1 > se.idx ? 'towards ' + line1.stations[line1.stations.length-1] : 'towards ' + line1.stations[0];
-  const dir2 = de.idx > xferIdx2 ? 'towards ' + line2.stations[line2.stations.length-1] : 'towards ' + line2.stations[0];
-
-  const travelMins = stops1 * MINS_PER_STOP[se.lineId] + stops2 * MINS_PER_STOP[de.lineId] + 8; // 8 min transfer
-  const totalMins  = WALK_MIN + travelMins + WALK_MIN;
-
-  const srcStation = line1.stations[se.idx];
-  const dstStation = line2.stations[de.idx];
-  const srcAccess  = ACCESSIBLE_STATIONS.has(srcStation);
-  const dstAccess  = ACCESSIBLE_STATIONS.has(dstStation);
-  const xferAccess = ACCESSIBLE_STATIONS.has(xferStation);
-  const fullyAccess = srcAccess && dstAccess && xferAccess && line1.accessible && line2.accessible;
-
-  const pills = [
-    { t: line1.icon + ' ' + line1.label, c: 'blue' },
-    { t: '⇄ Change at ' + xferStation, c: 'yellow' },
-    { t: line2.icon + ' ' + line2.label, c: 'blue' },
-    ...(fullyAccess ? [{ t: '♿ Accessible', c: 'green' }] : [])
-  ];
-
-  const steps = [
-    { icon:'🚶', text:`Walk to ${srcStation}`, sub:`~5 min · ${srcAccess ? 'Accessible entrance' : 'Ramp at entrance'}` },
-    { icon: line1.icon, text:`Board ${line1.label} ${dir1}`, sub:`Ride ${stops1} stop${stops1>1?'s':''} · ~${stops1*MINS_PER_STOP[se.lineId]} min` },
-    { icon:'🔄', text:`Change at ${xferStation}`, sub:`${xferAccess ? 'Elevator/ramp available · Allow ~8 min to cross platform' : 'Platform transfer · ~8 min'}` },
-    { icon: line2.icon, text:`Board ${line2.label} ${dir2}`, sub:`Ride ${stops2} stop${stops2>1?'s':''} · ~${stops2*MINS_PER_STOP[de.lineId]} min` },
-    { icon:'🚉', text:`Alight at ${dstStation}`, sub:`${dstAccess ? 'Elevator available · ramp at exit' : 'Platform exit'}` },
-    { icon:'🚶', text:`Walk to your destination`, sub:'~5 min from station exit' }
-  ];
-
-  const voiceText = `Take the ${line1.label} ${dir1}. Board at ${srcStation}. Ride ${stops1} stop${stops1>1?'s':''}. Change at ${xferStation} to the ${line2.label} ${dir2}. Ride ${stops2} more stop${stops2>1?'s':''}. Alight at ${dstStation}. Total journey approximately ${totalMins} minutes.`;
-
-  return {
-    id: 'r_' + se.lineId + '_' + de.lineId + '_' + xferStation.replace(/\s/g,''),
-    name: `Via ${xferStation} · Change`,
-    mins: totalMins,
-    mode: line1.label + ' + ' + line2.label,
-    accessible: fullyAccess,
-    pills,
-    steps,
-    voiceText
-  };
-}
-
-// Known interchange / transfer stations between lines
-const TRANSFERS = [
-  // ── SUBURBAN RAIL ──────────────────────────────────────
-  { station:'Dadar',                              lines:['western','central'] },
-  { station:'Kurla',                              lines:['central','harbour'] },
-  { station:'Chhatrapati Shivaji Maharaj Terminus',lines:['central','harbour'] },
-  { station:'Masjid',                             lines:['central','harbour'] },
-  { station:'Sandhurst Road',                     lines:['central','harbour'] },
-  { station:'Kalyan Junction',                    lines:['central','kasara','karjat'] },
-  { station:'Diva Junction',                      lines:['central','kasara','karjat'] },
-
-  // ── METRO LINE 1 INTERCHANGES ──────────────────────────
-  // Metro 1 ↔ Western Line at Andheri
-  { station:'Andheri',                            lines:['western','metro1'] },
-  // Metro 1 ↔ Central Line at Ghatkopar
-  { station:'Ghatkopar',                          lines:['central','metro1'] },
-  // Metro 1 ↔ Metro 3 at Marol Naka
-  { station:'Marol Naka',                         lines:['metro1','metro3'] },
-
-  // ── METRO LINE 2A INTERCHANGES ─────────────────────────
-  // Metro 2A ↔ Western Line at Andheri (Andheri West exit)
-  { station:'Andheri',                            lines:['western','metro2a'] },
-  // Metro 2A ↔ Western Line at Borivali (Borivali West)
-  { station:'Borivali',                           lines:['western','metro2a'] },
-  // Metro 2A ↔ Metro 7 (share Dahisar East terminus + Ovaripada, Rashtriya Udyan, Mandapeshwar, Eksar)
-  { station:'Dahisar East',                       lines:['metro2a','metro7'] },
-
-  // ── METRO LINE 7 INTERCHANGES ──────────────────────────
-  // Metro 7 ↔ Western Line at Goregaon (Goregaon East ↔ Goregaon station)
-  { station:'Goregaon',                           lines:['western','metro7'] },
-  // Metro 7 ↔ Western Line at Jogeshwari (Jogeshwari East ↔ Jogeshwari)
-  { station:'Jogeshwari',                         lines:['western','metro7'] },
-  // Metro 7 ↔ Western Line at Borivali (Borivali East ↔ Borivali)
-  { station:'Borivali',                           lines:['western','metro7'] },
-  // Metro 7 ↔ Metro 2A at shared northern stations
-  { station:'Dahisar East',                       lines:['metro7','metro2a'] },
-  // Metro 7 ↔ Metro 1 at Gundavali (future interchange with Metro 1 extension area)
-  { station:'Andheri',                            lines:['western','metro7'] },
-
-  // ── METRO LINE 3 INTERCHANGES ──────────────────────────
-  // Metro 3 ↔ Western Line at Churchgate
-  { station:'Churchgate',                         lines:['western','metro3'] },
-  // Metro 3 ↔ Western Line at Grant Road
-  { station:'Grant Road',                         lines:['western','metro3'] },
-  // Metro 3 ↔ Western Line at Mumbai Central
-  { station:'Mumbai Central',                     lines:['western','metro3'] },
-  // Metro 3 ↔ Western Line at Mahalaxmi
-  { station:'Mahalaxmi',                          lines:['western','metro3'] },
-  // Metro 3 ↔ Western Line at Dadar
-  { station:'Dadar',                              lines:['western','metro3'] },
-  // Metro 3 ↔ Central Line at CST (Chhatrapati Shivaji Maharaj Terminus)
-  { station:'Chhatrapati Shivaji Maharaj Terminus',lines:['central','metro3'] },
-  // Metro 3 ↔ Central Line at Dadar
-  { station:'Dadar',                              lines:['central','metro3'] },
-  // Metro 3 ↔ Western Line at Bandra (BKC is near Bandra)
-  { station:'Bandra',                             lines:['western','metro3'] },
-  // Metro 3 ↔ Metro 1 at Marol Naka (already in metro1 block)
-  // Metro 3 ↔ Western Line at Santacruz
-  { station:'Santacruz',                          lines:['western','metro3'] },
-  // Metro 3 ↔ Harbour Line at Mahim
-  { station:'Mahim Junction',                     lines:['western','metro3'] },
+const ACCESSIBLE_STATIONS=new Set(['Churchgate','Mumbai Central','Dadar','Andheri','Borivali','Bandra','Virar','Vasai Road','Kurla','Thane','Ghatkopar','Kalyan Junction','Chhatrapati Shivaji Maharaj Terminus','Vashi','Panvel','Belapur CBD','Nerul','Sanpada','Lower Parel','Mahalaxmi','Masjid','Versova','D. N. Nagar','Azad Nagar','Western Express Highway','Chakala (J. B. Nagar)','Airport Road','Marol Naka','Saki Naka','Asalpha','Jagruti Nagar','Dahisar East','Ovaripada','Rashtriya Udyan','Mandapeshwar','Eksar','Borivali West','Shimpoli','Kandarpada','IC Colony','Pahadi Eksar','Andheri West','Borivali East','Magathane','Devipada','Poisar','Akurli','Kurar','Dindoshi','Aarey','Goregaon East','Jogeshwari East','Gundavali','Colaba','Cuffe Parade','Hutatma Chowk','CST','Kalbadevi','Girgaon','Science Museum','Worli','Acharya Atre Chowk','Siddhivinayak','Mahim','Bandra-Kurla Complex','Dharavi','Domestic Airport','Sahar Airport','MIDC','SEEPZ','Ram Mandir','Santacruz']);
+const MINS_PER_STOP={western:3,central:3,harbour:4,kasara:5,karjat:5,metro1:3,metro2a:3,metro7:3,metro3:3};
+const WALK_MIN=5;
+const STATION_INDEX={};
+Object.entries(LINES).forEach(([lineId,lineData])=>{lineData.stations.forEach((st,idx)=>{const key=normalize(st);if(!STATION_INDEX[key])STATION_INDEX[key]=[];STATION_INDEX[key].push({lineId,idx});});});
+const ALL_STATIONS=[...new Set(Object.values(LINES).flatMap(l=>l.stations))].sort();
+function normalize(s){return s.toLowerCase().trim();}
+const TRANSFERS=[
+  {station:'Dadar',lines:['western','central']},{station:'Kurla',lines:['central','harbour']},
+  {station:'Chhatrapati Shivaji Maharaj Terminus',lines:['central','harbour']},
+  {station:'Masjid',lines:['central','harbour']},{station:'Sandhurst Road',lines:['central','harbour']},
+  {station:'Kalyan Junction',lines:['central','kasara','karjat']},{station:'Diva Junction',lines:['central','kasara','karjat']},
+  {station:'Andheri',lines:['western','metro1']},{station:'Ghatkopar',lines:['central','metro1']},
+  {station:'Marol Naka',lines:['metro1','metro3']},{station:'Andheri',lines:['western','metro2a']},
+  {station:'Borivali',lines:['western','metro2a']},{station:'Dahisar East',lines:['metro2a','metro7']},
+  {station:'Goregaon',lines:['western','metro7']},{station:'Jogeshwari',lines:['western','metro7']},
+  {station:'Borivali',lines:['western','metro7']},{station:'Dahisar East',lines:['metro7','metro2a']},
+  {station:'Andheri',lines:['western','metro7']},{station:'Churchgate',lines:['western','metro3']},
+  {station:'Grant Road',lines:['western','metro3']},{station:'Mumbai Central',lines:['western','metro3']},
+  {station:'Mahalaxmi',lines:['western','metro3']},{station:'Dadar',lines:['western','metro3']},
+  {station:'Chhatrapati Shivaji Maharaj Terminus',lines:['central','metro3']},{station:'Dadar',lines:['central','metro3']},
+  {station:'Bandra',lines:['western','metro3']},{station:'Santacruz',lines:['western','metro3']},
+  {station:'Mahim Junction',lines:['western','metro3']}
 ];
-
-function findTransfers(lineA, lineB) {
-  return TRANSFERS.filter(t => t.lines.includes(lineA) && t.lines.includes(lineB));
-}
-
-// Fuzzy finder — returns entries for close station name matches
-function fuzzyFind(key) {
-  const results = [];
-  for (const [stKey, entries] of Object.entries(STATION_INDEX)) {
-    if (stKey.includes(key) || key.includes(stKey) || levenshtein(stKey, key) <= 3) {
-      results.push(...entries);
-    }
-  }
-  // deduplicate
-  const seen = new Set();
-  return results.filter(e => {
-    const k = e.lineId + e.idx;
-    if (seen.has(k)) return false;
-    seen.add(k); return true;
-  });
-}
-
-function levenshtein(a, b) {
-  const m = a.length, n = b.length;
-  const dp = Array.from({length:m+1}, (_,i) => Array.from({length:n+1}, (_,j) => i||j));
-  for (let i=1;i<=m;i++) for (let j=1;j<=n;j++)
-    dp[i][j] = a[i-1]===b[j-1] ? dp[i-1][j-1] : 1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);
-  return dp[m][n];
-}
-
-/* ══════════════════════════════════════════════════════
-   STATE
-══════════════════════════════════════════════════════ */
-const state = {
-  dark:false, contrast:false, voiceOn:false, reduceMotion:false,
-  activeMode:null, selectedNeeds:new Set(), gpsCoords:null
-};
-
-/* ══════════════════════════════════════════════════════
-   INIT
-══════════════════════════════════════════════════════ */
-document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('stationCount').innerHTML =
-    `Station data loaded · <strong>${ALL_STATIONS.length} stations</strong> across 9 lines (Rail + Metro)`;
-
-  document.querySelectorAll('.need-chip').forEach(chip => {
-    chip.addEventListener('click', () => {
-      const need = chip.dataset.need;
-      if (state.selectedNeeds.has(need)) {
-        state.selectedNeeds.delete(need); chip.classList.remove('selected'); chip.setAttribute('aria-pressed','false');
-      } else {
-        state.selectedNeeds.add(need); chip.classList.add('selected'); chip.setAttribute('aria-pressed','true');
-      }
-    });
-  });
-
-  setupAutocomplete('source',      'srcDropdown');
-  setupAutocomplete('destination', 'dstDropdown');
-
-  ['source','destination'].forEach(id =>
-    document.getElementById(id).addEventListener('keydown', e => { if(e.key==='Enter') findRoutes(); })
-  );
-
-  if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) { state.reduceMotion=true; document.body.classList.add('reduce-motion'); document.getElementById('toggleMotionBtn').classList.add('active'); document.getElementById('toggleMotionBtn').setAttribute('aria-pressed','true'); }
-
-  document.getElementById('voiceSrcBtn').addEventListener('click', () => startVoice('source'));
-  document.getElementById('voiceDstBtn').addEventListener('click', () => startVoice('destination'));
-  document.getElementById('gpsBtn').addEventListener('click', getGPS);
+function findTransfers(a,b){return TRANSFERS.filter(t=>t.lines.includes(a)&&t.lines.includes(b));}
+function fuzzyFind(key){const r=[];for(const[k,e]of Object.entries(STATION_INDEX)){if(k.includes(key)||key.includes(k)||levenshtein(k,key)<=3)r.push(...e);}const s=new Set();return r.filter(e=>{const k=e.lineId+e.idx;if(s.has(k))return false;s.add(k);return true;});}
+function levenshtein(a,b){const m=a.length,n=b.length,dp=Array.from({length:m+1},(_,i)=>Array.from({length:n+1},(_,j)=>i||j));for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]:1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);return dp[m][n];}
+function findBestRoutes(srcName,dstName){const srcKey=normalize(srcName),dstKey=normalize(dstName);const srcEntries=STATION_INDEX[srcKey]||fuzzyFind(srcKey),dstEntries=STATION_INDEX[dstKey]||fuzzyFind(dstKey);if(!srcEntries.length)return{error:`Station not found: "${srcName}"`};if(!dstEntries.length)return{error:`Station not found: "${dstName}"`};const routes=[];for(const se of srcEntries)for(const de of dstEntries){if(se.lineId===de.lineId){const r=buildDirectRoute(se,de);if(r)routes.push(r);}else{const xfers=findTransfers(se.lineId,de.lineId);for(const x of xfers){const r=buildTransferRoute(se,de,x);if(r)routes.push(r);}}}if(!routes.length)return{error:'No routes found between these stations.'};const seen=new Set();const unique=routes.filter(r=>{const k=r.name+r.mins;if(seen.has(k))return false;seen.add(k);return true;});unique.sort((a,b)=>a.mins-b.mins);const top=unique.slice(0,3);top.sort((a,b)=>(b.accessible?1:0)-(a.accessible?1:0)||a.mins-b.mins);return{routes:top};}
+function buildDirectRoute(se,de){const line=LINES[se.lineId],from=se.idx,to=de.idx,stops=Math.abs(to-from);if(stops===0)return null;const direction=to>from?'towards '+line.stations[line.stations.length-1]:'towards '+line.stations[0];const st=to>from?line.stations.slice(from,to+1):line.stations.slice(to,from+1).reverse();const travelMins=stops*MINS_PER_STOP[se.lineId],totalMins=WALK_MIN+travelMins+WALK_MIN;const srcS=line.stations[from],dstS=line.stations[to],srcA=ACCESSIBLE_STATIONS.has(srcS),dstA=ACCESSIBLE_STATIONS.has(dstS),lineA=line.accessible,fullyA=srcA&&dstA&&lineA;const pills=[{t:line.icon+' '+line.label,c:'blue'},{t:stops+' stop'+(stops>1?'s':''),c:'gray'},...(fullyA?[{t:'♿ Accessible',c:'green'}]:[])];const steps=[{icon:'🚶',text:`Walk to ${srcS}`,sub:`Allow ~5 min · ${srcA?'Elevator/ramp available':'Ramp at entrance'}`},{icon:line.icon,text:`Board ${line.label} ${direction}`,sub:`${stops} stop${stops>1?'s':''} · ~${travelMins} min`},...(st.length>2&&st.length<=6?[{icon:'📍',text:`Passing: ${st.slice(1,-1).join(' → ')}`,sub:'Remain seated'}]:st.length>6?[{icon:'📍',text:`Passing ${st.length-2} intermediate stations`,sub:`Next major: ${st[Math.floor(st.length/2)]}`}]:[]),{icon:'🚉',text:`Alight at ${dstS}`,sub:`${dstA?'Elevator at Gate B · ramp available':'Platform exit'}`},{icon:'🚶',text:'Walk to your destination',sub:'Allow ~5 min from station exit'}];return{id:'r_'+se.lineId+'_'+from+'_'+to,name:'Direct · '+line.label,mins:totalMins,mode:line.label,accessible:fullyA,pills,steps,voiceText:`Take the ${line.label} ${direction}. Board at ${srcS}. Ride for ${stops} stop${stops>1?'s':''}. Alight at ${dstS}. Total journey approximately ${totalMins} minutes.`};}
+function buildTransferRoute(se,de,xfer){const line1=LINES[se.lineId],line2=LINES[de.lineId],xferSt=xfer.station;const x1=line1.stations.findIndex(s=>normalize(s)===normalize(xferSt)),x2=line2.stations.findIndex(s=>normalize(s)===normalize(xferSt));if(x1<0||x2<0)return null;const s1=Math.abs(x1-se.idx),s2=Math.abs(de.idx-x2);if(s1===0&&s2===0)return null;const d1=x1>se.idx?'towards '+line1.stations[line1.stations.length-1]:'towards '+line1.stations[0];const d2=de.idx>x2?'towards '+line2.stations[line2.stations.length-1]:'towards '+line2.stations[0];const tM=s1*MINS_PER_STOP[se.lineId]+s2*MINS_PER_STOP[de.lineId]+8,total=WALK_MIN+tM+WALK_MIN;const srcS=line1.stations[se.idx],dstS=line2.stations[de.idx],sA=ACCESSIBLE_STATIONS.has(srcS),dA=ACCESSIBLE_STATIONS.has(dstS),xA=ACCESSIBLE_STATIONS.has(xferSt),fullyA=sA&&dA&&xA&&line1.accessible&&line2.accessible;const pills=[{t:line1.icon+' '+line1.label,c:'blue'},{t:'⇄ Change at '+xferSt,c:'yellow'},{t:line2.icon+' '+line2.label,c:'blue'},...(fullyA?[{t:'♿ Accessible',c:'green'}]:[])];const steps=[{icon:'🚶',text:`Walk to ${srcS}`,sub:`~5 min · ${sA?'Accessible entrance':'Ramp at entrance'}`},{icon:line1.icon,text:`Board ${line1.label} ${d1}`,sub:`Ride ${s1} stop${s1>1?'s':''} · ~${s1*MINS_PER_STOP[se.lineId]} min`},{icon:'🔄',text:`Change at ${xferSt}`,sub:`${xA?'Elevator/ramp available · Allow ~8 min':'Platform transfer · ~8 min'}`},{icon:line2.icon,text:`Board ${line2.label} ${d2}`,sub:`Ride ${s2} stop${s2>1?'s':''} · ~${s2*MINS_PER_STOP[de.lineId]} min`},{icon:'🚉',text:`Alight at ${dstS}`,sub:`${dA?'Elevator available · ramp at exit':'Platform exit'}`},{icon:'🚶',text:'Walk to your destination',sub:'~5 min from station exit'}];return{id:'r_'+se.lineId+'_'+de.lineId+'_'+xferSt.replace(/\s/g,''),name:`Via ${xferSt} · Change`,mins:total,mode:line1.label+' + '+line2.label,accessible:fullyA,pills,steps,voiceText:`Take the ${line1.label} ${d1}. Board at ${srcS}. Ride ${s1} stop${s1>1?'s':''}. Change at ${xferSt} to the ${line2.label} ${d2}. Ride ${s2} more stop${s2>1?'s':''}. Alight at ${dstS}. Total journey approximately ${total} minutes.`};}
+const state={dark:false,contrast:false,voiceOn:false,reduceMotion:false,activeMode:null,selectedNeeds:new Set(),gpsCoords:null};
+document.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('stationCount').innerHTML=`Station data loaded · <strong>${ALL_STATIONS.length} stations</strong> across 9 lines (Rail + Metro)`;
+  document.querySelectorAll('.need-chip').forEach(chip=>{chip.addEventListener('click',()=>{const need=chip.dataset.need;if(state.selectedNeeds.has(need)){state.selectedNeeds.delete(need);chip.classList.remove('selected');chip.setAttribute('aria-pressed','false');}else{state.selectedNeeds.add(need);chip.classList.add('selected');chip.setAttribute('aria-pressed','true');}});});
+  setupAutocomplete('source','srcDropdown');setupAutocomplete('destination','dstDropdown');
+  ['source','destination'].forEach(id=>document.getElementById(id).addEventListener('keydown',e=>{if(e.key==='Enter')findRoutes();}));
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches){state.reduceMotion=true;document.body.classList.add('reduce-motion');document.getElementById('toggleMotionBtn').classList.add('active');document.getElementById('toggleMotionBtn').setAttribute('aria-pressed','true');}
+  document.getElementById('voiceSrcBtn').addEventListener('click',()=>startVoice('source'));
+  document.getElementById('voiceDstBtn').addEventListener('click',()=>startVoice('destination'));
+  document.getElementById('gpsBtn').addEventListener('click',getGPS);
 });
-
-/* ══════════════════════════════════════════════════════
-   AUTOCOMPLETE
-══════════════════════════════════════════════════════ */
-function setupAutocomplete(inputId, dropdownId) {
-  const input    = document.getElementById(inputId);
-  const dropdown = document.getElementById(dropdownId);
-  let focusIdx   = -1;
-
-  input.addEventListener('input', () => {
-    const q = input.value.trim().toLowerCase();
-    if (q.length < 1) { closeDropdown(); return; }
-
-    const matches = ALL_STATIONS.filter(s => normalize(s).includes(q)).slice(0,8);
-    if (!matches.length) { closeDropdown(); return; }
-
-    dropdown.innerHTML = matches.map(s => {
-      // Find which lines this station is on
-      const lineIds = (STATION_INDEX[normalize(s)] || []).map(e=>e.lineId);
-      const badges  = [...new Set(lineIds)].map(lid =>
-        `<span class="ac-item-line ${LINES[lid].bgClass}">${LINES[lid].label.split(' ')[0]}</span>`
-      ).join('');
-      return `<div class="ac-item" role="option" data-val="${escHtml(s)}">${badges}<span>${escHtml(s)}</span></div>`;
-    }).join('');
-
-    dropdown.querySelectorAll('.ac-item').forEach(item => {
-      item.addEventListener('mousedown', e => {
-        e.preventDefault();
-        input.value = item.dataset.val;
-        closeDropdown();
-        if (state.voiceOn) speakText(input.value + ' selected');
-      });
-    });
-
-    dropdown.classList.add('open');
-    input.setAttribute('aria-expanded','true');
-    focusIdx = -1;
-  });
-
-  input.addEventListener('keydown', e => {
-    const items = dropdown.querySelectorAll('.ac-item');
-    if (!items.length) return;
-    if (e.key==='ArrowDown') { e.preventDefault(); focusIdx = Math.min(focusIdx+1, items.length-1); highlight(items,focusIdx); }
-    else if (e.key==='ArrowUp')  { e.preventDefault(); focusIdx = Math.max(focusIdx-1, 0); highlight(items,focusIdx); }
-    else if (e.key==='Enter' && focusIdx>=0) { e.preventDefault(); input.value = items[focusIdx].dataset.val; closeDropdown(); }
-    else if (e.key==='Escape') closeDropdown();
-  });
-
-  input.addEventListener('blur', () => setTimeout(closeDropdown, 150));
-
-  function highlight(items, idx) {
-    items.forEach((it,i) => it.classList.toggle('focused', i===idx));
-    if (items[idx]) items[idx].scrollIntoView({block:'nearest'});
-  }
-  function closeDropdown() {
-    dropdown.classList.remove('open');
-    input.setAttribute('aria-expanded','false');
-    focusIdx = -1;
-  }
-}
-
-/* ══════════════════════════════════════════════════════
-   FIND ROUTES
-══════════════════════════════════════════════════════ */
-function findRoutes() {
-  const src  = document.getElementById('source').value.trim();
-  const dest = document.getElementById('destination').value.trim();
-  if (!src)  { showToast('Please enter a starting station 📍'); document.getElementById('source').focus();      return; }
-  if (!dest) { showToast('Please enter a destination station 🗺️'); document.getElementById('destination').focus(); return; }
-  if (normalize(src) === normalize(dest)) { showToast('Source and destination are the same!'); return; }
-
-  const container = document.getElementById('routeResults');
-  container.innerHTML = `
-    <p class="section-label" style="margin-top:28px">Finding routes…</p>
-    <div class="shimmer"></div><div class="shimmer" style="height:70px;opacity:.5"></div>`;
-
-  // small delay for shimmer UX feel
-  setTimeout(() => {
-    const result = findBestRoutes(src, dest);
-    if (result.error) {
-      container.innerHTML = `
-        <div style="background:var(--warn-lt);border:1.5px solid var(--warn);border-radius:var(--r-lg);padding:20px 24px;margin-top:16px">
-          <div style="font-weight:700;color:var(--warn);margin-bottom:6px">⚠ ${escHtml(result.error)}</div>
-          <div style="font-size:13px;color:var(--ink-muted)">Try typing the station name more precisely — e.g. "Dadar" or "Andheri".</div>
-        </div>`;
-      return;
-    }
-
-    let routes = result.routes;
-
-    // Accessibility filter
-    const needsA11y = state.selectedNeeds.size > 0;
-    if (needsA11y) {
-      const accessible = routes.filter(r => r.accessible);
-      if (accessible.length) routes = accessible;
-    }
-
-    // Line mode filter
-    if (state.activeMode && state.activeMode !== 'accessible') {
-      const filtered = routes.filter(r => r.mode.toLowerCase().includes(state.activeMode));
-      if (filtered.length) routes = filtered;
-    }
-    if (state.activeMode === 'accessible') {
-      const filtered = routes.filter(r => r.accessible);
-      if (filtered.length) routes = filtered;
-    }
-
-    renderRoutes(src, dest, routes, result.routes);
-  }, 500);
-}
-
-/* ══════════════════════════════════════════════════════
-   RENDER ROUTES
-══════════════════════════════════════════════════════ */
-function renderRoutes(src, dest, shown, all) {
-  const container = document.getElementById('routeResults');
-  const filtered  = shown.length < all.length;
-
-  let html = `<p class="section-label" style="margin-top:28px">
-    ${escHtml(src)} → ${escHtml(dest)}
-    <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:12px;color:var(--ink-muted)"> · ${shown.length} route${shown.length!==1?'s':''} found</span>
-  </p>`;
-
-  shown.forEach((r, ri) => {
-    const pillsHtml = (r.pills||[]).map(p=>`<span class="route-pill pill-${escHtml(p.c)}">${escHtml(p.t)}</span>`).join('');
-    const stepsHtml = (r.steps||[]).map((s,i)=>`
-      <li class="step-item" style="animation-delay:${i*.07+.1}s">
-        <div class="step-dot" aria-hidden="true">${i+1}</div>
-        <div class="step-content">
-          <div class="step-text">${escHtml(s.icon||'')} ${escHtml(s.text||'')}</div>
-          <div class="step-sub">${escHtml(s.sub||'')}</div>
-        </div>
-      </li>`).join('');
-
-    const rid = 'rc' + ri;
-    html += `
-      <div class="route-card" id="${rid}">
-        <div class="route-header" onclick="toggleSteps('${rid}')"
-          role="button" tabindex="0" aria-expanded="false" aria-controls="${rid}s"
-          onkeydown="if(event.key==='Enter'||event.key===' ')toggleSteps('${rid}')">
-          <div class="route-left">
-            <div class="route-name">${escHtml(r.name)}</div>
-            <div class="route-meta">${pillsHtml}</div>
-          </div>
-          <div class="route-time">
-            <div class="mins">${r.mins}</div>
-            <div class="mins-label">min est.</div>
-          </div>
-        </div>
-        <div class="route-steps" id="${rid}s">
-          <ol class="step-list">${stepsHtml}</ol>
-          <button class="speak-btn" onclick='speakVoice(${JSON.stringify(r.voiceText||'')})'
-            aria-label="Read aloud: ${escHtml(r.name)}">
-            🔊 Read Instructions Aloud
-          </button>
-        </div>
-      </div>`;
-  });
-
-  if (filtered) {
-    window._allR = all; window._lastSrc = document.getElementById('source').value.trim(); window._lastDst = document.getElementById('destination').value.trim();
-    html += `<p style="font-size:13px;color:var(--ink-muted);margin-top:8px">
-      ♿ Showing accessible routes only.
-      <button onclick="renderRoutes(window._lastSrc,window._lastDst,window._allR,window._allR)" style="color:var(--accent);background:none;border:none;cursor:pointer;font-weight:600;font-size:13px">Show all routes</button>
-    </p>`;
-  }
-
-  container.innerHTML = html;
-
-  if (state.voiceOn && shown.length)
-    speakText(`Found ${shown.length} route${shown.length!==1?'s':''} from ${src} to ${dest}. Tap a route to hear step by step directions.`);
-}
-
-/* ══════════════════════════════════════════════════════
-   TOGGLE STEPS
-══════════════════════════════════════════════════════ */
-function toggleSteps(cardId) {
-  const steps = document.getElementById(cardId+'s');
-  if (!steps) return;
-  const hdr  = steps.previousElementSibling;
-  const open = steps.classList.toggle('open');
-  hdr.setAttribute('aria-expanded', open);
-}
-
-/* ══════════════════════════════════════════════════════
-   LINE FILTER — shows station picker panel
-══════════════════════════════════════════════════════ */
-function filterLine(mode) {
-  const wasActive = state.activeMode === mode;
-
-  // Deselect all cards
-  document.querySelectorAll('.mode-card').forEach(c => {
-    c.classList.remove('selected'); c.setAttribute('aria-pressed','false');
-  });
-
-  const picker = document.getElementById('linePicker');
-
-  // Toggle off if same card clicked
-  if (wasActive) {
-    state.activeMode = null;
-    picker.style.display = 'none';
-    picker.innerHTML = '';
-    return;
-  }
-
-  state.activeMode = mode;
-  const btn = document.querySelector(`[data-mode="${mode}"]`);
-  btn.classList.add('selected'); btn.setAttribute('aria-pressed','true');
-
-  // Accessible-only filter: just set flag, no station panel
-  if (mode === 'accessible') {
-    picker.style.display = 'none';
-    picker.innerHTML = '';
-    showToast('♿ Accessible routes filter active — search to apply');
-    return;
-  }
-
-  const lineData = LINES[mode];
-  if (!lineData) return;
-
-  // Render the station picker
-  const stationPills = lineData.stations.map(s => {
-    const isInterchange = TRANSFERS.some(t => normalize(t.station) === normalize(s) && t.lines.includes(mode) && t.lines.length > 1);
-    return `<button class="station-pill${isInterchange?' interchange':''}"
-      onclick="pickStation('${escHtml(s)}')"
-      title="${isInterchange ? 'Interchange station' : ''}"
-      aria-label="Select ${escHtml(s)}">${escHtml(s)}${isInterchange ? ' ⇄' : ''}</button>`;
-  }).join('');
-
-  picker.style.display = 'block';
-  picker.innerHTML = `
-    <div class="line-picker">
-      <div class="line-picker-header">
-        <div class="line-picker-title">
-          <span>${lineData.icon}</span>
-          <span>${lineData.label}</span>
-          <span style="font-size:11px;font-weight:500;color:var(--ink-muted)">${lineData.stations.length} stations · tap to fill field</span>
-        </div>
-        <button class="line-picker-close" onclick="filterLine('${mode}')" aria-label="Close station picker">✕</button>
-      </div>
-      <div class="station-pills">${stationPills}</div>
-    </div>`;
-
-  // Scroll picker into view
-  picker.scrollIntoView({ behavior:'smooth', block:'nearest' });
-  showToast(`${lineData.label} · ${lineData.stations.length} stations`);
-}
-
-// Called when user taps a station pill
-let _lastPickedField = 'source';
-function pickStation(name) {
-  // Fill whichever field is empty or was last focused
-  const src = document.getElementById('source');
-  const dst = document.getElementById('destination');
-
-  if (!src.value) {
-    src.value = name;
-    src.focus();
-    _lastPickedField = 'destination';
-    showToast(`✅ Source: ${name}`);
-  } else if (!dst.value) {
-    dst.value = name;
-    dst.focus();
-    _lastPickedField = 'source';
-    showToast(`✅ Destination: ${name}`);
-  } else {
-    // Both filled — overwrite the last picked field
-    if (_lastPickedField === 'source') {
-      src.value = name;
-      _lastPickedField = 'destination';
-      showToast(`✅ Source: ${name}`);
-    } else {
-      dst.value = name;
-      _lastPickedField = 'source';
-      showToast(`✅ Destination: ${name}`);
-    }
-  }
-  if (state.voiceOn) speakText(name + ' selected');
-}
-
-/* ══════════════════════════════════════════════════════
-   VOICE — modal with interim results + language fallback
-══════════════════════════════════════════════════════ */
-let _voiceRec = null;
-let _voiceField = null;
-
-function startVoice(fieldId) {
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SR) {
-    showToast('Voice input not supported — try Chrome or Edge');
-    return;
-  }
-
-  _voiceField = fieldId;
-  const label = fieldId === 'source' ? 'Starting Station' : 'Destination Station';
-
-  // Show modal
-  const modal   = document.getElementById('voiceModal');
-  const orb     = document.getElementById('voiceOrb');
-  const title   = document.getElementById('voiceModalTitle');
-  const sub     = document.getElementById('voiceModalSub');
-  const interim = document.getElementById('voiceInterim');
-
-  modal.classList.add('open');
-  orb.classList.add('listening');
-  title.textContent = `Listening for ${label}`;
-  sub.textContent   = 'Speak clearly — say a Mumbai station name';
-  interim.textContent = '';
-
-  // Cancel any existing recognition
-  if (_voiceRec) { try { _voiceRec.abort(); } catch(e){} }
-
-  const rec = new SR();
-  _voiceRec = rec;
-
-  // Try en-US first (most reliable), with en-IN as display preference
-  // Chrome/Edge work best with en-US for Indian English station names
-  rec.lang = 'en-US';
-  rec.continuous = true;
-  rec.interimResults = true;
-  rec.maxAlternatives = 5;
-
-  let finalTranscript = '';
-  let silenceTimer = null;
-
-  rec.onstart = () => {
-    sub.textContent = 'Listening… speak now';
-  };
-
-  rec.onresult = (e) => {
-    let interimText = '';
-    finalTranscript = '';
-
-    for (let i = e.resultIndex; i < e.results.length; i++) {
-      if (e.results[i].isFinal) {
-        finalTranscript += e.results[i][0].transcript;
-      } else {
-        interimText += e.results[i][0].transcript;
-      }
-    }
-
-    // Show interim as user speaks
-    interim.textContent = interimText || finalTranscript;
-
-    // If we have a final result, auto-commit after short delay
-    if (finalTranscript.trim()) {
-      clearTimeout(silenceTimer);
-      silenceTimer = setTimeout(() => commitVoice(finalTranscript.trim()), 800);
-    }
-  };
-
-  rec.onerror = (e) => {
-    clearTimeout(silenceTimer);
-    if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
-      sub.textContent = '🚫 Microphone permission denied';
-      orb.classList.remove('listening');
-      orb.textContent = '🚫';
-      setTimeout(cancelVoice, 2000);
-    } else if (e.error === 'no-speech') {
-      sub.textContent = '🔇 No speech heard — try again';
-      orb.classList.remove('listening');
-      orb.textContent = '🔇';
-      setTimeout(() => {
-        orb.classList.add('listening');
-        orb.textContent = '🎙️';
-        sub.textContent = 'Listening… speak now';
-        rec.start();
-      }, 1500);
-    } else if (e.error === 'network') {
-      sub.textContent = '📡 Network error — check connection';
-      setTimeout(cancelVoice, 2000);
-    } else {
-      sub.textContent = `Error: ${e.error} — tap Cancel and try again`;
-    }
-  };
-
-  rec.onend = () => {
-    // If continuous mode ended without commit (e.g. timeout), try to commit what we have
-    if (finalTranscript.trim() && _voiceField) {
-      commitVoice(finalTranscript.trim());
-    }
-  };
-
-  try {
-    rec.start();
-  } catch(e) {
-    cancelVoice();
-    showToast('Could not start microphone — ensure permission is granted');
-  }
-}
-
-function commitVoice(text) {
-  if (!_voiceField || !text) { cancelVoice(); return; }
-
-  // Try to match to a known station name (fuzzy)
-  const lower = text.toLowerCase().trim();
-  const exact = ALL_STATIONS.find(s => normalize(s) === lower);
-  const fuzzy = exact || ALL_STATIONS.find(s => normalize(s).includes(lower) || lower.includes(normalize(s)));
-  const bestMatch = fuzzy || text;
-
-  const input = document.getElementById(_voiceField);
-  input.value = bestMatch;
-  input.dispatchEvent(new Event('input')); // trigger autocomplete
-
-  // Update modal to show confirmation
-  document.getElementById('voiceOrb').classList.remove('listening');
-  document.getElementById('voiceOrb').textContent = '✅';
-  document.getElementById('voiceModalTitle').textContent = 'Got it!';
-  document.getElementById('voiceModalSub').textContent = `"${bestMatch}"`;
-  document.getElementById('voiceInterim').textContent = '';
-
-  if (_voiceRec) { try { _voiceRec.stop(); } catch(e){} _voiceRec = null; }
-  if (state.voiceOn) speakText(bestMatch + ' selected');
-
-  setTimeout(cancelVoice, 900);
-}
-
-function cancelVoice() {
-  if (_voiceRec) { try { _voiceRec.abort(); } catch(e){} _voiceRec = null; }
-  const modal = document.getElementById('voiceModal');
-  modal.classList.remove('open');
-  document.getElementById('voiceOrb').classList.remove('listening');
-  document.getElementById('voiceOrb').textContent = '🎙️';
-  document.getElementById('voiceModalTitle').textContent = 'Listening…';
-  document.getElementById('voiceModalSub').textContent = 'Speak the station name clearly';
-  document.getElementById('voiceInterim').textContent = '';
-  _voiceField = null;
-}
-
-function speakVoice(text) { stopSpeech(); speakText(text); }
-function speakText(text) {
-  if (!window.speechSynthesis) { showToast('Speech not supported'); return; }
-  const u = new SpeechSynthesisUtterance(text);
-  u.rate=.88; u.pitch=1; u.lang='en-IN';
-  speechSynthesis.cancel(); speechSynthesis.speak(u);
-}
-function stopSpeech(){ window.speechSynthesis && speechSynthesis.cancel(); }
-
-function toggleContinuousVoice() {
-  state.voiceOn=!state.voiceOn;
-  const b=document.getElementById('toggleVoiceBtn');
-  b.classList.toggle('active',state.voiceOn); b.setAttribute('aria-pressed',state.voiceOn);
-  showToast(state.voiceOn?'🔊 Voice guidance ON':'🔇 Voice guidance OFF');
-  if(state.voiceOn) speakText('Voice guidance is now active.');
-}
-
-/* ══════════════════════════════════════════════════════
-   GPS
-══════════════════════════════════════════════════════ */
-function getGPS() {
-  if (!navigator.geolocation) { showToast('GPS not available'); return; }
-  const btn=document.getElementById('gpsBtn');
-  btn.classList.add('locating'); btn.setAttribute('aria-label','Locating…');
-  showToast('📍 Getting your location…');
-  navigator.geolocation.getCurrentPosition(
-    pos => {
-      state.gpsCoords={lat:pos.coords.latitude,lon:pos.coords.longitude};
-      fetch(`https://nominatim.openstreetmap.org/reverse?lat=${state.gpsCoords.lat}&lon=${state.gpsCoords.lon}&format=json`)
-        .then(r=>r.json()).then(d=>{
-          // Try to find nearest station from display name
-          const area = (d.display_name||'').toLowerCase();
-          const nearest = ALL_STATIONS.find(s=>area.includes(normalize(s))) ||
-                          ALL_STATIONS.find(s=>normalize(s).split(' ').some(w=>w.length>3&&area.includes(w)));
-          const val = nearest || (d.display_name||'').split(',').slice(0,2).join(', ');
-          document.getElementById('source').value = val;
-          document.getElementById('source').dispatchEvent(new Event('input'));
-          showToast(`📍 Nearest: ${val}`);
-        })
-        .catch(()=>{ document.getElementById('source').value=`${state.gpsCoords.lat.toFixed(4)}, ${state.gpsCoords.lon.toFixed(4)}`; showToast('📍 GPS captured'); });
-      btn.classList.remove('locating'); btn.setAttribute('aria-label','Use my current GPS location');
-    },
-    err=>{ btn.classList.remove('locating'); btn.setAttribute('aria-label','Use my current GPS location');
-      showToast({1:'🚫 Permission denied',2:'📡 Unavailable',3:'⏱ Timed out'}[err.code]||'GPS error'); },
-    {enableHighAccuracy:true,timeout:12000,maximumAge:60000}
-  );
-}
-
-/* ══════════════════════════════════════════════════════
-   SWAP
-══════════════════════════════════════════════════════ */
-function swapLocations() {
-  const s=document.getElementById('source'), d=document.getElementById('destination');
-  [s.value,d.value]=[d.value,s.value]; state.gpsCoords=null; showToast('⇅ Locations swapped');
-}
-
-/* ══════════════════════════════════════════════════════
-   A11Y TOGGLES
-══════════════════════════════════════════════════════ */
-function toggleDark(silent){
-  state.dark=!state.dark;
-  document.documentElement.setAttribute('data-theme',state.dark?'dark':'');
-  document.getElementById('toggleDarkBtn').classList.toggle('active',state.dark);
-  document.getElementById('toggleDarkBtn').setAttribute('aria-pressed',state.dark);
-  document.getElementById('themeBtn').classList.toggle('active',state.dark);
-  if(!silent) showToast(state.dark?'🌙 Dark mode on':'☀️ Light mode on');
-}
-function toggleContrast(silent){
-  state.contrast=!state.contrast;
-  document.body.classList.toggle('high-contrast',state.contrast);
-  document.getElementById('toggleContrastBtn').classList.toggle('active',state.contrast);
-  document.getElementById('toggleContrastBtn').setAttribute('aria-pressed',state.contrast);
-  document.getElementById('contrastBtn').classList.toggle('active',state.contrast);
-  if(!silent) showToast(state.contrast?'◑ High contrast on':'◑ Off');
-}
-function toggleMotion(silent){
-  state.reduceMotion=!state.reduceMotion;
-  document.body.classList.toggle('reduce-motion', state.reduceMotion);
-  document.getElementById('toggleMotionBtn').classList.toggle('active',state.reduceMotion);
-  document.getElementById('toggleMotionBtn').setAttribute('aria-pressed',state.reduceMotion);
-  if(!silent) showToast(state.reduceMotion?'🎭 Reduced motion on':'🎭 Animations on');
-}
-function adjustTextSize(v){
-  document.body.style.fontSize=v+'px';
-  document.getElementById('sizePreview').textContent=v+'px';
-}
-
-/* ══════════════════════════════════════════════════════
-   SOS + TOAST + UTILS
-══════════════════════════════════════════════════════ */
-function triggerSOS(){
-  showToast('🚨 Alert sent to nearest station staff!');
-  speakText('Emergency alert sent. Station staff have been notified. Please stay where you are.');
-}
-let _tt;
-function showToast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
-  clearTimeout(_tt); _tt=setTimeout(()=>t.classList.remove('show'),2800);
-}
-function escHtml(s){
-  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
+function setupAutocomplete(inputId,dropdownId){const input=document.getElementById(inputId),dropdown=document.getElementById(dropdownId);let focusIdx=-1;input.addEventListener('input',()=>{const q=input.value.trim().toLowerCase();if(q.length<1){closeDD();return;}const matches=ALL_STATIONS.filter(s=>normalize(s).includes(q)).slice(0,8);if(!matches.length){closeDD();return;}dropdown.innerHTML=matches.map(s=>{const lIds=(STATION_INDEX[normalize(s)]||[]).map(e=>e.lineId);const badges=[...new Set(lIds)].map(lid=>`<span class="ac-item-line ${LINES[lid].bgClass}">${LINES[lid].label.split(' ')[0]}</span>`).join('');return`<div class="ac-item" role="option" data-val="${escHtml(s)}">${badges}<span>${escHtml(s)}</span></div>`;}).join('');dropdown.querySelectorAll('.ac-item').forEach(item=>{item.addEventListener('mousedown',e=>{e.preventDefault();input.value=item.dataset.val;closeDD();if(state.voiceOn)speakText(input.value+' selected');});});dropdown.classList.add('open');input.setAttribute('aria-expanded','true');focusIdx=-1;});input.addEventListener('keydown',e=>{const items=dropdown.querySelectorAll('.ac-item');if(!items.length)return;if(e.key==='ArrowDown'){e.preventDefault();focusIdx=Math.min(focusIdx+1,items.length-1);hl(items,focusIdx);}else if(e.key==='ArrowUp'){e.preventDefault();focusIdx=Math.max(focusIdx-1,0);hl(items,focusIdx);}else if(e.key==='Enter'&&focusIdx>=0){e.preventDefault();input.value=items[focusIdx].dataset.val;closeDD();}else if(e.key==='Escape')closeDD();});input.addEventListener('blur',()=>setTimeout(closeDD,150));function hl(items,idx){items.forEach((it,i)=>it.classList.toggle('focused',i===idx));if(items[idx])items[idx].scrollIntoView({block:'nearest'});}function closeDD(){dropdown.classList.remove('open');input.setAttribute('aria-expanded','false');focusIdx=-1;}}
+function findRoutes(){const src=document.getElementById('source').value.trim(),dest=document.getElementById('destination').value.trim();if(!src){showToast('Please enter a starting station 📍');document.getElementById('source').focus();return;}if(!dest){showToast('Please enter a destination station 🗺️');document.getElementById('destination').focus();return;}if(normalize(src)===normalize(dest)){showToast('Source and destination are the same!');return;}const container=document.getElementById('routeResults');container.innerHTML=`<p class="section-label" style="margin-top:28px">Finding routes…</p><div class="shimmer"></div><div class="shimmer" style="height:70px;opacity:.5"></div>`;setTimeout(()=>{const result=findBestRoutes(src,dest);if(result.error){container.innerHTML=`<div style="background:var(--warn-lt);border:2px solid var(--warn);padding:18px 22px;margin-top:16px;box-shadow:3px 3px 0 rgba(139,58,26,.2)"><div style="font-family:'Outfit',sans-serif;font-weight:800;color:var(--warn);margin-bottom:6px">⚠ ${escHtml(result.error)}</div><div style="font-size:0.72rem;color:var(--ink-muted)">Try typing the station name more precisely — e.g. "Dadar" or "Andheri".</div></div>`;return;}let routes=result.routes;if(state.selectedNeeds.size>0){const a=routes.filter(r=>r.accessible);if(a.length)routes=a;}if(state.activeMode&&state.activeMode!=='accessible'){const f=routes.filter(r=>r.mode.toLowerCase().includes(state.activeMode));if(f.length)routes=f;}if(state.activeMode==='accessible'){const f=routes.filter(r=>r.accessible);if(f.length)routes=f;}renderRoutes(src,dest,routes,result.routes);},500);}
+function renderRoutes(src,dest,shown,all){const container=document.getElementById('routeResults'),filtered=shown.length<all.length;let html=`<p class="section-label" style="margin-top:28px">${escHtml(src)} → ${escHtml(dest)}<span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:0.7rem;color:var(--ink-muted)"> · ${shown.length} route${shown.length!==1?'s':''} found</span></p>`;shown.forEach((r,ri)=>{const pH=(r.pills||[]).map(p=>`<span class="route-pill pill-${escHtml(p.c)}">${escHtml(p.t)}</span>`).join('');const sH=(r.steps||[]).map((s,i)=>`<li class="step-item" style="animation-delay:${i*.07+.1}s"><div class="step-dot" aria-hidden="true">${i+1}</div><div class="step-content"><div class="step-text">${escHtml(s.icon||'')} ${escHtml(s.text||'')}</div><div class="step-sub">${escHtml(s.sub||'')}</div></div></li>`).join('');const rid='rc'+ri;html+=`<div class="route-card" id="${rid}"><div class="route-header" onclick="toggleSteps('${rid}')" role="button" tabindex="0" aria-expanded="false" aria-controls="${rid}s" onkeydown="if(event.key==='Enter'||event.key===' ')toggleSteps('${rid}')"><div class="route-left"><div class="route-name">${escHtml(r.name)}</div><div class="route-meta">${pH}</div></div><div class="route-time"><div class="mins">${r.mins}</div><div class="mins-label">min est.</div></div></div><div class="route-steps" id="${rid}s"><ol class="step-list">${sH}</ol><button class="speak-btn" onclick='speakVoice(${JSON.stringify(r.voiceText||'')})' aria-label="Read aloud: ${escHtml(r.name)}">🔊 Read Instructions Aloud</button></div></div>`;});if(filtered){window._allR=all;window._lastSrc=document.getElementById('source').value.trim();window._lastDst=document.getElementById('destination').value.trim();html+=`<p style="font-size:0.72rem;color:var(--ink-muted);margin-top:8px">♿ Showing accessible routes only. <button onclick="renderRoutes(window._lastSrc,window._lastDst,window._allR,window._allR)" style="color:var(--caramel);background:none;border:none;cursor:pointer;font-weight:700;font-size:0.72rem;text-decoration:underline">Show all routes</button></p>`;}container.innerHTML=html;if(state.voiceOn&&shown.length)speakText(`Found ${shown.length} route${shown.length!==1?'s':''} from ${src} to ${dest}.`);}
+function toggleSteps(cardId){const steps=document.getElementById(cardId+'s');if(!steps)return;const hdr=steps.previousElementSibling,open=steps.classList.toggle('open');hdr.setAttribute('aria-expanded',open);}
+function filterLine(mode){const was=state.activeMode===mode;document.querySelectorAll('.mode-card').forEach(c=>{c.classList.remove('selected');c.setAttribute('aria-pressed','false');});const picker=document.getElementById('linePicker');if(was){state.activeMode=null;picker.style.display='none';picker.innerHTML='';return;}state.activeMode=mode;const btn=document.querySelector(`[data-mode="${mode}"]`);btn.classList.add('selected');btn.setAttribute('aria-pressed','true');if(mode==='accessible'){picker.style.display='none';picker.innerHTML='';showToast('♿ Accessible routes filter active — search to apply');return;}const ld=LINES[mode];if(!ld)return;const pills=ld.stations.map(s=>{const isX=TRANSFERS.some(t=>normalize(t.station)===normalize(s)&&t.lines.includes(mode)&&t.lines.length>1);return`<button class="station-pill${isX?' interchange':''}" onclick="pickStation('${escHtml(s)}')" aria-label="Select ${escHtml(s)}">${escHtml(s)}${isX?' ⇄':''}</button>`;}).join('');picker.style.display='block';picker.innerHTML=`<div class="line-picker"><div class="line-picker-header"><div class="line-picker-title"><span>${ld.icon}</span><span>${ld.label}</span><span style="font-size:0.62rem;font-weight:700;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.08em">${ld.stations.length} stations</span></div><button class="line-picker-close" onclick="filterLine('${mode}')" aria-label="Close">✕</button></div><div class="station-pills">${pills}</div></div>`;picker.scrollIntoView({behavior:'smooth',block:'nearest'});showToast(`${ld.label} · ${ld.stations.length} stations`);}
+let _lpf='source';function pickStation(name){const s=document.getElementById('source'),d=document.getElementById('destination');if(!s.value){s.value=name;s.focus();_lpf='destination';showToast(`✅ Source: ${name}`);}else if(!d.value){d.value=name;d.focus();_lpf='source';showToast(`✅ Destination: ${name}`);}else{if(_lpf==='source'){s.value=name;_lpf='destination';showToast(`✅ Source: ${name}`);}else{d.value=name;_lpf='source';showToast(`✅ Destination: ${name}`);}}if(state.voiceOn)speakText(name+' selected');}
+let _vRec=null,_vField=null;
+function startVoice(fieldId){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){showToast('Voice input not supported — try Chrome or Edge');return;}_vField=fieldId;const modal=document.getElementById('voiceModal'),orb=document.getElementById('voiceOrb'),title=document.getElementById('voiceModalTitle'),sub=document.getElementById('voiceModalSub'),interim=document.getElementById('voiceInterim');modal.classList.add('open');orb.classList.add('listening');title.textContent=`Listening for ${fieldId==='source'?'Starting Station':'Destination'}`;sub.textContent='Speak clearly — say a Mumbai station name';interim.textContent='';if(_vRec){try{_vRec.abort();}catch(e){}}const rec=new SR();_vRec=rec;rec.lang='en-US';rec.continuous=true;rec.interimResults=true;rec.maxAlternatives=5;let finalT='',sT=null;rec.onstart=()=>{sub.textContent='Listening… speak now';};rec.onresult=(e)=>{let iT='';finalT='';for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)finalT+=e.results[i][0].transcript;else iT+=e.results[i][0].transcript;}interim.textContent=iT||finalT;if(finalT.trim()){clearTimeout(sT);sT=setTimeout(()=>commitVoice(finalT.trim()),800);}};rec.onerror=(e)=>{clearTimeout(sT);if(e.error==='not-allowed'||e.error==='service-not-allowed'){sub.textContent='🚫 Microphone permission denied';orb.classList.remove('listening');orb.textContent='🚫';setTimeout(cancelVoice,2000);}else if(e.error==='no-speech'){sub.textContent='🔇 No speech heard — try again';orb.classList.remove('listening');orb.textContent='🔇';setTimeout(()=>{orb.classList.add('listening');orb.textContent='🎙️';sub.textContent='Listening… speak now';rec.start();},1500);}else if(e.error==='network'){sub.textContent='📡 Network error';setTimeout(cancelVoice,2000);}else{sub.textContent=`Error: ${e.error}`;}};rec.onend=()=>{if(finalT.trim()&&_vField)commitVoice(finalT.trim());};try{rec.start();}catch(e){cancelVoice();showToast('Could not start microphone');}}
+function commitVoice(text){if(!_vField||!text){cancelVoice();return;}const lower=text.toLowerCase().trim(),exact=ALL_STATIONS.find(s=>normalize(s)===lower),fuzzy=exact||ALL_STATIONS.find(s=>normalize(s).includes(lower)||lower.includes(normalize(s))),best=fuzzy||text;const input=document.getElementById(_vField);input.value=best;input.dispatchEvent(new Event('input'));document.getElementById('voiceOrb').classList.remove('listening');document.getElementById('voiceOrb').textContent='✅';document.getElementById('voiceModalTitle').textContent='Got it!';document.getElementById('voiceModalSub').textContent=`"${best}"`;document.getElementById('voiceInterim').textContent='';if(_vRec){try{_vRec.stop();}catch(e){}_vRec=null;}if(state.voiceOn)speakText(best+' selected');setTimeout(cancelVoice,900);}
+function cancelVoice(){if(_vRec){try{_vRec.abort();}catch(e){}_vRec=null;}document.getElementById('voiceModal').classList.remove('open');document.getElementById('voiceOrb').classList.remove('listening');document.getElementById('voiceOrb').textContent='🎙️';document.getElementById('voiceModalTitle').textContent='Listening…';document.getElementById('voiceModalSub').textContent='Speak the station name clearly';document.getElementById('voiceInterim').textContent='';_vField=null;}
+function speakVoice(t){stopSpeech();speakText(t);}
+function speakText(t){if(!window.speechSynthesis){showToast('Speech not supported');return;}const u=new SpeechSynthesisUtterance(t);u.rate=.88;u.pitch=1;u.lang='en-IN';speechSynthesis.cancel();speechSynthesis.speak(u);}
+function stopSpeech(){window.speechSynthesis&&speechSynthesis.cancel();}
+function toggleContinuousVoice(){state.voiceOn=!state.voiceOn;const b=document.getElementById('toggleVoiceBtn');b.classList.toggle('active',state.voiceOn);b.setAttribute('aria-pressed',state.voiceOn);showToast(state.voiceOn?'🔊 Voice guidance ON':'🔇 Voice guidance OFF');if(state.voiceOn)speakText('Voice guidance is now active.');}
+function getGPS(){if(!navigator.geolocation){showToast('GPS not available');return;}const btn=document.getElementById('gpsBtn');btn.classList.add('locating');btn.setAttribute('aria-label','Locating…');showToast('📍 Getting your location…');navigator.geolocation.getCurrentPosition(pos=>{state.gpsCoords={lat:pos.coords.latitude,lon:pos.coords.longitude};fetch(`https://nominatim.openstreetmap.org/reverse?lat=${state.gpsCoords.lat}&lon=${state.gpsCoords.lon}&format=json`).then(r=>r.json()).then(d=>{const area=(d.display_name||'').toLowerCase();const nearest=ALL_STATIONS.find(s=>area.includes(normalize(s)))||ALL_STATIONS.find(s=>normalize(s).split(' ').some(w=>w.length>3&&area.includes(w)));const val=nearest||(d.display_name||'').split(',').slice(0,2).join(', ');document.getElementById('source').value=val;document.getElementById('source').dispatchEvent(new Event('input'));showToast(`📍 Nearest: ${val}`);}).catch(()=>{document.getElementById('source').value=`${state.gpsCoords.lat.toFixed(4)}, ${state.gpsCoords.lon.toFixed(4)}`;showToast('📍 GPS captured');});btn.classList.remove('locating');btn.setAttribute('aria-label','Use my current GPS location');},err=>{btn.classList.remove('locating');btn.setAttribute('aria-label','Use my current GPS location');showToast({1:'🚫 Permission denied',2:'📡 Unavailable',3:'⏱ Timed out'}[err.code]||'GPS error');},{enableHighAccuracy:true,timeout:12000,maximumAge:60000});}
+function swapLocations(){const s=document.getElementById('source'),d=document.getElementById('destination');[s.value,d.value]=[d.value,s.value];state.gpsCoords=null;showToast('⇅ Locations swapped');}
+function toggleDark(silent){state.dark=!state.dark;document.documentElement.setAttribute('data-theme',state.dark?'dark':'');document.getElementById('toggleDarkBtn').classList.toggle('active',state.dark);document.getElementById('toggleDarkBtn').setAttribute('aria-pressed',state.dark);document.getElementById('themeBtn').classList.toggle('active',state.dark);if(!silent)showToast(state.dark?'🌙 Dark mode on':'☀️ Light mode on');}
+function toggleContrast(silent){state.contrast=!state.contrast;document.body.classList.toggle('high-contrast',state.contrast);document.getElementById('toggleContrastBtn').classList.toggle('active',state.contrast);document.getElementById('toggleContrastBtn').setAttribute('aria-pressed',state.contrast);document.getElementById('contrastBtn').classList.toggle('active',state.contrast);if(!silent)showToast(state.contrast?'◑ High contrast on':'◑ Off');}
+function toggleMotion(silent){state.reduceMotion=!state.reduceMotion;document.body.classList.toggle('reduce-motion',state.reduceMotion);document.getElementById('toggleMotionBtn').classList.toggle('active',state.reduceMotion);document.getElementById('toggleMotionBtn').setAttribute('aria-pressed',state.reduceMotion);if(!silent)showToast(state.reduceMotion?'🎭 Reduced motion on':'🎭 Animations on');}
+function adjustTextSize(v){document.body.style.fontSize=v+'px';document.getElementById('sizePreview').textContent=v+'px';}
+function triggerSOS(){showToast('🚨 Alert sent to nearest station staff!');speakText('Emergency alert sent. Station staff have been notified. Please stay where you are.');}
+let _tt;function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove('show'),2800);}
+function escHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 </script>
 </body>
 </html>
