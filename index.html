@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects · CaffnCode ☕</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,700&family=Outfit:wght@400;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,700&family=Outfit:wght@400;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --cream:      #fdf6f0;
+      --espresso:   #2c1a0e;
+      --caramel:    #c87941;
+      --latte:      #e8c9a0;
+      --foam:       #f5ede3;
+      --steam:      #d4a574;
+      --dark-roast: #1a0f07;
+      --mocha:      #6b3d1e;
+    }
+
+    body {
+      background: var(--cream);
+      font-family: 'Space Mono', monospace;
+      color: var(--espresso);
+      overflow-x: hidden;
+    }
+
+    /* Pixel scanline */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(44,26,14,0.015) 2px, rgba(44,26,14,0.015) 4px),
+        repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(44,26,14,0.015) 2px, rgba(44,26,14,0.015) 4px);
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; width: 100%; z-index: 50;
+      background: var(--cream);
+      border-bottom: 3px solid var(--espresso);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-logo {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: var(--espresso);
+      letter-spacing: -0.03em;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-pixel {
+      display: inline-block;
+      width: 10px; height: 10px;
+      background: var(--caramel);
+      box-shadow: 3px 3px 0 var(--espresso);
+      flex-shrink: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--espresso);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--caramel); }
+
+    /* ── HERO ── */
+    .page-hero {
+      padding: 120px 3rem 4rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .page-hero::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--latte) 1px, transparent 1px),
+        linear-gradient(90deg, var(--latte) 1px, transparent 1px);
+      background-size: 32px 32px;
+      opacity: 0.4;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .section-tag {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--caramel);
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .section-tag::before {
+      content: '';
+      display: inline-block;
+      width: 6px; height: 6px;
+      background: var(--caramel);
+      box-shadow: 2px 2px 0 var(--espresso);
+      flex-shrink: 0;
+    }
+
+    .page-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      color: var(--espresso);
+      margin-bottom: 0.3rem;
+    }
+
+    .page-title .cursive {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      color: var(--caramel);
+      font-size: 1.1em;
+    }
+
+    .page-subtitle {
+      font-size: 0.85rem;
+      color: var(--mocha);
+      line-height: 1.85;
+      margin-top: 1rem;
+      max-width: 520px;
+    }
+
+    .section-divider {
+      width: 100%;
+      height: 3px;
+      background: repeating-linear-gradient(
+        90deg, var(--espresso) 0px, var(--espresso) 8px,
+        transparent 8px, transparent 12px
+      );
+      opacity: 0.12;
+      margin: 3rem 0;
+    }
+
+    /* ── PROJECTS GRID ── */
+    .projects-section {
+      padding: 0 3rem 6rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    /* ── PROJECT CARD ── */
+    .project-card {
+      background: var(--cream);
+      border: 2px solid var(--espresso);
+      box-shadow: 5px 5px 0 var(--latte);
+      padding: 1.8rem;
+      transition: transform 0.12s, box-shadow 0.12s;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      display: block;
+      color: var(--espresso);
+      text-decoration: none;
+    }
+
+    .project-card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 8px 8px 0 var(--caramel);
+      color: var(--espresso);
+    }
+
+    .project-stripe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 4px;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--caramel) 0px, var(--caramel) 6px,
+        var(--espresso) 6px, var(--espresso) 9px
+      );
+    }
+
+    .project-num {
+      font-size: 0.65rem;
+      color: var(--steam);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+      margin-top: 0.3rem;
+    }
+
+    .project-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.3rem;
+      color: var(--espresso);
+      margin-bottom: 0.4rem;
+      letter-spacing: -0.02em;
+    }
+
+    .project-desc {
+      font-size: 0.78rem;
+      color: var(--mocha);
+      line-height: 1.85;
+      margin-bottom: 1.2rem;
+    }
+
+    /* Feature list inside card */
+    .project-features {
+      list-style: none;
+      margin-bottom: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .project-features li {
+      font-size: 0.68rem;
+      color: var(--mocha);
+      line-height: 1.6;
+      padding-left: 1rem;
+      position: relative;
+    }
+
+    .project-features li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--caramel);
+      font-size: 0.65rem;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-bottom: 1rem;
+    }
+
+    .project-tag {
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 3px 9px;
+      background: var(--latte);
+      color: var(--espresso);
+      border: 1px solid var(--steam);
+    }
+
+    .project-tag.tag-highlight {
+      background: var(--espresso);
+      color: var(--cream);
+      border-color: var(--espresso);
+    }
+
+    .project-arrow {
+      position: absolute;
+      bottom: 1.2rem;
+      right: 1.2rem;
+      font-size: 1rem;
+      color: var(--caramel);
+      transition: transform 0.15s;
+    }
+
+    .project-card:hover .project-arrow {
+      transform: translate(3px, -3px);
+    }
+
+    /* Featured card — bigger, full width on first row */
+    .project-card.featured {
+      border-color: var(--caramel);
+      box-shadow: 5px 5px 0 var(--caramel);
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .project-card.featured:hover {
+      box-shadow: 8px 8px 0 var(--espresso);
+    }
+
+    .featured-left {}
+    .featured-right {
+      min-width: 220px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      padding-top: 0.3rem;
+    }
+
+    .featured-badge {
+      display: inline-block;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 4px 10px;
+      background: var(--caramel);
+      color: var(--cream);
+      box-shadow: 2px 2px 0 var(--espresso);
+      margin-bottom: 0.5rem;
+    }
+
+    .featured-stat {
+      font-size: 0.68rem;
+      color: var(--mocha);
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .featured-stat strong {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.4rem;
+      color: var(--caramel);
+      letter-spacing: -0.02em;
+    }
+
+    /* Placeholder brewing card */
+    .project-card.brewing {
+      background: var(--foam);
+      border-style: dashed;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 200px;
+      text-align: center;
+      cursor: default;
+      gap: 8px;
+    }
+
+    .project-card.brewing:hover {
+      transform: none;
+      box-shadow: 5px 5px 0 var(--latte);
+    }
+
+    .brewing-icon { font-size: 2rem; }
+
+    .brewing-dots::after {
+      content: '';
+      animation: dotdotdot 1.2s steps(3, end) infinite;
+    }
+
+    @keyframes dotdotdot {
+      0%   { content: ''; }
+      33%  { content: '.'; }
+      66%  { content: '..'; }
+      100% { content: '...'; }
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark-roast);
+      color: var(--steam);
+      text-align: center;
+      padding: 1.5rem 1rem;
+      font-size: 0.63rem;
+      line-height: 2.2;
+      letter-spacing: 0.06em;
+    }
+
+    footer a { color: var(--caramel); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* ── SCROLL ANIMATIONS ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
+    }
+    .reveal.is-visible { opacity: 1; transform: none; }
+
+    .reveal-stagger > *:nth-child(1) { transition-delay: 0s; }
+    .reveal-stagger > *:nth-child(2) { transition-delay: 0.12s; }
+    .reveal-stagger > *:nth-child(3) { transition-delay: 0.24s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      .nav-links { display: none; }
+      .page-hero { padding: 100px 1.5rem 2rem; }
+      .projects-section { padding: 0 1.5rem 4rem; }
+
+      .project-card.featured {
+        grid-template-columns: 1fr;
+      }
+
+      .featured-right {
+        flex-direction: row;
+        flex-wrap: wrap;
+        min-width: unset;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="https://caffncode.com" class="nav-logo">
+      <span class="nav-pixel"></span>
+      caffncode
+    </a>
+    <ul class="nav-links">
+      <li><a href="https://caffncode.com/#about">About</a></li>
+      <li><a href="https://projects.caffncode.com" class="active">Projects</a></li>
+      <li><a href="https://caffncode.com/#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="section-tag reveal">what I've been brewing</div>
+    <h1 class="page-title reveal">
+      Projects<br>
+      <span class="cursive">by Yug Rane</span>
+    </h1>
+    <p class="page-subtitle reveal">
+      A collection of things I've built — mostly frontend, always with intention.
+      Each one brewed slowly, with care. ☕
+    </p>
+    <div class="section-divider"></div>
+  </div>
+
+  <!-- PROJECTS -->
+  <div class="projects-section">
+    <div class="projects-grid reveal-stagger">
+
+      <!-- 01 — AccessRide (FEATURED) -->
+      <a href="https://projects.caffncode.com/accessride" target="_blank" rel="noopener" class="project-card featured">
+        <div class="project-stripe"></div>
+
+        <div class="featured-left">
+          <div class="project-num">01 / accessride</div>
+          <div class="featured-badge">HCI Course Project</div>
+          <div class="project-title">AccessRide Mumbai</div>
+          <p class="project-desc">
+            Accessibility-first rail navigation for Mumbai's suburban and metro network.
+            Fully client-side — no server, no install. Computes real step-by-step routes
+            with interchange transfers entirely in the browser, designed so that anyone
+            can use it regardless of physical, visual, or motor ability.
+          </p>
+          <ul class="project-features">
+            <li>150+ stations across 9 lines — Western, Central, Harbour, Kasara, Karjat & Metro 1, 2A, 7, 3</li>
+            <li>Smart routing with automatic transfer detection at 17 interchange points</li>
+            <li>Voice input, GPS auto-fill, and fuzzy station matching</li>
+            <li>Wheelchair, elevator & tactile path accessibility filters</li>
+            <li>Dark mode, high contrast, reduce motion, variable text size (14–24px)</li>
+            <li>Full keyboard navigation, ARIA attributes, text-to-speech & voice guidance</li>
+            <li>Emergency SOS strip with one-tap staff alert</li>
+          </ul>
+          <div class="project-tags">
+            <span class="project-tag tag-highlight">Accessibility</span>
+            <span class="project-tag tag-highlight">HCI</span>
+            <span class="project-tag">HTML</span>
+            <span class="project-tag">CSS</span>
+            <span class="project-tag">JavaScript</span>
+            <span class="project-tag">Client-side</span>
+            <span class="project-tag">Voice API</span>
+            <span class="project-tag">Geolocation</span>
+          </div>
+        </div>
+
+        <div class="featured-right">
+          <div class="featured-stat"><strong>150+</strong> stations</div>
+          <div class="featured-stat"><strong>9</strong> rail lines</div>
+          <div class="featured-stat"><strong>17</strong> interchanges</div>
+          <div class="featured-stat"><strong>0</strong> server needed</div>
+          <div class="featured-stat"><strong>♿</strong> fully accessible</div>
+        </div>
+
+        <div class="project-arrow">↗</div>
+      </a>
+
+      <!-- 02 — CaffnCode Website -->
+      <a href="https://caffncode.com" target="_blank" rel="noopener" class="project-card">
+        <div class="project-stripe"></div>
+        <div class="project-num">02 / caffncode.com</div>
+        <div class="project-title">CaffnCode Website</div>
+        <p class="project-desc">
+          The official portfolio & landing page for CaffnCode™ — pixel-themed,
+          cozy, and brewed from scratch with vanilla HTML, CSS, and JS.
+          Scroll animations, cursive type, and a coffee-shop aesthetic throughout.
+        </p>
+        <div class="project-tags">
+          <span class="project-tag">HTML</span>
+          <span class="project-tag">CSS</span>
+          <span class="project-tag">JavaScript</span>
+          <span class="project-tag">Design</span>
+        </div>
+        <div class="project-arrow">↗</div>
+      </a>
+
+      <!-- 03 — Brewing placeholder -->
+      <div class="project-card brewing">
+        <div class="brewing-icon">☕</div>
+        <div class="project-num" style="color:var(--steam)">
+          something's brewing<span class="brewing-dots"></span>
+        </div>
+        <p class="project-desc" style="margin:0;font-size:0.68rem;">next project coming soon</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>
+      <a href="https://assets.caffncode.com/udyam.pdf" target="_blank" rel="noopener">
+        CaffnCode<sup>TM</sup> is a registered MSME under Govt. of India ·
+        Udyam Reg. No: <strong>UDYAM-MH-33-0608110</strong>
+      </a>
+    </p>
+    <p style="margin-top:4px">© 2025 CaffnCode™ · Built with ☕ by <a href="https://caffncode.com">Yug Rane</a></p>
+  </footer>
+
+  <script>
+    /* Scroll reveal */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    /* Stagger grid */
+    const staggerObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          Array.from(e.target.children).forEach((child, i) => {
+            child.style.opacity = '0';
+            child.style.transform = 'translateY(36px)';
+            child.style.transition = `opacity 0.6s cubic-bezier(0.22,1,0.36,1) ${i * 0.15}s, transform 0.6s cubic-bezier(0.22,1,0.36,1) ${i * 0.15}s`;
+            requestAnimationFrame(() => requestAnimationFrame(() => {
+              child.style.opacity = '1';
+              child.style.transform = 'none';
+            }));
+          });
+          staggerObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.05 });
+
+    document.querySelectorAll('.reveal-stagger').forEach(el => staggerObs.observe(el));
+
+    /* Fire reveals on load */
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.querySelectorAll('.page-hero .reveal').forEach((el, i) => {
+          setTimeout(() => el.classList.add('is-visible'), i * 120);
+        });
+      }, 80);
+    });
+  </script>
+
+</body>
+</html>
