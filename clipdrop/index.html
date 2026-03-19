@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ClipDrop · CaffnCode</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,700&family=Outfit:wght@400;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,700&family=Outfit:wght@400;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+
+    :root{
+      --cream:#fdf6f0;--espresso:#2c1a0e;--caramel:#c87941;
+      --latte:#e8c9a0;--foam:#f5ede3;--steam:#d4a574;
+      --dark-roast:#1a0f07;--mocha:#6b3d1e;
+    }
+
+    body{
+      background:var(--cream);
+      font-family:'Space Mono',monospace;
+      color:var(--espresso);
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:'';position:fixed;inset:0;
+      background-image:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(44,26,14,0.015) 2px,rgba(44,26,14,0.015) 4px),repeating-linear-gradient(90deg,transparent,transparent 2px,rgba(44,26,14,0.015) 2px,rgba(44,26,14,0.015) 4px);
+      pointer-events:none;z-index:100;
+    }
+
+    body::after{
+      content:'';position:fixed;inset:0;
+      background-image:linear-gradient(var(--latte) 1px,transparent 1px),linear-gradient(90deg,var(--latte) 1px,transparent 1px);
+      background-size:32px 32px;opacity:0.2;pointer-events:none;z-index:0;
+    }
+
+    /* ── NAV ── */
+    nav{
+      position:sticky;top:0;z-index:200;
+      background:var(--cream);border-bottom:3px solid var(--espresso);
+      padding:0 2rem;height:56px;
+      display:flex;align-items:center;justify-content:space-between;
+    }
+
+    .nav-logo{
+      font-family:'Outfit',sans-serif;font-weight:800;font-size:1.05rem;
+      letter-spacing:-0.03em;display:flex;align-items:center;gap:6px;
+      text-decoration:none;color:var(--espresso);
+    }
+
+    .nav-pixel{width:9px;height:9px;background:var(--caramel);box-shadow:2px 2px 0 var(--espresso);display:inline-block;flex-shrink:0}
+    .nav-x{font-size:0.7rem;color:var(--steam);margin:0 4px;font-weight:400}
+    .nav-clip{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:700;font-size:1.25rem;color:var(--caramel)}
+    .nav-badge{font-size:0.55rem;text-transform:uppercase;letter-spacing:0.12em;background:var(--espresso);color:var(--cream);padding:2px 8px;box-shadow:2px 2px 0 var(--caramel)}
+
+    /* ── SCREENS ── */
+    .screen{display:none;position:relative;z-index:1;padding:2.5rem 2rem;animation:fadeUp 0.3s ease both;max-width:700px;margin:0 auto}
+    .screen.active{display:block}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+    /* ── TYPOGRAPHY ── */
+    .eyebrow{font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--caramel);margin-bottom:0.5rem;display:flex;align-items:center;gap:8px}
+    .eyebrow::before{content:'';width:16px;height:2px;background:var(--caramel);display:inline-block}
+    .page-title{font-family:'Outfit',sans-serif;font-weight:900;font-size:clamp(2rem,6vw,3.5rem);line-height:1;letter-spacing:-0.03em;margin-bottom:0.4rem}
+    .page-title span{color:var(--caramel)}
+    .page-sub{font-size:0.75rem;color:var(--mocha);line-height:1.85;max-width:500px;margin-bottom:2rem}
+    .section-tag{font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--caramel);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+    .section-tag::before{content:'';width:6px;height:6px;background:var(--caramel);box-shadow:2px 2px 0 var(--espresso);display:inline-block}
+
+    /* ── BUTTONS ── */
+    .btn-primary{background:var(--espresso);color:var(--cream);border:none;padding:10px 20px;font-family:'Space Mono',monospace;font-weight:700;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;box-shadow:4px 4px 0 var(--caramel);cursor:pointer;transition:all 0.12s;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+    .btn-primary:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--caramel)}
+    .btn-primary:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--caramel)}
+    .btn-primary:disabled{opacity:0.5;transform:none;box-shadow:none;cursor:not-allowed}
+    .btn-secondary{background:transparent;color:var(--espresso);border:2px solid var(--espresso);padding:10px 20px;font-family:'Space Mono',monospace;font-weight:700;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;box-shadow:4px 4px 0 var(--latte);cursor:pointer;transition:all 0.12s;white-space:nowrap}
+    .btn-secondary:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--latte)}
+    .back-btn{background:none;border:none;font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--steam);cursor:pointer;text-transform:uppercase;letter-spacing:0.1em;display:flex;align-items:center;gap:4px;padding:0;margin-bottom:1.4rem}
+    .back-btn:hover{color:var(--caramel)}
+
+    /* ── LANDING ── */
+    .cards-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:2rem}
+    .action-card{background:var(--foam);border:2px solid var(--espresso);padding:1.5rem;box-shadow:4px 4px 0 var(--latte);cursor:pointer;transition:all 0.12s;position:relative;overflow:hidden;text-align:left}
+    .action-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:repeating-linear-gradient(90deg,var(--caramel) 0,var(--caramel) 6px,var(--espresso) 6px,var(--espresso) 9px)}
+    .action-card:hover{transform:translate(-3px,-3px);box-shadow:7px 7px 0 var(--caramel)}
+    .card-icon{font-size:1.8rem;margin-bottom:0.6rem}
+    .card-title{font-family:'Outfit',sans-serif;font-weight:800;font-size:0.95rem;letter-spacing:-0.02em;margin-bottom:0.3rem}
+    .card-desc{font-size:0.65rem;color:var(--mocha);line-height:1.7}
+
+    .divider-row{display:flex;align-items:center;gap:12px;margin:0.5rem 0 1.2rem;color:var(--steam);font-size:0.62rem;text-transform:uppercase;letter-spacing:0.15em}
+    .divider-row::before,.divider-row::after{content:'';flex:1;height:1px;background:var(--latte)}
+
+    .join-row{display:flex;gap:8px}
+    .code-input{flex:1;border:2px solid var(--espresso);background:var(--cream);padding:11px 14px;font-family:'Space Mono',monospace;font-size:1rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--espresso);outline:none;transition:border-color 0.15s}
+    .code-input:focus{border-color:var(--caramel)}
+    .code-input::placeholder{color:var(--latte);font-weight:400;text-transform:none;letter-spacing:0.05em;font-size:0.8rem}
+
+    /* ── FORM FIELDS ── */
+    .field{display:flex;flex-direction:column;gap:6px;margin-bottom:1.2rem}
+    .field label{font-size:0.62rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--mocha);font-weight:700}
+    .field input[type=text]{border:2px solid var(--espresso);background:var(--cream);padding:10px 12px;font-family:'Space Mono',monospace;font-size:0.82rem;color:var(--espresso);outline:none;transition:border-color 0.15s}
+    .field input:focus{border-color:var(--caramel)}
+
+    .chip-group{display:flex;gap:6px;flex-wrap:wrap}
+    .chip{padding:5px 12px;border:1.5px solid var(--espresso);background:var(--cream);font-family:'Space Mono',monospace;font-size:0.65rem;font-weight:700;cursor:pointer;box-shadow:2px 2px 0 var(--latte);transition:all 0.12s;user-select:none}
+    .chip:hover{border-color:var(--caramel)}
+    .chip.selected{background:var(--espresso);color:var(--cream);box-shadow:2px 2px 0 var(--caramel)}
+
+    .btn-row{display:flex;gap:10px;margin-top:1.6rem;flex-wrap:wrap}
+
+    /* ── ROOM HEADER ── */
+    .room-header{background:var(--espresso);color:var(--cream);padding:1.2rem 1.5rem;margin:-2.5rem -2rem 1.8rem;position:relative;overflow:hidden}
+    .room-header::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:repeating-linear-gradient(90deg,var(--caramel) 0,var(--caramel) 6px,rgba(255,255,255,0.15) 6px,rgba(255,255,255,0.15) 9px)}
+    .room-code-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+    .room-label{font-size:0.58rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--steam);margin-bottom:3px}
+    .room-code{font-family:'Outfit',sans-serif;font-weight:900;font-size:2.2rem;letter-spacing:0.15em;color:var(--caramel)}
+    .room-pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+    .room-pill{font-size:0.58rem;text-transform:uppercase;letter-spacing:0.1em;padding:3px 9px;border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.6);display:inline-flex;align-items:center;gap:5px}
+    .room-pill.live{border-color:var(--caramel);color:var(--caramel)}
+    .pulse{width:6px;height:6px;background:var(--caramel);border-radius:50%;animation:pulse 1.4s infinite;display:inline-block;flex-shrink:0}
+    @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(200,121,65,.5)}50%{box-shadow:0 0 0 5px rgba(200,121,65,0)}}
+    .copy-btn{margin-left:auto;background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.2);color:var(--cream);font-family:'Space Mono',monospace;font-size:0.62rem;text-transform:uppercase;letter-spacing:0.08em;padding:6px 12px;cursor:pointer;transition:all 0.12s;white-space:nowrap}
+    .copy-btn:hover{background:var(--caramel);border-color:var(--caramel)}
+
+    /* ── DROP ZONE ── */
+    .drop-zone{border:2.5px dashed var(--latte);background:var(--foam);padding:2.5rem 1.5rem;text-align:center;cursor:pointer;transition:all 0.15s;margin-bottom:1.4rem;position:relative;overflow:hidden}
+    .drop-zone:hover,.drop-zone.dragging{border-color:var(--caramel);background:var(--cream)}
+    .drop-zone.dragging{border-style:solid}
+    .drop-icon{font-size:2.2rem;margin-bottom:0.5rem}
+    .drop-title{font-family:'Outfit',sans-serif;font-weight:800;font-size:1rem;letter-spacing:-0.02em;margin-bottom:0.3rem}
+    .drop-sub{font-size:0.65rem;color:var(--mocha);line-height:1.7}
+    .drop-sub span{color:var(--caramel);text-decoration:underline}
+    .file-input-hidden{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+
+    /* ── FILE LIST ── */
+    .file-list{display:flex;flex-direction:column;gap:8px;margin-bottom:1.2rem}
+    .file-item{background:var(--cream);border:1.5px solid var(--espresso);padding:10px 14px;display:flex;align-items:center;gap:12px;box-shadow:3px 3px 0 var(--latte);animation:fadeUp 0.2s ease both;position:relative;overflow:hidden}
+    .file-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--caramel)}
+    .file-icon{font-size:1.3rem;flex-shrink:0}
+    .file-info{flex:1;min-width:0}
+    .file-name{font-family:'Outfit',sans-serif;font-weight:700;font-size:0.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:-0.01em}
+    .file-meta{font-size:0.6rem;color:var(--steam);margin-top:2px}
+    .file-actions{display:flex;gap:5px;flex-shrink:0}
+    .file-btn{width:28px;height:28px;border:1.5px solid var(--espresso);background:var(--foam);font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.12s}
+    .file-btn:hover{background:var(--caramel);color:var(--cream);border-color:var(--caramel)}
+    .file-btn.del:hover{background:#8b3a1a;border-color:#8b3a1a;color:#fff}
+    .progress-wrap{height:3px;background:var(--latte);margin-top:5px;overflow:hidden}
+    .progress-fill{height:100%;background:var(--caramel);width:0%;transition:width 0.3s ease}
+
+    /* ── DIVIDER ── */
+    .divider{width:100%;height:2px;background:repeating-linear-gradient(90deg,var(--espresso) 0,var(--espresso) 6px,transparent 6px,transparent 10px);opacity:0.1;margin:1.4rem 0}
+
+    /* ── JOIN PANEL ── */
+    .join-panel{background:var(--foam);border:2px solid var(--espresso);padding:1.6rem;max-width:480px;box-shadow:5px 5px 0 var(--latte);position:relative}
+    .join-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:repeating-linear-gradient(90deg,var(--caramel) 0,var(--caramel) 6px,var(--espresso) 6px,var(--espresso) 9px)}
+
+    /* ── ERROR BOX ── */
+    .error-box{background:#fdebd9;border:2px solid #8b3a1a;padding:14px 16px;margin-bottom:1rem;font-size:0.72rem;color:#8b3a1a;box-shadow:3px 3px 0 rgba(139,58,26,.2);display:none}
+    .error-box.show{display:block}
+
+    /* ── LOADING SPINNER ── */
+    .spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(253,246,240,0.3);border-top-color:var(--cream);border-radius:50%;animation:spin 0.7s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* ── TOAST ── */
+    #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(12px);background:var(--espresso);color:var(--cream);border:1.5px solid var(--caramel);font-family:'Space Mono',monospace;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:9px 18px;box-shadow:3px 3px 0 var(--caramel);opacity:0;pointer-events:none;transition:all 0.25s;z-index:9999;white-space:nowrap}
+    #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+    /* ── COUNTDOWN TIMER ── */
+    .countdown{font-family:'Outfit',sans-serif;font-weight:800;font-size:1rem;color:var(--caramel);letter-spacing:0.05em}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:600px){
+      .cards-row{grid-template-columns:1fr}
+      .screen{padding:1.5rem 1rem}
+      .room-header{margin:-1.5rem -1rem 1.5rem;padding:1rem}
+      .room-code{font-size:1.6rem}
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="https://projects.caffncode.com" class="nav-logo">
+    <span class="nav-pixel"></span>
+    caffncode
+    <span class="nav-x">×</span>
+    <span class="nav-clip">ClipDrop</span>
+  </a>
+  <span class="nav-badge">beta</span>
+</nav>
+
+<!-- ── SCREEN: LANDING ── -->
+<div class="screen active" id="screen-landing">
+  <div class="eyebrow">Temporary file transfer</div>
+  <h1 class="page-title">Your browser is<br><span>the pendrive</span></h1>
+  <p class="page-sub">Create a room, drop your files, share the code. Access them on any device — no account, no install. Files vanish when the room expires.</p>
+
+  <div class="cards-row">
+    <div class="action-card" onclick="showScreen('screen-create')">
+      <div class="card-icon">📦</div>
+      <div class="card-title">Create a room</div>
+      <div class="card-desc">Generate a room code, set expiry, and drop your files in.</div>
+    </div>
+    <div class="action-card" onclick="showScreen('screen-join')">
+      <div class="card-icon">🔑</div>
+      <div class="card-title">Join a room</div>
+      <div class="card-desc">Enter a code to access files someone shared with you.</div>
+    </div>
+  </div>
+
+  <div class="divider-row">or enter code directly</div>
+
+  <div class="join-row">
+    <input class="code-input" id="quick-code" placeholder="e.g. CAFF-4829" maxlength="9" oninput="formatCode(this)" onkeydown="if(event.key==='Enter')quickJoin()"/>
+    <button class="btn-primary" onclick="quickJoin()">Join ↗</button>
+  </div>
+</div>
+
+<!-- ── SCREEN: CREATE ROOM ── -->
+<div class="screen" id="screen-create">
+  <button class="back-btn" onclick="showScreen('screen-landing')">← Back</button>
+  <div class="eyebrow">New room</div>
+  <h2 class="page-title" style="font-size:clamp(1.6rem,4vw,2.4rem)">Set up your room</h2>
+  <p class="page-sub">Choose how long this room stays alive, then drop your files in.</p>
+
+  <div class="field">
+    <label>Room name (optional)</label>
+    <input type="text" id="room-name-input" placeholder="e.g. design-assets, exam-notes…"/>
+  </div>
+
+  <div class="field">
+    <label>Expires after</label>
+    <div class="chip-group" id="expiry-group">
+      <div class="chip" onclick="selectChip(this,'expiry','10m')">10 min</div>
+      <div class="chip selected" onclick="selectChip(this,'expiry','30m')">30 min</div>
+      <div class="chip" onclick="selectChip(this,'expiry','1h')">1 hour</div>
+      <div class="chip" onclick="selectChip(this,'expiry','6h')">6 hours</div>
+      <div class="chip" onclick="selectChip(this,'expiry','24h')">24 hours</div>
+      <div class="chip" onclick="selectChip(this,'expiry','close')">On tab close</div>
+    </div>
+  </div>
+
+  <div class="field">
+    <label>Max file size per upload</label>
+    <div class="chip-group" id="size-group">
+      <div class="chip" onclick="selectChip(this,'size','10mb')">10 MB</div>
+      <div class="chip selected" onclick="selectChip(this,'size','50mb')">50 MB</div>
+      <div class="chip" onclick="selectChip(this,'size','200mb')">200 MB</div>
+      <div class="chip" onclick="selectChip(this,'size','500mb')">500 MB</div>
+    </div>
+  </div>
+
+  <div id="create-error" class="error-box"></div>
+
+  <div class="btn-row">
+    <button class="btn-primary" id="create-btn" onclick="createRoom()">☕ Brew the room</button>
+    <button class="btn-secondary" onclick="showScreen('screen-landing')">Cancel</button>
+  </div>
+</div>
+
+<!-- ── SCREEN: JOIN ROOM ── -->
+<div class="screen" id="screen-join">
+  <button class="back-btn" onclick="showScreen('screen-landing')">← Back</button>
+  <div class="eyebrow">Join a room</div>
+  <h2 class="page-title" style="font-size:clamp(1.6rem,4vw,2.4rem)">Enter room code</h2>
+  <p class="page-sub">Ask the host for their 8-character code and enter it below.</p>
+
+  <div class="join-panel">
+    <div class="field" style="margin-bottom:1rem">
+      <label>Room code</label>
+      <input class="code-input" id="join-code-input" placeholder="CAFF-4829" maxlength="9" oninput="formatCode(this)" onkeydown="if(event.key==='Enter')joinRoom()" style="font-size:1.2rem;padding:12px 16px"/>
+    </div>
+    <div id="join-error" class="error-box"></div>
+    <button class="btn-primary" id="join-btn" onclick="joinRoom()" style="width:100%;justify-content:center">Join Room ↗</button>
+  </div>
+</div>
+
+<!-- ── SCREEN: ACTIVE ROOM (HOST) ── -->
+<div class="screen" id="screen-room">
+  <div class="room-header">
+    <div class="room-code-row">
+      <div>
+        <div class="room-label">Room code · share this</div>
+        <div class="room-code" id="display-code">CAFF-0000</div>
+      </div>
+      <button class="copy-btn" onclick="copyCode()">📋 Copy code</button>
+    </div>
+    <div class="room-pills">
+      <span class="room-pill live"><span class="pulse"></span> Live</span>
+      <span class="room-pill" id="expiry-pill">Expires in 30 min</span>
+      <span class="room-pill" id="files-pill">0 files</span>
+      <span class="room-pill" id="size-pill">Max 50 MB</span>
+    </div>
+  </div>
+
+  <div class="drop-zone" id="drop-zone"
+    ondragover="event.preventDefault();this.classList.add('dragging')"
+    ondragleave="this.classList.remove('dragging')"
+    ondrop="handleDrop(event)">
+    <input type="file" class="file-input-hidden" multiple onchange="handleFiles(this.files)"/>
+    <div class="drop-icon">📂</div>
+    <div class="drop-title">Drop files here</div>
+    <div class="drop-sub">or <span>click to browse</span> · any format accepted</div>
+  </div>
+
+  <div id="host-files-wrap" style="display:none">
+    <div class="section-tag">Files in room</div>
+    <div class="file-list" id="host-file-list"></div>
+    <div class="divider"></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn-primary" onclick="downloadAll('host')">⬇ Download all</button>
+      <button class="btn-secondary" onclick="closeRoom()">✕ Close room</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── SCREEN: GUEST ROOM ── -->
+<div class="screen" id="screen-guest">
+  <button class="back-btn" onclick="showScreen('screen-landing')">← Leave room</button>
+
+  <div class="room-header">
+    <div class="room-code-row">
+      <div>
+        <div class="room-label">Connected to room</div>
+        <div class="room-code" id="guest-code">CAFF-0000</div>
+      </div>
+      <button class="copy-btn" onclick="copyGuestCode()">📋 Copy code</button>
+    </div>
+    <div class="room-pills">
+      <span class="room-pill live"><span class="pulse"></span> Connected</span>
+      <span class="room-pill">Guest · read only</span>
+      <span class="room-pill" id="guest-expiry-pill">—</span>
+    </div>
+  </div>
+
+  <div id="guest-empty" style="display:none;padding:2rem 0;text-align:center;color:var(--steam);font-size:0.75rem">
+    No files in this room yet.<br>Ask the host to upload some.
+  </div>
+
+  <div id="guest-files-wrap" style="display:none">
+    <div class="section-tag">Available files</div>
+    <div class="file-list" id="guest-file-list"></div>
+    <div class="divider"></div>
+    <button class="btn-primary" onclick="downloadAll('guest')">⬇ Download all</button>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+/* ══════════════════════════════════
+   CONFIG
+══════════════════════════════════ */
+const API = 'https://ut04js0exa.execute-api.eu-north-1.amazonaws.com';
+
+/* ══════════════════════════════════
+   STATE
+══════════════════════════════════ */
+const state = {
+  expiry:   '30m',
+  maxSize:  '50mb',
+  roomCode: '',
+  files:    [],       // { fileName, fileSize, fileType, s3Key, progress }
+  guestRoom: null,    // full room object from API
+  timerInterval: null,
+};
+
+const EXPIRY_LABELS = { '10m':'10 min','30m':'30 min','1h':'1 hour','6h':'6 hours','24h':'24 hours','close':'On tab close' };
+const SIZE_LABELS   = { '10mb':'10 MB','50mb':'50 MB','200mb':'200 MB','500mb':'500 MB' };
+const FILE_ICONS    = { pdf:'📄',ppt:'📊',pptx:'📊',doc:'📝',docx:'📝',xls:'📈',xlsx:'📈',zip:'🗜',rar:'🗜',mp4:'🎬',mp3:'🎵',jpg:'🖼',jpeg:'🖼',png:'🖼',gif:'🖼',webp:'🖼',txt:'📃',js:'💻',html:'💻',css:'💻',py:'💻',ts:'💻' };
+
+function getIcon(name){ const ext = (name||'').split('.').pop().toLowerCase(); return FILE_ICONS[ext] || '📁'; }
+function fmtSize(b){ if(b<1024)return b+'B'; if(b<1048576)return(b/1024).toFixed(1)+'KB'; return(b/1048576).toFixed(1)+'MB'; }
+function fmtExpiry(expiresAt){ const secs = expiresAt - Math.floor(Date.now()/1000); if(secs<=0)return'Expired'; const h=Math.floor(secs/3600),m=Math.floor((secs%3600)/60),s=secs%60; if(h>0)return`${h}h ${m}m`; if(m>0)return`${m}m ${s}s`; return`${s}s`; }
+
+/* ══════════════════════════════════
+   NAVIGATION
+══════════════════════════════════ */
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+/* ══════════════════════════════════
+   CHIPS + CODE FORMAT
+══════════════════════════════════ */
+function selectChip(el, group, val){
+  document.querySelectorAll(`#${group}-group .chip`).forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  state[group] = val;
+}
+
+function formatCode(input){
+  let v = input.value.replace(/[^A-Za-z0-9]/g,'').toUpperCase();
+  if(v.length>4) v = v.slice(0,4)+'-'+v.slice(4,8);
+  input.value = v;
+}
+
+/* ══════════════════════════════════
+   CREATE ROOM
+══════════════════════════════════ */
+async function createRoom(){
+  const btn = document.getElementById('create-btn');
+  const errBox = document.getElementById('create-error');
+  errBox.classList.remove('show');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Brewing…';
+
+  try {
+    const res = await fetch(`${API}/room/create`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        expiry:   state.expiry,
+        maxSize:  state.maxSize,
+        roomName: document.getElementById('room-name-input').value.trim(),
+      }),
+    });
+
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.error || 'Failed to create room');
+
+    state.roomCode  = data.roomCode;
+    state.files     = [];
+    state.expiresAt = data.expiresAt;
+
+    document.getElementById('display-code').textContent = state.roomCode;
+    document.getElementById('expiry-pill').textContent  = 'Expires in ' + EXPIRY_LABELS[state.expiry];
+    document.getElementById('size-pill').textContent    = 'Max ' + SIZE_LABELS[state.maxSize];
+    document.getElementById('files-pill').textContent   = '0 files';
+    document.getElementById('host-file-list').innerHTML = '';
+    document.getElementById('host-files-wrap').style.display = 'none';
+
+    // Start countdown timer
+    startTimer(data.expiresAt, 'expiry-pill');
+
+    showScreen('screen-room');
+    showToast('☕ Room ' + state.roomCode + ' is live!');
+
+  } catch(err){
+    errBox.textContent = '⚠ ' + err.message;
+    errBox.classList.add('show');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '☕ Brew the room';
+  }
+}
+
+/* ══════════════════════════════════
+   JOIN ROOM
+══════════════════════════════════ */
+function quickJoin(){
+  const code = document.getElementById('quick-code').value.trim().toUpperCase();
+  if(code.replace('-','').length < 8){ showToast('Enter a valid 8-character code'); return; }
+  fetchAndJoin(code);
+}
+
+function joinRoom(){
+  const code = document.getElementById('join-code-input').value.trim().toUpperCase();
+  if(code.replace('-','').length < 8){
+    const e = document.getElementById('join-error');
+    e.textContent = '⚠ Enter a valid 8-character room code';
+    e.classList.add('show');
+    return;
+  }
+  fetchAndJoin(code);
+}
+
+async function fetchAndJoin(code){
+  const btn = document.getElementById('join-btn');
+  const errBox = document.getElementById('join-error');
+  if(btn){ btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Joining…'; }
+  if(errBox) errBox.classList.remove('show');
+
+  try {
+    const res  = await fetch(`${API}/room/${code}`);
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.error || 'Room not found');
+
+    state.guestRoom = data;
+
+    document.getElementById('guest-code').textContent = data.roomCode;
+    startTimer(data.expiresAt, 'guest-expiry-pill');
+
+    renderGuestFiles(data.files || []);
+    showScreen('screen-guest');
+    showToast('✅ Joined room ' + data.roomCode);
+
+  } catch(err){
+    if(errBox){ errBox.textContent='⚠ '+err.message; errBox.classList.add('show'); }
+    else showToast('⚠ ' + err.message);
+  } finally {
+    if(btn){ btn.disabled=false; btn.innerHTML='Join Room ↗'; }
+  }
+}
+
+/* ══════════════════════════════════
+   FILE UPLOAD
+══════════════════════════════════ */
+function handleDrop(e){
+  e.preventDefault();
+  document.getElementById('drop-zone').classList.remove('dragging');
+  handleFiles(e.dataTransfer.files);
+}
+
+async function handleFiles(fileList){
+  const files = Array.from(fileList);
+  for(const file of files){
+    uploadFile(file);
+  }
+}
+
+async function uploadFile(file){
+  const tempId = 'f-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+
+  // Add to UI immediately as "uploading"
+  const item = {
+    fileName: file.name,
+    fileSize: file.size,
+    fileType: file.type || 'application/octet-stream',
+    progress: 0,
+    tempId,
+    status: 'uploading',
+  };
+  state.files.push(item);
+  renderHostFiles();
+
+  try {
+    // Step 1: get presigned URL
+    const res = await fetch(`${API}/room/${state.roomCode}/upload`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        fileName: file.name,
+        fileSize: file.size,
+        fileType: file.type || 'application/octet-stream',
+      }),
+    });
+
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.error || 'Failed to get upload URL');
+
+    // Step 2: upload directly to S3 via presigned URL
+    const xhr = new XMLHttpRequest();
+    xhr.open('PUT', data.presignedUrl);
+    xhr.setRequestHeader('Content-Type', file.type || 'application/octet-stream');
+
+    xhr.upload.onprogress = (e) => {
+      if(e.lengthComputable){
+        item.progress = Math.round((e.loaded / e.total) * 100);
+        const bar = document.getElementById('prog-' + tempId);
+        if(bar) bar.style.width = item.progress + '%';
+      }
+    };
+
+    xhr.onload = () => {
+      if(xhr.status === 200){
+        item.progress = 100;
+        item.status   = 'ready';
+        item.s3Key    = data.s3Key;
+        renderHostFiles();
+        showToast('✅ ' + file.name + ' uploaded');
+      } else {
+        item.status = 'error';
+        renderHostFiles();
+        showToast('⚠ Upload failed: ' + file.name);
+      }
+    };
+
+    xhr.onerror = () => {
+      item.status = 'error';
+      renderHostFiles();
+      showToast('⚠ Upload error: ' + file.name);
+    };
+
+    xhr.send(file);
+
+  } catch(err){
+    item.status = 'error';
+    renderHostFiles();
+    showToast('⚠ ' + err.message);
+  }
+}
+
+/* ══════════════════════════════════
+   RENDER FILE LISTS
+══════════════════════════════════ */
+function renderHostFiles(){
+  const list = document.getElementById('host-file-list');
+  const wrap = document.getElementById('host-files-wrap');
+  list.innerHTML = '';
+  wrap.style.display = state.files.length ? 'block' : 'none';
+  document.getElementById('files-pill').textContent = state.files.length + ' file' + (state.files.length!==1?'s':'');
+
+  state.files.forEach((f, i) => {
+    const div = document.createElement('div');
+    div.className = 'file-item';
+    div.style.animationDelay = (i * 0.05) + 's';
+    const statusText = f.status === 'uploading' ? 'uploading…' : f.status === 'error' ? '⚠ failed' : 'ready ✓';
+    div.innerHTML = `
+      <div class="file-icon">${getIcon(f.fileName)}</div>
+      <div class="file-info">
+        <div class="file-name">${escHtml(f.fileName)}</div>
+        <div class="file-meta">${fmtSize(f.fileSize)} · ${statusText}</div>
+        <div class="progress-wrap"><div class="progress-fill" id="prog-${f.tempId}" style="width:${f.progress}%"></div></div>
+      </div>
+      <div class="file-actions">
+        <button class="file-btn" onclick="downloadFile('${escHtml(f.fileName)}')" title="Download">⬇</button>
+        <button class="file-btn del" onclick="removeFile(${i})" title="Remove">✕</button>
+      </div>`;
+    list.appendChild(div);
+  });
+}
+
+function renderGuestFiles(files){
+  const list  = document.getElementById('guest-file-list');
+  const wrap  = document.getElementById('guest-files-wrap');
+  const empty = document.getElementById('guest-empty');
+  list.innerHTML = '';
+
+  if(!files.length){
+    wrap.style.display  = 'none';
+    empty.style.display = 'block';
+    return;
+  }
+
+  wrap.style.display  = 'block';
+  empty.style.display = 'none';
+
+  files.forEach((f, i) => {
+    const div = document.createElement('div');
+    div.className = 'file-item';
+    div.style.animationDelay = (i * 0.05) + 's';
+    div.innerHTML = `
+      <div class="file-icon">${getIcon(f.fileName)}</div>
+      <div class="file-info">
+        <div class="file-name">${escHtml(f.fileName)}</div>
+        <div class="file-meta">${fmtSize(f.fileSize)} · ready ✓</div>
+      </div>
+      <div class="file-actions">
+        <button class="file-btn" onclick="downloadGuestFile('${escHtml(f.fileName)}')" title="Download">⬇</button>
+      </div>`;
+    list.appendChild(div);
+  });
+}
+
+/* ══════════════════════════════════
+   DOWNLOAD
+══════════════════════════════════ */
+async function downloadFile(fileName){
+  showToast('⬇ Preparing download…');
+  try {
+    const res  = await fetch(`${API}/room/${state.roomCode}/download/${encodeURIComponent(fileName)}`);
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.error || 'Download failed');
+    triggerDownload(data.presignedUrl, fileName);
+  } catch(err){
+    showToast('⚠ ' + err.message);
+  }
+}
+
+async function downloadGuestFile(fileName){
+  const code = state.guestRoom?.roomCode;
+  if(!code) return;
+  showToast('⬇ Preparing download…');
+  try {
+    const res  = await fetch(`${API}/room/${code}/download/${encodeURIComponent(fileName)}`);
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.error || 'Download failed');
+    triggerDownload(data.presignedUrl, fileName);
+  } catch(err){
+    showToast('⚠ ' + err.message);
+  }
+}
+
+function triggerDownload(url, name){
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = name;
+  a.target = '_blank';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
+async function downloadAll(mode){
+  const files = mode === 'host' ? state.files : (state.guestRoom?.files || []);
+  if(!files.length){ showToast('No files to download'); return; }
+  showToast('⬇ Downloading ' + files.length + ' file' + (files.length!==1?'s':'') + '…');
+  for(const f of files){
+    await new Promise(r => setTimeout(r, 300));
+    if(mode === 'host') await downloadFile(f.fileName);
+    else await downloadGuestFile(f.fileName);
+  }
+}
+
+/* ══════════════════════════════════
+   MISC
+══════════════════════════════════ */
+function removeFile(i){
+  state.files.splice(i,1);
+  renderHostFiles();
+  showToast('File removed');
+}
+
+function closeRoom(){
+  if(state.timerInterval) clearInterval(state.timerInterval);
+  state.roomCode = '';
+  state.files    = [];
+  showScreen('screen-landing');
+  showToast('Room closed · files will expire automatically');
+}
+
+function copyCode(){
+  navigator.clipboard?.writeText(state.roomCode).catch(()=>{});
+  showToast('📋 ' + state.roomCode + ' copied!');
+}
+
+function copyGuestCode(){
+  const code = state.guestRoom?.roomCode || document.getElementById('guest-code').textContent;
+  navigator.clipboard?.writeText(code).catch(()=>{});
+  showToast('📋 ' + code + ' copied!');
+}
+
+function startTimer(expiresAt, pillId){
+  if(state.timerInterval) clearInterval(state.timerInterval);
+  const pill = document.getElementById(pillId);
+  if(!pill) return;
+  const update = () => {
+    const secs = expiresAt - Math.floor(Date.now()/1000);
+    if(secs <= 0){
+      pill.textContent = 'Expired';
+      clearInterval(state.timerInterval);
+      return;
+    }
+    pill.textContent = 'Expires in ' + fmtExpiry(expiresAt);
+  };
+  update();
+  state.timerInterval = setInterval(update, 1000);
+}
+
+let _tt;
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(_tt);
+  _tt = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+function escHtml(s){
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>
