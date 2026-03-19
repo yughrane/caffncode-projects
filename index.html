@@ -469,56 +469,72 @@
   <div class="projects-section">
     <div class="projects-grid reveal-stagger">
 
-      <!-- 01 — AccessRide (FEATURED) -->
-      <a href="https://projects.caffncode.com/accessride" target="_blank" rel="noopener" class="project-card featured">
+      <!-- 01 — ClipDrop (FEATURED) -->
+      <a href="https://projects.caffncode.com/clipdrop" target="_blank" rel="noopener" class="project-card featured">
         <div class="project-stripe"></div>
 
         <div class="featured-left">
-          <div class="project-num">01 / accessride</div>
-          <div class="featured-badge">HCI Course Project</div>
-          <div class="project-title">AccessRide Mumbai</div>
+          <div class="project-num">01 / clipdrop</div>
+          <div class="featured-badge">Serverless · Live</div>
+          <div class="project-title">ClipDrop</div>
           <p class="project-desc">
-            Accessibility-first rail navigation for Mumbai's suburban and metro network.
-            Fully client-side — no server, no install. Computes real step-by-step routes
-            with interchange transfers entirely in the browser, designed so that anyone
-            can use it regardless of physical, visual, or motor ability.
+            Your browser is the pendrive. Create a room, drop your files, share the code —
+            access them instantly on any device. No account, no install, no cloud storage.
+            Files auto-delete when the room expires.
           </p>
           <ul class="project-features">
-            <li>150+ stations across 9 lines — Western, Central, Harbour, Kasara, Karjat & Metro 1, 2A, 7, 3</li>
-            <li>Smart routing with automatic transfer detection at 17 interchange points</li>
-            <li>Voice input, GPS auto-fill, and fuzzy station matching</li>
-            <li>Wheelchair, elevator & tactile path accessibility filters</li>
-            <li>Dark mode, high contrast, reduce motion, variable text size (14–24px)</li>
-            <li>Full keyboard navigation, ARIA attributes, text-to-speech & voice guidance</li>
-            <li>Emergency SOS strip with one-tap staff alert</li>
+            <li>Room-code based sharing — no login required</li>
+            <li>Direct S3 upload via presigned URLs — files never touch the server</li>
+            <li>User-controlled expiry — 10 min, 30 min, 1hr, 6hr, 24hr, or on tab close</li>
+            <li>Auto file deletion via S3 lifecycle rules + DynamoDB TTL</li>
+            <li>Supports any file format up to 500 MB per file</li>
+            <li>Live countdown timer, per-file progress bars, download all</li>
           </ul>
           <div class="project-tags">
-            <span class="project-tag tag-highlight">Accessibility</span>
-            <span class="project-tag tag-highlight">HCI</span>
-            <span class="project-tag">HTML</span>
-            <span class="project-tag">CSS</span>
+            <span class="project-tag tag-highlight">AWS S3</span>
+            <span class="project-tag tag-highlight">Lambda</span>
+            <span class="project-tag">DynamoDB</span>
+            <span class="project-tag">API Gateway</span>
             <span class="project-tag">JavaScript</span>
-            <span class="project-tag">Client-side</span>
-            <span class="project-tag">Voice API</span>
-            <span class="project-tag">Geolocation</span>
+            <span class="project-tag">Serverless</span>
           </div>
         </div>
 
         <div class="featured-right">
-          <div class="featured-stat"><strong>150+</strong> stations</div>
-          <div class="featured-stat"><strong>9</strong> rail lines</div>
-          <div class="featured-stat"><strong>17</strong> interchanges</div>
-          <div class="featured-stat"><strong>0</strong> server needed</div>
-          <div class="featured-stat"><strong>♿</strong> fully accessible</div>
+          <div class="featured-stat"><strong>4</strong> Lambda fns</div>
+          <div class="featured-stat"><strong>0</strong> accounts needed</div>
+          <div class="featured-stat"><strong>500</strong> MB max</div>
+          <div class="featured-stat"><strong>∞</strong> file formats</div>
+          <div class="featured-stat"><strong>🗑</strong> auto-deletes</div>
         </div>
 
         <div class="project-arrow">↗</div>
       </a>
 
-      <!-- 02 — CaffnCode Website -->
+      <!-- 02 — AccessRide -->
+      <a href="https://projects.caffncode.com/accessride" target="_blank" rel="noopener" class="project-card">
+        <div class="project-stripe"></div>
+        <div class="project-num">02 / accessride</div>
+        <div class="project-title">AccessRide Mumbai</div>
+        <p class="project-desc">
+          Accessibility-first rail navigation for Mumbai's 150+ stations across 9 lines —
+          fully client-side, with voice input, GPS, dark mode, and screen reader support.
+        </p>
+        <div class="project-tags">
+          <span class="project-tag tag-highlight">Accessibility</span>
+          <span class="project-tag tag-highlight">HCI</span>
+          <span class="project-tag">HTML</span>
+          <span class="project-tag">CSS</span>
+          <span class="project-tag">JavaScript</span>
+          <span class="project-tag">Client-side</span>
+        </div>
+        <div class="project-arrow">↗</div>
+      </a>
+
+      <!-- 03 — CaffnCode Website -->
       <a href="https://caffncode.com" target="_blank" rel="noopener" class="project-card">
         <div class="project-stripe"></div>
-        <div class="project-num">02 / caffncode.com</div>
+        <div class="project-num">03 / caffncode.com</div>
         <div class="project-title">CaffnCode Website</div>
         <p class="project-desc">
           The official portfolio & landing page for CaffnCode™ — pixel-themed,
@@ -530,27 +546,6 @@
           <span class="project-tag">CSS</span>
           <span class="project-tag">JavaScript</span>
           <span class="project-tag">Design</span>
-        </div>
-        <div class="project-arrow">↗</div>
-      </a>
-
-      <!-- 03 — ClipDrop -->
-      <a href="https://projects.caffncode.com/clipdrop" target="_blank" rel="noopener" class="project-card">
-        <div class="project-stripe"></div>
-        <div class="project-num">03 / clipdrop</div>
-        <div class="project-title">ClipDrop</div>
-        <p class="project-desc">
-          Your browser is the pendrive. Create a room, drop your files, share the code —
-          access them instantly on any device. No account, no install, no cloud storage.
-          Files vanish when the room expires.
-        </p>
-        <div class="project-tags">
-          <span class="project-tag tag-highlight">AWS S3</span>
-          <span class="project-tag tag-highlight">Lambda</span>
-          <span class="project-tag">DynamoDB</span>
-          <span class="project-tag">API Gateway</span>
-          <span class="project-tag">JavaScript</span>
-          <span class="project-tag">Serverless</span>
         </div>
         <div class="project-arrow">↗</div>
       </a>
