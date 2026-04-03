@@ -200,7 +200,8 @@ footer a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
-
+<!-- Notice banner -->
+<div id="notice-banner" style="display:none"></div>
 <!-- NAV -->
 <nav>
   <a href="https://projects.caffncode.com" class="nav-logo">
@@ -788,6 +789,34 @@ function showToast(msg){
 function escHtml(s){
   return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
+/* ── Notice banner ── */
+(async () => {
+  const PAGE_ID = 'clipdrop'; // ← change this per page
+  try {
+    const res  = await fetch('https://ut04js0exa.execute-api.eu-north-1.amazonaws.com/notices/active?page=' + PAGE_ID);
+    const data = await res.json();
+    if (!data.notices?.length) return;
+
+    const colors = {
+      yellow: { bg:'#fff4cc', border:'#c9a800', color:'#7a5800' },
+      red:    { bg:'#fde8e8', border:'#8b1a1a', color:'#8b1a1a' },
+      green:  { bg:'#d8f3dc', border:'#2d6a4f', color:'#2d6a4f' },
+      blue:   { bg:'#d4e8f0', border:'#1a4e6b', color:'#1a4e6b' },
+    };
+
+    const banner = document.getElementById('notice-banner');
+    banner.style.display = 'block';
+    banner.innerHTML = data.notices.map(n => {
+      const c = colors[n.color] || colors.yellow;
+      return `<div style="background:${c.bg};border-bottom:3px solid ${c.border};color:${c.color};padding:10px 2rem;font-family:'Space Mono',monospace;font-size:0.72rem;font-weight:700;letter-spacing:0.05em;display:flex;align-items:center;justify-content:space-between;gap:1rem;">
+        <span>${n.message}</span>
+        <button onclick="this.parentElement.remove()" style="background:none;border:none;cursor:pointer;color:${c.color};font-size:1rem;flex-shrink:0;padding:0;line-height:1;">✕</button>
+      </div>`;
+    }).join('');
+  } catch (e) {
+    // Fail silently — never break the page
+  }
+})();
 </script>
 </body>
 </html>
