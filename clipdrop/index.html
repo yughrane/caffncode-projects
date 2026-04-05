@@ -201,7 +201,7 @@ footer a:hover { text-decoration: underline; }
 </head>
 <body>
 <!-- Notice banner -->
-<div id="notice-banner" style="display:none"></div>
+<div id="notice-popup" style="display:none"></div>
 <!-- NAV -->
 <nav>
   <a href="https://projects.caffncode.com" class="nav-logo">
@@ -789,9 +789,9 @@ function showToast(msg){
 function escHtml(s){
   return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
-/* ── Notice banner ── */
+/* ── Notice popup ── */
 (async () => {
-  const PAGE_ID = 'clipdrop'; // ← change this per page
+  const PAGE_ID = 'clipdrop'; // ← change per page
   try {
     const res  = await fetch('https://ut04js0exa.execute-api.eu-north-1.amazonaws.com/notices/active?page=' + PAGE_ID);
     const data = await res.json();
@@ -804,17 +804,45 @@ function escHtml(s){
       blue:   { bg:'#d4e8f0', border:'#1a4e6b', color:'#1a4e6b' },
     };
 
-    const banner = document.getElementById('notice-banner');
-    banner.style.display = 'block';
-    banner.innerHTML = data.notices.map(n => {
-      const c = colors[n.color] || colors.yellow;
-      return `<div style="background:${c.bg};border-bottom:3px solid ${c.border};color:${c.color};padding:10px 2rem;font-family:'Space Mono',monospace;font-size:0.72rem;font-weight:700;letter-spacing:0.05em;display:flex;align-items:center;justify-content:space-between;gap:1rem;">
-        <span>${n.message}</span>
-        <button onclick="this.parentElement.remove()" style="background:none;border:none;cursor:pointer;color:${c.color};font-size:1rem;flex-shrink:0;padding:0;line-height:1;">✕</button>
-      </div>`;
-    }).join('');
+    const n = data.notices[0];
+    const c = colors[n.color] || colors.yellow;
+
+    const popup = document.createElement('div');
+    popup.id = 'notice-popup';
+    popup.style.cssText = `
+      position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+      z-index:9999;max-width:560px;width:calc(100% - 3rem);
+      background:${c.bg};border:2px solid ${c.border};
+      box-shadow:4px 4px 0 ${c.border};
+      padding:14px 16px;display:flex;align-items:flex-start;gap:12px;
+      font-family:'Space Mono',monospace;font-size:0.72rem;
+      color:${c.color};line-height:1.6;
+      animation:noticeSlideUp 0.3s ease both;
+    `;
+
+    popup.innerHTML = `
+      <style>
+        @keyframes noticeSlideUp {
+          from { opacity:0; transform:translateX(-50%) translateY(16px); }
+          to   { opacity:1; transform:translateX(-50%) translateY(0); }
+        }
+      </style>
+      <span style="font-size:1rem;flex-shrink:0">
+        ${ n.color==='red' ? '🚨' : n.color==='green' ? '✓' : n.color==='blue' ? 'ℹ' : '⚠' }
+      </span>
+      <span style="flex:1">${n.message}</span>
+      <button onclick="document.getElementById('notice-popup').remove()"
+        style="background:none;border:none;cursor:pointer;color:${c.color};
+        font-size:1.1rem;flex-shrink:0;padding:0;line-height:1;margin-top:-2px;">✕</button>
+    `;
+
+    document.body.appendChild(popup);
+
+    // Auto-dismiss after 10 seconds
+    setTimeout(() => popup?.remove(), 10000);
+
   } catch (e) {
-    // Fail silently — never break the page
+    // Fail silently
   }
 })();
 </script>
