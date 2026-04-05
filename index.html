@@ -634,11 +634,17 @@
 
     const banner = document.getElementById('notice-banner');
     banner.style.display = 'block';
+    // Push nav down by banner height
+    const nav = document.querySelector('nav');
+    if (nav) {
+      const offset = banner.offsetHeight;
+      nav.style.top = offset + 'px';
+    }
     banner.innerHTML = data.notices.map(n => {
       const c = colors[n.color] || colors.yellow;
       return `<div style="background:${c.bg};border-bottom:3px solid ${c.border};color:${c.color};padding:10px 2rem;font-family:'Space Mono',monospace;font-size:0.72rem;font-weight:700;letter-spacing:0.05em;display:flex;align-items:center;justify-content:space-between;gap:1rem;">
         <span>${n.message}</span>
-        <button onclick="this.parentElement.remove()" style="background:none;border:none;cursor:pointer;color:${c.color};font-size:1rem;flex-shrink:0;padding:0;line-height:1;">✕</button>
+        <button onclick="this.closest('#notice-banner').style.display='none';document.querySelector('nav').style.top='0';" style="background:none;border:none;cursor:pointer;color:${c.color};font-size:1rem;flex-shrink:0;padding:0;line-height:1;">✕</button>
       </div>`;
     }).join('');
   } catch (e) {
