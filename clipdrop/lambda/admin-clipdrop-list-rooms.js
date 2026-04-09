@@ -48,6 +48,7 @@ exports.handler = async (event) => {
       roomName: room.roomName || "(Unnamed)",
       expiry: room.expiry || "unknown",
       maxSize: room.maxSize || "50mb",
+      files: room.files || [],
       fileCount: (room.files || []).length,
       totalSize: (room.files || []).reduce((sum, f) => sum + (f.fileSize || 0), 0),
       createdAt: room.createdAt || null,
