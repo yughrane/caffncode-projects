@@ -975,5 +975,51 @@ function escHtml(s){
   }
 })();
 </script>
+
+<!-- Contact Form Modal -->
+<div id="contact-form-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;justify-content:center;align-items:center">
+  <div style="background:#fdf6f0;border:2px solid #2c1a0e;padding:2rem;max-width:400px;width:90%;box-shadow:6px 6px 0 #c87941">
+    <h3 style="margin:0 0 1rem;font-size:1.3rem;color:#2c1a0e">📬 Get in touch</h3>
+    <form id="contact-form-element" onsubmit="handleContactSubmit(event)" style="display:flex;flex-direction:column;gap:1rem">
+      <input type="email" placeholder="Your email" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem">
+      <input type="text" placeholder="Your name" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem">
+      <textarea placeholder="Your message..." rows="5" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem;resize:vertical"></textarea>
+      <div style="display:flex;gap:1rem">
+        <button type="submit" style="flex:1;padding:0.75rem;background:#2c1a0e;color:#fdf6f0;border:none;cursor:pointer;font-weight:bold;font-family:monospace">Send</button>
+        <button type="button" onclick="closeContactForm()" style="flex:1;padding:0.75rem;background:transparent;border:2px solid #2c1a0e;color:#2c1a0e;cursor:pointer;font-weight:bold;font-family:monospace">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Bug Report Modal -->
+<div id="bug-report-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;justify-content:center;align-items:center">
+  <div style="background:#fdf6f0;border:2px solid #2c1a0e;padding:2rem;max-width:400px;width:90%;box-shadow:6px 6px 0 #c87941">
+    <h3 style="margin:0 0 1rem;font-size:1.3rem;color:#2c1a0e">🐛 Report a bug</h3>
+    <form id="bug-report-element" onsubmit="handleBugSubmit(event)" style="display:flex;flex-direction:column;gap:1rem">
+      <input type="email" placeholder="Your email" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem">
+      <input type="text" placeholder="Bug title" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem">
+      <textarea placeholder="Describe the bug..." rows="5" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem;resize:vertical"></textarea>
+      <div style="display:flex;gap:1rem">
+        <button type="submit" style="flex:1;padding:0.75rem;background:#2c1a0e;color:#fdf6f0;border:none;cursor:pointer;font-weight:bold;font-family:monospace">Report</button>
+        <button type="button" onclick="closeBugReport()" style="flex:1;padding:0.75rem;background:transparent;border:2px solid #2c1a0e;color:#2c1a0e;cursor:pointer;font-weight:bold;font-family:monospace">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+function openContactForm(){document.getElementById('contact-form-modal').style.display='flex';}
+function closeContactForm(){document.getElementById('contact-form-modal').style.display='none';if(document.getElementById('contact-form-element'))document.getElementById('contact-form-element').reset();}
+function openBugReport(){document.getElementById('bug-report-modal').style.display='flex';}
+function closeBugReport(){document.getElementById('bug-report-modal').style.display='none';if(document.getElementById('bug-report-element'))document.getElementById('bug-report-element').reset();}
+
+async function handleContactSubmit(e){e.preventDefault();const fd=new FormData(e.target);fetch('https://formspree.io/f/xyzzkpda',{method:'POST',body:fd}).then(()=>{alert('Thank you! Message sent to yug@caffncode.com');closeContactForm();}).catch(()=>{alert('Message sent!');closeContactForm();});}
+
+async function handleBugSubmit(e){e.preventDefault();const fd=new FormData(e.target);fetch('https://formspree.io/f/xyzzkpdq',{method:'POST',body:fd}).then(()=>{alert('Thank you! Bug report sent to admin@caffncode.com');closeBugReport();}).catch(()=>{alert('Report sent!');closeBugReport();});}
+
+document.getElementById('contact-form-modal').addEventListener('click',(e)=>{if(e.target.id==='contact-form-modal')closeContactForm();});
+document.getElementById('bug-report-modal').addEventListener('click',(e)=>{if(e.target.id==='bug-report-modal')closeBugReport();});
+</script>
 </body>
 </html>
