@@ -94,6 +94,8 @@
     .btn-primary:disabled{opacity:0.5;transform:none;box-shadow:none;cursor:not-allowed}
     .btn-secondary{background:transparent;color:var(--espresso);border:2px solid var(--espresso);padding:10px 20px;font-family:'Space Mono',monospace;font-weight:700;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;box-shadow:4px 4px 0 var(--latte);cursor:pointer;transition:all 0.12s;display:inline-flex;align-items:center;gap:6px}
     .btn-secondary:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--latte)}
+    .btn-icon{background:transparent;border:2px solid var(--espresso);padding:8px 12px;font-size:1.2rem;cursor:pointer;transition:all 0.12s;display:inline-flex;align-items:center;justify-content:center;box-shadow:4px 4px 0 var(--latte)}
+    .btn-icon:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--caramel)}
     .back-btn{background:none;border:none;font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--steam);cursor:pointer;text-transform:uppercase;letter-spacing:0.1em;display:flex;align-items:center;gap:4px;padding:0;margin-bottom:1.4rem}
     .back-btn:hover{color:var(--caramel)}
 
@@ -355,7 +357,7 @@ footer a:hover { text-decoration: underline; }
       <span class="room-pill" id="size-pill">Max 50 MB</span>
     </div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center">
-      <button class="btn-secondary" id="host-portal-btn" onclick="openHostPortal()" style="display:none">�</button>
+      <button class="btn-icon" id="host-portal-btn" onclick="openHostPortal()" style="display:none" title="Manage room as host">🔑</button>
     </div>
   </div>
 
@@ -398,7 +400,7 @@ footer a:hover { text-decoration: underline; }
       <span class="room-pill" id="guest-expiry-pill">—</span>
     </div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center">
-      <button class="btn-secondary" id="guest-host-portal-btn" onclick="openHostPortal()" style="display:none">�</button>
+      <button class="btn-icon" id="guest-host-portal-btn" onclick="openHostPortal()" style="display:none" title="Re-enter as host">🔑</button>
     </div>
   </div>
 
