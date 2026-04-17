@@ -49,7 +49,7 @@
       display:flex;align-items:center;justify-content:space-between;
     }
     .nav-icon{display:inline-block;flex-shrink:0;vertical-align:middle;box-shadow:2px 2px 0 var(--latte);}
-    
+
     .nav-logo{
       font-family:'Outfit',sans-serif;font-weight:800;font-size:1.05rem;
       letter-spacing:-0.03em;display:flex;align-items:center;gap:6px;
@@ -354,6 +354,9 @@ footer a:hover { text-decoration: underline; }
       <span class="room-pill" id="files-pill">0 files</span>
       <span class="room-pill" id="size-pill">Max 50 MB</span>
     </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center">
+      <button class="btn-secondary" id="host-portal-btn" onclick="openHostPortal()" style="display:none;padding:6px 12px;font-size:0.65rem">🔧 Manage in admin</button>
+    </div>
   </div>
 
   <div class="drop-zone" id="drop-zone"
@@ -393,6 +396,9 @@ footer a:hover { text-decoration: underline; }
       <span class="room-pill live"><span class="pulse"></span> Connected</span>
       <span class="room-pill">Guest · read only</span>
       <span class="room-pill" id="guest-expiry-pill">—</span>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center">
+      <button class="btn-secondary" id="guest-host-portal-btn" onclick="openHostPortal()" style="display:none;padding:6px 12px;font-size:0.65rem">🔧 You are the host</button>
     </div>
   </div>
 
@@ -438,6 +444,7 @@ const state = {
   roomCode: '',
   files:    [],       // { fileName, fileSize, fileType, s3Key, progress }
   guestRoom: null,    // full room object from API
+  hostIp:   null,     // IP of the host who created the room
   timerInterval: null,
 };
 
@@ -522,6 +529,8 @@ async function createRoom(){
     state.roomCode  = data.roomCode;
     state.files     = [];
     state.expiresAt = data.expiresAt;
+    state.hostIp    = data.hostIp;  // Store host IP for later access
+    localStorage.setItem('clipdrop_hostIp_' + data.roomCode, data.hostIp);  // Persist
 
     document.getElementById('display-code').textContent = state.roomCode;
     document.getElementById('expiry-pill').textContent  = 'Expires in ' + EXPIRY_LABELS[state.expiry];
@@ -532,6 +541,10 @@ async function createRoom(){
 
     // Start countdown timer
     startTimer(data.expiresAt, 'expiry-pill');
+
+    // Show host portal button for the room creator
+    const hostBtn = document.getElementById('host-portal-btn');
+    if(hostBtn) hostBtn.style.display = 'inline-flex';
 
     showScreen('screen-room');
     showToast('☕ Room ' + state.roomCode + ' is live!');
@@ -577,12 +590,14 @@ async function fetchAndJoin(code){
     if(!res.ok) throw new Error(data.error || 'Room not found');
 
     state.guestRoom = data;
+    state.hostIp = data.hostIp;  // Store host IP from room data
 
     document.getElementById('guest-code').textContent = data.roomCode;
     startTimer(data.expiresAt, 'guest-expiry-pill');
 
     renderGuestFiles(data.files || []);
     showScreen('screen-guest');
+    checkIfHost(data.roomCode);  // Check and show host button if IP matches
     showToast('✅ Joined room ' + data.roomCode);
 
   } catch(err){
@@ -591,6 +606,41 @@ async function fetchAndJoin(code){
   } finally {
     if(btn){ btn.disabled=false; btn.innerHTML='Join Room ↗'; }
   }
+}
+
+/* ══════════════════════════════════
+   HOST PORTAL ACCESS
+══════════════════════════════════ */
+async function checkIfHost(roomCode) {
+  try {
+    // Get user's current IP via a simple API call
+    const ipRes = await fetch('https://api.ipify.org?format=json');
+    const ipData = await ipRes.json();
+    const userIp = ipData.ip;
+
+    // Check if room's host IP matches user's IP
+    if(state.hostIp && state.hostIp === userIp) {
+      // Show the "You are the host" button
+      const hostBtn = document.getElementById('guest-host-portal-btn');
+      if(hostBtn) {
+        hostBtn.style.display = 'inline-flex';
+        hostBtn.textContent = '🔧 Access host controls';
+      }
+    }
+  } catch(err) {
+    console.log('Could not determine if user is host:', err.message);
+  }
+}
+
+function openHostPortal() {
+  const roomCode = state.roomCode || state.guestRoom?.roomCode;
+  if(!roomCode) {
+    showToast('⚠ Room code not found');
+    return;
+  }
+  // Open admin portal - they can use the room code to manage files there
+  window.open(`https://admin.caffncode.com/#room=${roomCode}`, '_blank');
+  showToast('Opening admin portal...');
 }
 
 /* ══════════════════════════════════

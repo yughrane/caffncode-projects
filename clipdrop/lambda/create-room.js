@@ -42,6 +42,10 @@ exports.handler = async (event) => {
     const body = JSON.parse(event.body || "{}");
     const { expiry = "30m", maxSize = "50mb", roomName = "" } = body;
 
+    // Extract host IP address for host portal access
+    const hostIp = event.headers['x-forwarded-for'] || event.requestContext?.identity?.sourceIp || 'unknown';
+    const hostIpClean = hostIp.split(',')[0].trim();
+
     const roomCode = generateCode();
     const now = Math.floor(Date.now() / 1000);
     const expiresAt = now + getExpirySeconds(expiry);
@@ -56,6 +60,7 @@ exports.handler = async (event) => {
         files: [],
         createdAt: now,
         expiresAt, // DynamoDB TTL attribute
+        hostIp: hostIpClean,  // Store host IP for identifying host access
       },
     }));
 
@@ -68,6 +73,7 @@ exports.handler = async (event) => {
         maxSize,
         expiresAt,
         createdAt: now,
+        hostIp: hostIpClean,  // Return host IP to frontend
       }),
     };
   } catch (err) {

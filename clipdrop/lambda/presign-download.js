@@ -9,7 +9,7 @@ const s3 = new S3Client({ region: process.env.REGION });
 
 exports.handler = async (event) => {
   const headers = {
-    "Access-Control-Allow-Origin": "https://projects.caffncode.com",
+    "Access-Control-Allow-Origin": "https://projects.caffncode.com, https://admin.caffncode.com",
     "Access-Control-Allow-Headers": "Content-Type",
     "Content-Type": "application/json",
   };
