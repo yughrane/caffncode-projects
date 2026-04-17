@@ -543,6 +543,7 @@ async function createRoom(){
     startTimer(data.expiresAt, 'expiry-pill');
 
     // Show host portal button for the room creator
+    setHostToken(state.roomCode);  // Store token to allow re-entry as host
     const hostBtn = document.getElementById('host-portal-btn');
     if(hostBtn) hostBtn.style.display = 'inline-flex';
 
@@ -597,7 +598,7 @@ async function fetchAndJoin(code){
 
     renderGuestFiles(data.files || []);
     showScreen('screen-guest');
-    checkIfHost(data.roomCode);  // Check and show host button if IP matches
+    showHostControls(data.roomCode);  // Show host button if they created this room
     showToast('✅ Joined room ' + data.roomCode);
 
   } catch(err){
@@ -611,24 +612,25 @@ async function fetchAndJoin(code){
 /* ══════════════════════════════════
    HOST PORTAL ACCESS
 ══════════════════════════════════ */
-async function checkIfHost(roomCode) {
-  try {
-    // Get user's current IP via a simple API call
-    const ipRes = await fetch('https://api.ipify.org?format=json');
-    const ipData = await ipRes.json();
-    const userIp = ipData.ip;
+// Store host access token when room is created
+function setHostToken(roomCode) {
+  const token = 'host_' + roomCode + '_' + Math.random().toString(36).substr(2, 9);
+  localStorage.setItem('clipdrop_host_' + roomCode, token);
+  return token;
+}
 
-    // Check if room's host IP matches user's IP
-    if(state.hostIp && state.hostIp === userIp) {
-      // Show the "You are the host" button
-      const hostBtn = document.getElementById('guest-host-portal-btn');
-      if(hostBtn) {
-        hostBtn.style.display = 'inline-flex';
-        hostBtn.textContent = '🔧 Access host controls';
-      }
+function isHostOfRoom(roomCode) {
+  return localStorage.getItem('clipdrop_host_' + roomCode) ? true : false;
+}
+
+function showHostControls(roomCode) {
+  // Show host button on guest screen if they have host token for this room
+  if(isHostOfRoom(roomCode)) {
+    const hostBtn = document.getElementById('guest-host-portal-btn');
+    if(hostBtn) {
+      hostBtn.style.display = 'inline-flex';
+      hostBtn.textContent = '🔑 Re-enter as host';
     }
-  } catch(err) {
-    console.log('Could not determine if user is host:', err.message);
   }
 }
 
@@ -638,9 +640,17 @@ function openHostPortal() {
     showToast('⚠ Room code not found');
     return;
   }
-  // Open admin portal - they can use the room code to manage files there
-  window.open(`https://admin.caffncode.com/#room=${roomCode}`, '_blank');
-  showToast('Opening admin portal...');
+  // Switch to host screen - stay in clipdrop, don't leave
+  if(state.guestRoom) {
+    // Guest re-entering with room code as host
+    state.roomCode = roomCode;
+    state.files = state.guestRoom.files || [];
+    state.expiresAt = state.guestRoom.expiresAt;
+    setHostToken(roomCode);  // Mark as host for this room
+    renderHostFiles();
+    showScreen('screen-room');
+    showToast('✅ Switched to host mode');
+  }
 }
 
 /* ══════════════════════════════════
