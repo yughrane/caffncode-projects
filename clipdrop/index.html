@@ -92,7 +92,7 @@
     .btn-primary:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--caramel)}
     .btn-primary:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--caramel)}
     .btn-primary:disabled{opacity:0.5;transform:none;box-shadow:none;cursor:not-allowed}
-    .btn-secondary{background:transparent;color:var(--espresso);border:2px solid var(--espresso);padding:10px 20px;font-family:'Space Mono',monospace;font-weight:700;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;box-shadow:4px 4px 0 var(--latte);cursor:pointer;transition:all 0.12s;white-space:nowrap}
+    .btn-secondary{background:transparent;color:var(--espresso);border:2px solid var(--espresso);padding:10px 20px;font-family:'Space Mono',monospace;font-weight:700;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;box-shadow:4px 4px 0 var(--latte);cursor:pointer;transition:all 0.12s;display:inline-flex;align-items:center;gap:6px}
     .btn-secondary:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--latte)}
     .back-btn{background:none;border:none;font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--steam);cursor:pointer;text-transform:uppercase;letter-spacing:0.1em;display:flex;align-items:center;gap:4px;padding:0;margin-bottom:1.4rem}
     .back-btn:hover{color:var(--caramel)}
@@ -647,6 +647,13 @@ function openHostPortal() {
     state.files = state.guestRoom.files || [];
     state.expiresAt = state.guestRoom.expiresAt;
     setHostToken(roomCode);  // Mark as host for this room
+    
+    // Update UI with actual room code and details
+    document.getElementById('display-code').textContent = roomCode;
+    document.getElementById('expiry-pill').textContent  = 'Expires in ' + EXPIRY_LABELS[state.guestRoom.expiry];
+    document.getElementById('files-pill').textContent   = state.files.length + ' files';
+    document.getElementById('size-pill').textContent    = 'Max ' + SIZE_LABELS[state.guestRoom.maxSize];
+    
     renderHostFiles();
     showScreen('screen-room');
     showToast('✅ Switched to host mode');
