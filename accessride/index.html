@@ -6,8 +6,6 @@
 <title>AccessRide Mumbai · CaffnCode</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>"/>
-<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>"/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,700&family=Outfit:wght@400;500;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,700&family=Outfit:wght@400;500;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
@@ -28,7 +26,7 @@ input{font-family:'Space Mono',monospace}
 .logo-wrap{display:flex;align-items:center;gap:0;text-decoration:none}
 .logo-caff{font-family:'Outfit',sans-serif;font-weight:800;font-size:1.05rem;color:var(--espresso);letter-spacing:-0.03em;display:flex;align-items:center;gap:6px}
 [data-theme="dark"] .logo-caff{color:var(--ink)}
-.logo-pixel{display:inline-block;width:9px;height:9px;background:var(--caramel);box-shadow:2px 2px 0 var(--espresso);flex-shrink:0}
+.nav-icon{display:inline-block;flex-shrink:0;vertical-align:middle;box-shadow:2px 2px 0 var(--latte);}
 .logo-x{font-size:0.72rem;color:var(--steam);font-weight:400;letter-spacing:0.05em;margin:0 6px;font-family:'Space Mono',monospace}
 .logo-access{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:700;font-size:1.25rem;color:var(--caramel);letter-spacing:-0.01em}
 .header-controls{display:flex;gap:6px;align-items:center}
@@ -188,18 +186,24 @@ footer a:hover{text-decoration:underline}
 </style>
 </head>
 <body>
-  <!-- Notice popup -->
-<div id="notice-popup" style="display:none"></div>
 <a href="#main" class="skip-link">Skip to main content</a>
-
-<div style="background:#fff4cc;border-bottom:2px solid #c9a800;color:#7a5800;font-family:'Space Mono',monospace;font-size:0.65rem;font-weight:700;text-align:center;padding:7px 16px;letter-spacing:0.1em;text-transform:uppercase;position:relative;z-index:150;">
-  ⚠ This project is currently under development — some features may not work as expected
-</div>
 
 <header class="header" role="banner">
   <a href="https://projects.caffncode.com" class="logo-wrap" aria-label="CaffnCode Projects">
     <div class="logo-caff">
-      <span class="logo-pixel"></span>
+      <svg class="nav-icon" width="28" height="28" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <rect width="28" height="28" fill="#2c1a0e"/>
+  <rect x="2" y="2" width="24" height="24" fill="#c87941"/>
+  <rect x="7" y="12" width="11" height="9" fill="#2c1a0e"/>
+  <rect x="8" y="13" width="9" height="7" fill="#fdf6f0"/>
+  <rect x="8" y="13" width="9" height="2.5" fill="#e8c9a0" opacity="0.7"/>
+  <rect x="18" y="14" width="2.5" height="4" rx="0.5" fill="#2c1a0e"/>
+  <rect x="6" y="21" width="13" height="1.5" fill="#2c1a0e"/>
+  <rect x="5" y="22.5" width="15" height="1.5" fill="#1a0f07"/>
+  <rect x="10" y="8" width="1" height="4" fill="#2c1a0e" opacity="0.4"/>
+  <rect x="13.5" y="6.5" width="1" height="5" fill="#2c1a0e" opacity="0.4"/>
+  <rect x="17" y="8" width="1" height="4" fill="#2c1a0e" opacity="0.4"/>
+</svg>
       caffncode
     </div>
     <span class="logo-x">×</span>
@@ -322,7 +326,7 @@ footer a:hover{text-decoration:underline}
       CaffnCode<sup>TM</sup> is a registered MSME under Govt. of India · UDYAM-MH-33-0608110
     </a>
   </p>
-  <p style="margin-top:4px">© 6 CaffnCode™ · Built with ☕ by Yug Rane</p>
+  <p style="margin-top:4px">© 2025 CaffnCode™ · Built with ☕ by Yug Rane</p>
 </footer>
 
 <div id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
@@ -406,62 +410,6 @@ function adjustTextSize(v){document.body.style.fontSize=v+'px';document.getEleme
 function triggerSOS(){showToast('🚨 Alert sent to nearest station staff!');speakText('Emergency alert sent. Station staff have been notified. Please stay where you are.');}
 let _tt;function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove('show'),2800);}
 function escHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-/* ── Notice popup ── */
-(async () => {
-  const PAGE_ID = 'accessride'; // ← change per page
-  try {
-    const res  = await fetch('https://ut04js0exa.execute-api.eu-north-1.amazonaws.com/notices/active?page=' + PAGE_ID);
-    const data = await res.json();
-    if (!data.notices?.length) return;
-
-    const colors = {
-      yellow: { bg:'#fff4cc', border:'#c9a800', color:'#7a5800' },
-      red:    { bg:'#fde8e8', border:'#8b1a1a', color:'#8b1a1a' },
-      green:  { bg:'#d8f3dc', border:'#2d6a4f', color:'#2d6a4f' },
-      blue:   { bg:'#d4e8f0', border:'#1a4e6b', color:'#1a4e6b' },
-    };
-
-    const n = data.notices[0];
-    const c = colors[n.color] || colors.yellow;
-
-    const popup = document.createElement('div');
-    popup.id = 'notice-popup';
-    popup.style.cssText = `
-      position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
-      z-index:9999;max-width:560px;width:calc(100% - 3rem);
-      background:${c.bg};border:2px solid ${c.border};
-      box-shadow:4px 4px 0 ${c.border};
-      padding:14px 16px;display:flex;align-items:flex-start;gap:12px;
-      font-family:'Space Mono',monospace;font-size:0.72rem;
-      color:${c.color};line-height:1.6;
-      animation:noticeSlideUp 0.3s ease both;
-    `;
-
-    popup.innerHTML = `
-      <style>
-        @keyframes noticeSlideUp {
-          from { opacity:0; transform:translateX(-50%) translateY(16px); }
-          to   { opacity:1; transform:translateX(-50%) translateY(0); }
-        }
-      </style>
-      <span style="font-size:1rem;flex-shrink:0">
-        ${ n.color==='red' ? '🚨' : n.color==='green' ? '✓' : n.color==='blue' ? 'ℹ' : '⚠' }
-      </span>
-      <span style="flex:1">${n.message}</span>
-      <button onclick="document.getElementById('notice-popup').remove()"
-        style="background:none;border:none;cursor:pointer;color:${c.color};
-        font-size:1.1rem;flex-shrink:0;padding:0;line-height:1;margin-top:-2px;">✕</button>
-    `;
-
-    document.body.appendChild(popup);
-
-    // Auto-dismiss after 10 seconds
-    setTimeout(() => popup?.remove(), 10000);
-
-  } catch (e) {
-    // Fail silently
-  }
-})();
 </script>
 </body>
 </html>

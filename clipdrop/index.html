@@ -48,14 +48,14 @@
       padding:0 2rem;height:56px;
       display:flex;align-items:center;justify-content:space-between;
     }
-
+    .nav-icon{display:inline-block;flex-shrink:0;vertical-align:middle;box-shadow:2px 2px 0 var(--latte);}
+    
     .nav-logo{
       font-family:'Outfit',sans-serif;font-weight:800;font-size:1.05rem;
       letter-spacing:-0.03em;display:flex;align-items:center;gap:6px;
       text-decoration:none;color:var(--espresso);
     }
 
-    .nav-pixel{width:9px;height:9px;background:var(--caramel);box-shadow:2px 2px 0 var(--espresso);display:inline-block;flex-shrink:0}
     .nav-x{font-size:0.7rem;color:var(--steam);margin:0 4px;font-weight:400}
     .nav-clip{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:700;font-size:1.25rem;color:var(--caramel)}
     .nav-badge{font-size:0.55rem;text-transform:uppercase;letter-spacing:0.12em;background:var(--espresso);color:var(--cream);padding:2px 8px;box-shadow:2px 2px 0 var(--caramel)}
@@ -218,8 +218,19 @@ footer a:hover { text-decoration: underline; }
 <!-- NAV -->
 <nav>
   <a href="https://projects.caffncode.com" class="nav-logo">
-    <span class="nav-pixel"></span>
-    caffncode
+<svg class="nav-icon" width="28" height="28" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <rect width="28" height="28" fill="#2c1a0e"/>
+  <rect x="2" y="2" width="24" height="24" fill="#c87941"/>
+  <rect x="7" y="12" width="11" height="9" fill="#2c1a0e"/>
+  <rect x="8" y="13" width="9" height="7" fill="#fdf6f0"/>
+  <rect x="8" y="13" width="9" height="2.5" fill="#e8c9a0" opacity="0.7"/>
+  <rect x="18" y="14" width="2.5" height="4" rx="0.5" fill="#2c1a0e"/>
+  <rect x="6" y="21" width="13" height="1.5" fill="#2c1a0e"/>
+  <rect x="5" y="22.5" width="15" height="1.5" fill="#1a0f07"/>
+  <rect x="10" y="8" width="1" height="4" fill="#2c1a0e" opacity="0.4"/>
+  <rect x="13.5" y="6.5" width="1" height="5" fill="#2c1a0e" opacity="0.4"/>
+  <rect x="17" y="8" width="1" height="4" fill="#2c1a0e" opacity="0.4"/>
+</svg>    caffncode
     <span class="nav-x">×</span>
     <span class="nav-clip">ClipDrop</span>
   </a>
