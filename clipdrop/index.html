@@ -981,9 +981,9 @@ function escHtml(s){
   <div style="background:#fdf6f0;border:2px solid #2c1a0e;padding:2rem;max-width:400px;width:90%;box-shadow:6px 6px 0 #c87941">
     <h3 style="margin:0 0 1rem;font-size:1.3rem;color:#2c1a0e">📬 Get in touch</h3>
     <form id="contact-form-element" onsubmit="handleContactSubmit(event)" style="display:flex;flex-direction:column;gap:1rem">
-      <input type="email" placeholder="Your email" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem">
-      <input type="text" placeholder="Your name" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem">
-      <textarea placeholder="Your message..." rows="5" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem;resize:vertical"></textarea>
+      <input type="email" name="email" placeholder="Your email" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem">
+      <input type="text" name="name" placeholder="Your name" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem">
+      <textarea name="message" placeholder="Your message..." rows="5" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem;resize:vertical"></textarea>
       <div style="display:flex;gap:1rem">
         <button type="submit" style="flex:1;padding:0.75rem;background:#2c1a0e;color:#fdf6f0;border:none;cursor:pointer;font-weight:bold;font-family:monospace">Send</button>
         <button type="button" onclick="closeContactForm()" style="flex:1;padding:0.75rem;background:transparent;border:2px solid #2c1a0e;color:#2c1a0e;cursor:pointer;font-weight:bold;font-family:monospace">Cancel</button>
@@ -997,9 +997,9 @@ function escHtml(s){
   <div style="background:#fdf6f0;border:2px solid #2c1a0e;padding:2rem;max-width:400px;width:90%;box-shadow:6px 6px 0 #c87941">
     <h3 style="margin:0 0 1rem;font-size:1.3rem;color:#2c1a0e">🐛 Report a bug</h3>
     <form id="bug-report-element" onsubmit="handleBugSubmit(event)" style="display:flex;flex-direction:column;gap:1rem">
-      <input type="email" placeholder="Your email" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem">
-      <input type="text" placeholder="Bug title" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem">
-      <textarea placeholder="Describe the bug..." rows="5" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem;resize:vertical"></textarea>
+      <input type="email" name="email" placeholder="Your email" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem">
+      <input type="text" name="title" placeholder="Bug title" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem">
+      <textarea name="description" placeholder="Describe the bug..." rows="5" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem;resize:vertical"></textarea>
       <div style="display:flex;gap:1rem">
         <button type="submit" style="flex:1;padding:0.75rem;background:#2c1a0e;color:#fdf6f0;border:none;cursor:pointer;font-weight:bold;font-family:monospace">Report</button>
         <button type="button" onclick="closeBugReport()" style="flex:1;padding:0.75rem;background:transparent;border:2px solid #2c1a0e;color:#2c1a0e;cursor:pointer;font-weight:bold;font-family:monospace">Cancel</button>
@@ -1014,9 +1014,9 @@ function closeContactForm(){document.getElementById('contact-form-modal').style.
 function openBugReport(){document.getElementById('bug-report-modal').style.display='flex';}
 function closeBugReport(){document.getElementById('bug-report-modal').style.display='none';if(document.getElementById('bug-report-element'))document.getElementById('bug-report-element').reset();}
 
-async function handleContactSubmit(e){e.preventDefault();const fd=new FormData(e.target);fetch('https://formspree.io/f/xyzzkpda',{method:'POST',body:fd}).then(()=>{alert('Thank you! Message sent to yug@caffncode.com');closeContactForm();}).catch(()=>{alert('Message sent!');closeContactForm();});}
+async function handleContactSubmit(e){e.preventDefault();const data={type:'contact',email:e.target.email.value,name:e.target.name.value,message:e.target.message.value};fetch('https://ut04js0exa.execute-api.eu-north-1.amazonaws.com/send-email',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}).then(r=>r.json()).then(d=>{if(d.success){alert('Thank you! Message sent to yug@caffncode.com');closeContactForm();}else{alert('Error: '+d.error);}}).catch(e=>{console.error(e);alert('Failed to send message');});}
 
-async function handleBugSubmit(e){e.preventDefault();const fd=new FormData(e.target);fetch('https://formspree.io/f/xyzzkpdq',{method:'POST',body:fd}).then(()=>{alert('Thank you! Bug report sent to admin@caffncode.com');closeBugReport();}).catch(()=>{alert('Report sent!');closeBugReport();});}
+async function handleBugSubmit(e){e.preventDefault();const data={type:'bug',email:e.target.email.value,title:e.target.title.value,description:e.target.description.value};fetch('https://ut04js0exa.execute-api.eu-north-1.amazonaws.com/send-email',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}).then(r=>r.json()).then(d=>{if(d.success){alert('Thank you! Bug report sent to admin@caffncode.com');closeBugReport();}else{alert('Error: '+d.error);}}).catch(e=>{console.error(e);alert('Failed to send report');});}
 
 document.getElementById('contact-form-modal').addEventListener('click',(e)=>{if(e.target.id==='contact-form-modal')closeContactForm();});
 document.getElementById('bug-report-modal').addEventListener('click',(e)=>{if(e.target.id==='bug-report-modal')closeBugReport();});
