@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>"/>
   <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>"/>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,700&family=Outfit:wght@400;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,700&family=Outfit:wght@400;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
@@ -429,7 +430,31 @@ footer a:hover { text-decoration: underline; }
 /* ══════════════════════════════════
    CONFIG
 ══════════════════════════════════ */
-const API = 'https://ut04js0exa.execute-api.eu-north-1.amazonaws.com';
+const SUPABASE_URL = 'https://qjcnqslvoseyaabjjvkn.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_01TSfCXJMwGFVt2PxJQvSA_n8eL2zn7';
+const R2_WORKER    = 'https://clipdrop-r2.yug-rane.workers.dev';
+const sb           = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const CODE_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+function generateCode() {
+  let code = '';
+  for (let i = 0; i < 4; i++) code += CODE_CHARS[Math.floor(Math.random() * CODE_CHARS.length)];
+  code += '-';
+  for (let i = 0; i < 4; i++) code += CODE_CHARS[Math.floor(Math.random() * CODE_CHARS.length)];
+  return code;
+}
+
+function getExpirySeconds(expiry) {
+  const map = {
+    '10m': 10 * 60,
+    '30m': 30 * 60,
+    '1h':  60 * 60,
+    '6h':  6 * 60 * 60,
+    '24h': 24 * 60 * 60,
+    'close': 24 * 60 * 60,
+  };
+  return map[expiry] || 30 * 60;
+}
 
 /* ══════════════════════════════════
    STATE
@@ -509,24 +534,26 @@ async function createRoom(){
   btn.innerHTML = '<span class="spinner"></span> Brewing…';
 
   try {
-    const res = await fetch(`${API}/room/create`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        expiry:   state.expiry,
-        maxSize:  state.maxSize,
-        roomName: document.getElementById('room-name-input').value.trim(),
-      }),
-    });
+    const roomCode = generateCode();
+    const expirySecs = getExpirySeconds(state.expiry);
+    const expiresAt = Math.floor(Date.now() / 1000) + expirySecs;
+    const expiresAtIso = new Date(expiresAt * 1000).toISOString();
+    const roomName = document.getElementById('room-name-input').value.trim();
 
-    const data = await res.json();
-    if(!res.ok) throw new Error(data.error || 'Failed to create room');
+    const { error } = await sb.from('clipdrop_rooms').insert([{
+      room_code: roomCode,
+      room_name: roomName,
+      expiry: state.expiry,
+      max_size: state.maxSize,
+      files: [],
+      expires_at: expiresAtIso
+    }]);
 
-    state.roomCode  = data.roomCode;
+    if (error) throw error;
+
+    state.roomCode  = roomCode;
     state.files     = [];
-    state.expiresAt = data.expiresAt;
-    state.hostIp    = data.hostIp;  // Store host IP for later access
-    localStorage.setItem('clipdrop_hostIp_' + data.roomCode, data.hostIp);  // Persist
+    state.expiresAt = expiresAt;
 
     document.getElementById('display-code').textContent = state.roomCode;
     document.getElementById('expiry-pill').textContent  = 'Expires in ' + EXPIRY_LABELS[state.expiry];
@@ -536,10 +563,10 @@ async function createRoom(){
     document.getElementById('host-files-wrap').style.display = 'none';
 
     // Start countdown timer
-    startTimer(data.expiresAt, 'expiry-pill');
+    startTimer(expiresAt, 'expiry-pill');
 
     // Show host portal button for the room creator
-    setHostToken(state.roomCode);  // Store token to allow re-entry as host
+    setHostToken(state.roomCode);
     const hostBtn = document.getElementById('host-portal-btn');
     if(hostBtn) hostBtn.style.display = 'inline-flex';
 
@@ -582,20 +609,37 @@ async function fetchAndJoin(code){
   if(errBox) errBox.classList.remove('show');
 
   try {
-    const res  = await fetch(`${API}/room/${code}`);
-    const data = await res.json();
-    if(!res.ok) throw new Error(data.error || 'Room not found');
+    const { data: room, error } = await sb.from('clipdrop_rooms')
+      .select('*')
+      .eq('room_code', code)
+      .maybeSingle();
 
-    state.guestRoom = data;
-    state.hostIp = data.hostIp;  // Store host IP from room data
+    if (error) throw error;
+    if (!room) throw new Error('Room not found or expired');
 
-    document.getElementById('guest-code').textContent = data.roomCode;
-    startTimer(data.expiresAt, 'guest-expiry-pill');
+    const nowIso = new Date().toISOString();
+    if (room.expires_at < nowIso) throw new Error('Room has expired');
 
-    renderGuestFiles(data.files || []);
+    const expiresAtUnix = Math.floor(new Date(room.expires_at).getTime() / 1000);
+
+    const roomData = {
+      roomCode: room.room_code,
+      roomName: room.room_name,
+      expiry: room.expiry,
+      maxSize: room.max_size,
+      files: room.files || [],
+      expiresAt: expiresAtUnix
+    };
+
+    state.guestRoom = roomData;
+
+    document.getElementById('guest-code').textContent = roomData.roomCode;
+    startTimer(expiresAtUnix, 'guest-expiry-pill');
+
+    renderGuestFiles(roomData.files || []);
     showScreen('screen-guest');
-    showHostControls(data.roomCode);  // Show host button if they created this room
-    showToast('✅ Joined room ' + data.roomCode);
+    showHostControls(roomData.roomCode);
+    showToast('✅ Joined room ' + roomData.roomCode);
 
   } catch(err){
     if(errBox){ errBox.textContent='⚠ '+err.message; errBox.classList.add('show'); }
@@ -687,23 +731,11 @@ async function uploadFile(file){
   renderHostFiles();
 
   try {
-    // Step 1: get presigned URL
-    const res = await fetch(`${API}/room/${state.roomCode}/upload`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        fileName: file.name,
-        fileSize: file.size,
-        fileType: file.type || 'application/octet-stream',
-      }),
-    });
+    const r2Key = 'rooms/' + state.roomCode + '/' + encodeURIComponent(file.name);
+    const uploadUrl = `${R2_WORKER}/${r2Key}`;
 
-    const data = await res.json();
-    if(!res.ok) throw new Error(data.error || 'Failed to get upload URL');
-
-    // Step 2: upload directly to S3 via presigned URL
     const xhr = new XMLHttpRequest();
-    xhr.open('PUT', data.presignedUrl);
+    xhr.open('PUT', uploadUrl);
     xhr.setRequestHeader('Content-Type', file.type || 'application/octet-stream');
 
     xhr.upload.onprogress = (e) => {
@@ -714,13 +746,40 @@ async function uploadFile(file){
       }
     };
 
-    xhr.onload = () => {
+    xhr.onload = async () => {
       if(xhr.status === 200){
-        item.progress = 100;
-        item.status   = 'ready';
-        item.s3Key    = data.s3Key;
-        renderHostFiles();
-        showToast('✅ ' + file.name + ' uploaded');
+        try {
+          const newFileRecord = {
+            fileName: file.name,
+            fileSize: file.size,
+            fileType: file.type || 'application/octet-stream',
+            key: r2Key,
+            uploadedAt: Math.floor(Date.now() / 1000)
+          };
+
+          const { data: currentRoom } = await sb.from('clipdrop_rooms')
+            .select('files')
+            .eq('room_code', state.roomCode)
+            .single();
+
+          const existingFiles = (currentRoom?.files || []).filter(f => f.fileName !== file.name);
+          const updatedFiles = [...existingFiles, newFileRecord];
+
+          await sb.from('clipdrop_rooms')
+            .update({ files: updatedFiles })
+            .eq('room_code', state.roomCode);
+
+          item.progress = 100;
+          item.status   = 'ready';
+          item.s3Key    = r2Key;
+          renderHostFiles();
+          showToast('✅ ' + file.name + ' uploaded');
+        } catch(saveErr) {
+          console.error(saveErr);
+          item.status = 'error';
+          renderHostFiles();
+          showToast('⚠ Error saving file record');
+        }
       } else {
         item.status = 'error';
         renderHostFiles();
@@ -809,29 +868,15 @@ function renderGuestFiles(files){
    DOWNLOAD
 ══════════════════════════════════ */
 async function downloadFile(fileName){
-  showToast('⬇ Preparing download…');
-  try {
-    const res  = await fetch(`${API}/room/${state.roomCode}/download/${encodeURIComponent(fileName)}`);
-    const data = await res.json();
-    if(!res.ok) throw new Error(data.error || 'Download failed');
-    triggerDownload(data.presignedUrl, fileName);
-  } catch(err){
-    showToast('⚠ ' + err.message);
-  }
+  const url = `${R2_WORKER}/rooms/${state.roomCode}/${encodeURIComponent(fileName)}`;
+  triggerDownload(url, fileName);
 }
 
 async function downloadGuestFile(fileName){
   const code = state.guestRoom?.roomCode;
   if(!code) return;
-  showToast('⬇ Preparing download…');
-  try {
-    const res  = await fetch(`${API}/room/${code}/download/${encodeURIComponent(fileName)}`);
-    const data = await res.json();
-    if(!res.ok) throw new Error(data.error || 'Download failed');
-    triggerDownload(data.presignedUrl, fileName);
-  } catch(err){
-    showToast('⚠ ' + err.message);
-  }
+  const url = `${R2_WORKER}/rooms/${code}/${encodeURIComponent(fileName)}`;
+  triggerDownload(url, fileName);
 }
 
 function triggerDownload(url, name){
@@ -916,9 +961,16 @@ function escHtml(s){
 (async () => {
   const PAGE_ID = 'clipdrop'; // ← change per page
   try {
-    const res  = await fetch('https://ut04js0exa.execute-api.eu-north-1.amazonaws.com/notices/active?page=' + PAGE_ID);
-    const data = await res.json();
-    if (!data.notices?.length) return;
+    const SUPABASE_URL = 'https://qjcnqslvoseyaabjjvkn.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_01TSfCXJMwGFVt2PxJQvSA_n8eL2zn7';
+    const res  = await fetch(`${SUPABASE_URL}/rest/v1/notices?pages=cs.{${PAGE_ID}}&active=eq.true&order=created_at.desc&limit=1`, {
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`
+      }
+    });
+    const notices = await res.json();
+    if (!Array.isArray(notices) || !notices.length) return;
 
     const colors = {
       yellow: { bg:'#fff4cc', border:'#c9a800', color:'#7a5800' },
@@ -927,7 +979,7 @@ function escHtml(s){
       blue:   { bg:'#d4e8f0', border:'#1a4e6b', color:'#1a4e6b' },
     };
 
-    const n = data.notices[0];
+    const n = notices[0];
     const c = colors[n.color] || colors.yellow;
 
     const popup = document.createElement('div');
@@ -1003,14 +1055,62 @@ function escHtml(s){
 </div>
 
 <script>
+const SUPABASE_URL = 'https://qjcnqslvoseyaabjjvkn.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_01TSfCXJMwGFVt2PxJQvSA_n8eL2zn7';
+
+async function submitFeedback(payload) {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/messages`, {
+    method: 'POST',
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': `Bearer ${SUPABASE_KEY}`,
+      'Content-Type': 'application/json',
+      'Prefer': 'return=minimal'
+    },
+    body: JSON.stringify(payload)
+  });
+  if (!res.ok) throw new Error('Submission failed');
+  return true;
+}
+
 function openContactForm(){document.getElementById('contact-form-modal').style.display='flex';}
 function closeContactForm(){document.getElementById('contact-form-modal').style.display='none';if(document.getElementById('contact-form-element'))document.getElementById('contact-form-element').reset();}
 function openBugReport(){document.getElementById('bug-report-modal').style.display='flex';}
 function closeBugReport(){document.getElementById('bug-report-modal').style.display='none';if(document.getElementById('bug-report-element'))document.getElementById('bug-report-element').reset();}
 
-async function handleContactSubmit(e){e.preventDefault();const data={type:'contact',email:e.target.email.value,name:e.target.name.value,message:e.target.message.value};fetch('https://ut04js0exa.execute-api.eu-north-1.amazonaws.com/send-email',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}).then(r=>r.json()).then(d=>{if(d.success){alert('Thank you! Message sent to yug_rane@outlook.com');closeContactForm();}else{alert('Error: '+d.error);}}).catch(e=>{console.error(e);alert('Failed to send message');});}
+async function handleContactSubmit(e){
+  e.preventDefault();
+  const data = {
+    type: 'contact',
+    email: e.target.email.value,
+    name: e.target.name.value,
+    message: e.target.message.value
+  };
+  submitFeedback(data).then(() => {
+    alert('Thank you! Your message has been received.');
+    closeContactForm();
+  }).catch(err => {
+    console.error(err);
+    alert('Failed to send message: ' + err.message);
+  });
+}
 
-async function handleBugSubmit(e){e.preventDefault();const data={type:'bug',email:e.target.email.value,title:e.target.title.value,description:e.target.description.value};fetch('https://ut04js0exa.execute-api.eu-north-1.amazonaws.com/send-email',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}).then(r=>r.json()).then(d=>{if(d.success){alert('Thank you! Bug report sent to yug_rane@outlook.com');closeBugReport();}else{alert('Error: '+d.error);}}).catch(e=>{console.error(e);alert('Failed to send report');});}
+async function handleBugSubmit(e){
+  e.preventDefault();
+  const data = {
+    type: 'bug',
+    email: e.target.email.value,
+    title: e.target.title.value,
+    message: e.target.description.value
+  };
+  submitFeedback(data).then(() => {
+    alert('Thank you! Your bug report has been submitted.');
+    closeBugReport();
+  }).catch(err => {
+    console.error(err);
+    alert('Failed to send report: ' + err.message);
+  });
+}
 
 document.getElementById('contact-form-modal').addEventListener('click',(e)=>{if(e.target.id==='contact-form-modal')closeContactForm();});
 document.getElementById('bug-report-modal').addEventListener('click',(e)=>{if(e.target.id==='bug-report-modal')closeBugReport();});
