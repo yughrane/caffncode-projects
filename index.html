@@ -485,7 +485,7 @@
 
         <div class="featured-left">
           <div class="project-num">01 / clipdrop</div>
-          <div class="featured-badge">Serverless · Live</div>
+          <div class="featured-badge">Cloudflare R2 + Supabase · Live</div>
           <div class="project-title">ClipDrop</div>
           <p class="project-desc">
             Your browser is the pendrive. Create a room, drop your files, share the code —
@@ -493,25 +493,24 @@
             Files auto-delete when the room expires.
           </p>
           <ul class="project-features">
-            <li>Room-code based sharing — no login required</li>
-            <li>Direct S3 upload via presigned URLs — files never touch the server</li>
-            <li>User-controlled expiry — 10 min, 30 min, 1hr, 6hr, 24hr, or on tab close</li>
-            <li>Auto file deletion via S3 lifecycle rules + DynamoDB TTL</li>
+            <li>Room-code based sharing — no login or account required</li>
+            <li>Direct Cloudflare R2 upload via edge worker — zero server bottlenecks</li>
+            <li>User-controlled expiry — 10m, 30m, 1h, 6h, 24h, or on tab close</li>
+            <li>Automatic file & room expiration via edge workers & Supabase</li>
             <li>Supports any file format up to 500 MB per file</li>
-            <li>Live countdown timer, per-file progress bars, download all</li>
+            <li>Live countdown timer, real-time sync, in-browser preview & instant download</li>
           </ul>
           <div class="project-tags">
-            <span class="project-tag tag-highlight">AWS S3</span>
-            <span class="project-tag tag-highlight">Lambda</span>
-            <span class="project-tag">DynamoDB</span>
-            <span class="project-tag">API Gateway</span>
+            <span class="project-tag tag-highlight">Cloudflare R2</span>
+            <span class="project-tag tag-highlight">Workers</span>
+            <span class="project-tag">Supabase</span>
             <span class="project-tag">JavaScript</span>
             <span class="project-tag">Serverless</span>
           </div>
         </div>
 
         <div class="featured-right">
-          <div class="featured-stat"><strong>4</strong> Lambda fns</div>
+          <div class="featured-stat"><strong>Edge</strong> Worker</div>
           <div class="featured-stat"><strong>0</strong> accounts needed</div>
           <div class="featured-stat"><strong>500</strong> MB max</div>
           <div class="featured-stat"><strong>∞</strong> file formats</div>

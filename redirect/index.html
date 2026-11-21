@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Redirecting to ClipDrop · CaffnCode</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>"/>
+  <meta http-equiv="refresh" content="1; url=/clipdrop"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --espresso: #2c1a0e;
+      --caramel:  #c87941;
+      --foam:     #fdf6f0;
+      --latte:    #e8d5c4;
+      --cream:    #f5ede4;
+      --steam:    #9c8272;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--foam);
+      color: var(--espresso);
+      font-family: 'Space Mono', monospace;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      background-image:
+        radial-gradient(ellipse at 10% 20%, rgba(200,121,65,0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 90% 80%, rgba(44,26,14,0.06) 0%, transparent 50%);
+    }
+    .card {
+      background: var(--cream);
+      border: 2px solid var(--espresso);
+      box-shadow: 6px 6px 0 var(--espresso);
+      padding: 2.5rem 2rem;
+      max-width: 440px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      background: var(--latte);
+      border: 1.5px solid var(--espresso);
+      padding: 4px 10px;
+      margin-bottom: 1.2rem;
+      font-weight: 700;
+    }
+    h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-bottom: 0.8rem;
+      letter-spacing: -0.02em;
+    }
+    p {
+      font-size: 0.78rem;
+      line-height: 1.6;
+      color: var(--steam);
+      margin-bottom: 1.5rem;
+    }
+    .spinner {
+      width: 24px;
+      height: 24px;
+      border: 2.5px solid var(--latte);
+      border-top-color: var(--caramel);
+      border-radius: 50%;
+      display: inline-block;
+      animation: spin 0.8s linear infinite;
+      margin-bottom: 1.2rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 0.75rem 1.4rem;
+      background: var(--espresso);
+      color: var(--foam);
+      text-decoration: none;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 700;
+      border: 2px solid var(--espresso);
+      box-shadow: 3px 3px 0 var(--caramel);
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+    .btn:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0 var(--caramel);
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="badge">📎 Moving to new home</div>
+    <div class="spinner"></div>
+    <h1>Redirecting to ClipDrop…</h1>
+    <p>ClipDrop is now hosted on CaffnCode Projects with high-speed Cloudflare R2 storage.</p>
+    <a href="/clipdrop" class="btn" id="redir-btn">Open ClipDrop ↗</a>
+  </div>
+  <script>
+    setTimeout(function() {
+      window.location.replace('/clipdrop');
+    }, 400);
+  </script>
+</body>
+</html>

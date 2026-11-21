@@ -825,6 +825,7 @@ function renderHostFiles(){
         <div class="progress-wrap"><div class="progress-fill" id="prog-${f.tempId}" style="width:${f.progress}%"></div></div>
       </div>
       <div class="file-actions">
+        <button class="file-btn" onclick="viewFile('${escHtml(f.fileName)}')" title="Preview / View">👁</button>
         <button class="file-btn" onclick="downloadFile('${escHtml(f.fileName)}')" title="Download">⬇</button>
         <button class="file-btn del" onclick="removeFile(${i})" title="Remove">✕</button>
       </div>`;
@@ -858,6 +859,7 @@ function renderGuestFiles(files){
         <div class="file-meta">${fmtSize(f.fileSize)} · ready ✓</div>
       </div>
       <div class="file-actions">
+        <button class="file-btn" onclick="viewGuestFile('${escHtml(f.fileName)}')" title="Preview / View">👁</button>
         <button class="file-btn" onclick="downloadGuestFile('${escHtml(f.fileName)}')" title="Download">⬇</button>
       </div>`;
     list.appendChild(div);
@@ -865,28 +867,57 @@ function renderGuestFiles(files){
 }
 
 /* ══════════════════════════════════
-   DOWNLOAD
+   DOWNLOAD & PREVIEW
 ══════════════════════════════════ */
+function viewFile(fileName){
+  const url = `${R2_WORKER}/rooms/${state.roomCode}/${encodeURIComponent(fileName)}`;
+  window.open(url, '_blank', 'noopener');
+}
+
+function viewGuestFile(fileName){
+  const code = state.guestRoom?.roomCode;
+  if(!code) return;
+  const url = `${R2_WORKER}/rooms/${code}/${encodeURIComponent(fileName)}`;
+  window.open(url, '_blank', 'noopener');
+}
+
 async function downloadFile(fileName){
   const url = `${R2_WORKER}/rooms/${state.roomCode}/${encodeURIComponent(fileName)}`;
-  triggerDownload(url, fileName);
+  await triggerDownload(url, fileName);
 }
 
 async function downloadGuestFile(fileName){
   const code = state.guestRoom?.roomCode;
   if(!code) return;
   const url = `${R2_WORKER}/rooms/${code}/${encodeURIComponent(fileName)}`;
-  triggerDownload(url, fileName);
+  await triggerDownload(url, fileName);
 }
 
-function triggerDownload(url, name){
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = name;
-  a.target = '_blank';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
+async function triggerDownload(url, name){
+  try {
+    showToast('⬇ Fetching ' + name + '…');
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const blob = await res.blob();
+    const blobUrl = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = blobUrl;
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(blobUrl), 10000);
+    showToast('✓ Download complete');
+  } catch (err) {
+    console.warn('Direct blob download failed, falling back to direct link:', err);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = name;
+    a.target = '_blank';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
 }
 
 async function downloadAll(mode){
