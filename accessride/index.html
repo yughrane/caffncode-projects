@@ -497,6 +497,72 @@ async function handleBugSubmit(e){
   });
 }
 
+/* ── Notice popup ── */
+(async () => {
+  const PAGE_ID = 'accessride';
+  try {
+    const SUPABASE_URL = 'https://qjcnqslvoseyaabjjvkn.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_01TSfCXJMwGFVt2PxJQvSA_n8eL2zn7';
+    const res  = await fetch(`${SUPABASE_URL}/rest/v1/notices?pages=ov.{${PAGE_ID},projects.caffncode.com}&active=eq.true&order=created_at.desc&limit=1`, {
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`
+      }
+    });
+    const notices = await res.json();
+    if (!Array.isArray(notices) || !notices.length) return;
+
+    const n = notices[0];
+    if (n.expires_at && new Date(n.expires_at).getTime() <= Date.now()) return;
+
+    const colors = {
+      yellow: { bg:'#fff4cc', border:'#c9a800', color:'#7a5800' },
+      red:    { bg:'#fde8e8', border:'#8b1a1a', color:'#8b1a1a' },
+      green:  { bg:'#d8f3dc', border:'#2d6a4f', color:'#2d6a4f' },
+      blue:   { bg:'#d4e8f0', border:'#1a4e6b', color:'#1a4e6b' },
+    };
+
+    const c = colors[n.color] || colors.yellow;
+
+    const popup = document.createElement('div');
+    popup.id = 'notice-popup';
+    popup.style.cssText = `
+      position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+      z-index:9999;max-width:560px;width:calc(100% - 3rem);
+      background:${c.bg};border:2px solid ${c.border};
+      box-shadow:4px 4px 0 ${c.border};
+      padding:14px 16px;display:flex;align-items:flex-start;gap:12px;
+      font-family:'Space Mono',monospace;font-size:0.72rem;
+      color:${c.color};line-height:1.6;
+      animation:noticeSlideUp 0.3s ease both;
+    `;
+
+    popup.innerHTML = `
+      <style>
+        @keyframes noticeSlideUp {
+          from { opacity:0; transform:translateX(-50%) translateY(16px); }
+          to   { opacity:1; transform:translateX(-50%) translateY(0); }
+        }
+      </style>
+      <span style="font-size:1rem;flex-shrink:0">
+        ${ n.color==='red' ? '🚨' : n.color==='green' ? '✓' : n.color==='blue' ? 'ℹ' : '⚠' }
+      </span>
+      <span style="flex:1">${n.message}</span>
+      <button onclick="document.getElementById('notice-popup').remove()"
+        style="background:none;border:none;cursor:pointer;color:${c.color};
+        font-size:1.1rem;flex-shrink:0;padding:0;line-height:1;margin-top:-2px;">✕</button>
+    `;
+
+    document.body.appendChild(popup);
+
+    // Auto-dismiss after 10 seconds
+    setTimeout(() => popup?.remove(), 10000);
+
+  } catch (e) {
+    // Fail silently
+  }
+})();
+
 document.getElementById('contact-form-modal').addEventListener('click',(e)=>{if(e.target.id==='contact-form-modal')closeContactForm();});
 document.getElementById('bug-report-modal').addEventListener('click',(e)=>{if(e.target.id==='bug-report-modal')closeBugReport();});
 </script>

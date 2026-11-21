@@ -1003,14 +1003,8 @@ function escHtml(s){
     const notices = await res.json();
     if (!Array.isArray(notices) || !notices.length) return;
 
-    const colors = {
-      yellow: { bg:'#fff4cc', border:'#c9a800', color:'#7a5800' },
-      red:    { bg:'#fde8e8', border:'#8b1a1a', color:'#8b1a1a' },
-      green:  { bg:'#d8f3dc', border:'#2d6a4f', color:'#2d6a4f' },
-      blue:   { bg:'#d4e8f0', border:'#1a4e6b', color:'#1a4e6b' },
-    };
-
     const n = notices[0];
+    if (n.expires_at && new Date(n.expires_at).getTime() <= Date.now()) return;
     const c = colors[n.color] || colors.yellow;
 
     const popup = document.createElement('div');
