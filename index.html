@@ -415,8 +415,254 @@
       .reveal { opacity: 1; transform: none; transition: none; }
     }
 
+    /* ── MEMBERS ONLY CARDS & CAROUSEL MODAL ── */
+    .project-card.members-card {
+      border-color: var(--espresso);
+      background: var(--cream);
+      cursor: pointer;
+    }
+    .card-badge-members {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.58rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 3px 8px;
+      background: var(--espresso);
+      color: var(--caramel);
+      box-shadow: 2px 2px 0 var(--caramel);
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+    }
+    .card-preview-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--espresso);
+      color: var(--cream);
+      border: 1.5px solid var(--espresso);
+      padding: 6px 12px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      box-shadow: 3px 3px 0 var(--caramel);
+      cursor: pointer;
+      transition: all 0.12s;
+      margin-top: 0.8rem;
+    }
+    .project-card:hover .card-preview-btn {
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0 var(--caramel);
+      background: var(--caramel);
+      color: var(--espresso);
+    }
+
+    /* Modal */
+    .gallery-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: rgba(26, 15, 7, 0.82);
+      backdrop-filter: blur(4px);
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .gallery-modal.active {
+      display: flex;
+      animation: modalFadeIn 0.2s ease both;
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .gallery-card {
+      background: var(--foam);
+      border: 2px solid var(--espresso);
+      box-shadow: 8px 8px 0 var(--caramel);
+      width: 100%;
+      max-width: 960px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      animation: modalPop 0.22s ease both;
+    }
+    @keyframes modalPop {
+      from { transform: scale(0.97) translateY(8px); }
+      to { transform: scale(1) translateY(0); }
+    }
+    .gallery-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 1.4rem;
+      background: var(--espresso);
+      color: var(--cream);
+      border-bottom: 2px solid var(--caramel);
+    }
+    .gallery-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .gallery-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: var(--cream);
+    }
+    .gallery-badge {
+      font-size: 0.55rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      background: var(--caramel);
+      color: var(--espresso);
+      padding: 2px 7px;
+      font-weight: 700;
+    }
+    .gallery-close {
+      background: transparent;
+      border: 1.5px solid rgba(255,255,255,0.25);
+      color: var(--cream);
+      width: 32px;
+      height: 32px;
+      font-family: 'Space Mono', monospace;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+    }
+    .gallery-close:hover {
+      border-color: var(--caramel);
+      color: var(--caramel);
+      transform: scale(1.05);
+    }
+    .gallery-notice {
+      background: var(--cream);
+      border-bottom: 1.5px dashed rgba(44,26,14,0.2);
+      padding: 8px 1.4rem;
+      font-size: 0.62rem;
+      color: var(--mocha);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .gallery-viewport {
+      position: relative;
+      background: #1a0f07;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 280px;
+      max-height: 500px;
+      overflow: hidden;
+    }
+    .gallery-img {
+      width: 100%;
+      height: auto;
+      max-height: 500px;
+      object-fit: contain;
+      display: block;
+    }
+    .gallery-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(44,26,14,0.85);
+      border: 2px solid var(--caramel);
+      color: var(--cream);
+      width: 42px;
+      height: 42px;
+      font-size: 1.2rem;
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.12s;
+      box-shadow: 3px 3px 0 var(--dark-roast);
+      z-index: 10;
+    }
+    .gallery-nav-btn:hover {
+      background: var(--caramel);
+      color: var(--espresso);
+      box-shadow: 4px 4px 0 var(--espresso);
+    }
+    .gallery-nav-btn.prev { left: 1rem; }
+    .gallery-nav-btn.next { right: 1rem; }
+    .gallery-footer {
+      padding: 0.9rem 1.4rem;
+      background: var(--foam);
+      border-top: 2px solid var(--espresso);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .gallery-info {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .gallery-slide-name {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--espresso);
+      margin-bottom: 2px;
+    }
+    .gallery-slide-desc {
+      font-size: 0.68rem;
+      color: var(--mocha);
+      line-height: 1.6;
+    }
+    .gallery-counter {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--steam);
+      white-space: nowrap;
+    }
+    .gallery-dots {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding-top: 4px;
+    }
+    .gallery-dot {
+      width: 10px;
+      height: 10px;
+      background: var(--latte);
+      border: 1.5px solid var(--espresso);
+      cursor: pointer;
+      transition: all 0.12s;
+    }
+    .gallery-dot.active {
+      background: var(--caramel);
+      box-shadow: 2px 2px 0 var(--espresso);
+      transform: scale(1.15);
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 700px) {
+      .gallery-card { max-height: 94vh; }
+      .gallery-viewport { min-height: 220px; max-height: 320px; }
+      .gallery-img { max-height: 320px; }
+      .gallery-nav-btn { width: 34px; height: 34px; font-size: 1rem; }
+      .gallery-nav-btn.prev { left: 0.4rem; }
+      .gallery-nav-btn.next { right: 0.4rem; }
+      .gallery-title { font-size: 1rem; }
+      .gallery-badge { font-size: 0.5rem; }
+      .gallery-footer { padding: 0.7rem 1rem; }
       .nav-links { display: none; }
       .page-hero { padding: 100px 1.5rem 2rem; }
       .projects-section { padding: 0 1.5rem 4rem; }
@@ -559,7 +805,62 @@
         <div class="project-arrow">↗</div>
       </a>
 
-      <!-- 04 — Brewing placeholder -->
+      <!-- 04 — CaffnCode Admin Portal (MEMBERS ONLY) -->
+      <div class="project-card members-card" onclick="openGallery('admin')" role="button" tabindex="0">
+        <div class="project-stripe"></div>
+        <div class="card-badge-members">🔒 Members Only · Internal Portal</div>
+        <div class="project-num">04 / admin.caffncode.com</div>
+        <div class="project-title">CaffnCode Admin Portal</div>
+        <p class="project-desc">
+          Unified internal management system and developer backoffice. Orchestrates single sign-on authentication, automated Lark Open Platform member onboarding and mailbox allocation, personal email invitation dispatch, team task tracking, and cross-site notice broadcasting.
+        </p>
+        <ul class="project-features">
+          <li>Role-based access control (Super Admin & Team Members) with Supabase Auth</li>
+          <li>Automated Lark Open Platform contact provisioning & mailbox allocation</li>
+          <li>Onboarding credential dispatch & custom founder's note via Resend API</li>
+          <li>Full workspace task board with categorised workflows (To Do, In Progress, Done)</li>
+          <li>Cross-domain notice banners broadcasted in real time to all caffncode properties</li>
+          <li>Interactive 3-step first-login welcome tour tutorial</li>
+        </ul>
+        <div class="project-tags">
+          <span class="project-tag tag-highlight">Supabase Auth</span>
+          <span class="project-tag tag-highlight">Lark Open API</span>
+          <span class="project-tag">PostgreSQL</span>
+          <span class="project-tag">Resend API</span>
+          <span class="project-tag">Serverless</span>
+          <span class="project-tag">Internal Tool</span>
+        </div>
+        <div class="card-preview-btn">📸 View Interface Screenshots (4)</div>
+      </div>
+
+      <!-- 05 — CaffnCode Webmail (MEMBERS ONLY) -->
+      <div class="project-card members-card" onclick="openGallery('email')" role="button" tabindex="0">
+        <div class="project-stripe"></div>
+        <div class="card-badge-members">🔒 Members Only · Workspace Mail</div>
+        <div class="project-num">05 / email.caffncode.com</div>
+        <div class="project-title">CaffnCode Webmail</div>
+        <p class="project-desc">
+          Retro terminal webmail client designed specifically for CaffnCode team communication. Features seamless SSO session transfer directly from the admin portal, a 3-column responsive layout, and full integration with Lark Suite's Open Mail APIs.
+        </p>
+        <ul class="project-features">
+          <li>Custom espresso & foam terminal theme with high-contrast monospace typography</li>
+          <li>Seamless SSO handoff: click 'Mail' in admin to jump into webmail authenticated</li>
+          <li>3-column layout: folder navigation, message list with unread markers, and message body</li>
+          <li>Lark Suite Open Platform integration for enterprise mailbox synchronization</li>
+          <li>Clean composer with subject, recipient management, and signature formatting</li>
+          <li>Universal responsive design optimized for mobile and desktop screens</li>
+        </ul>
+        <div class="project-tags">
+          <span class="project-tag tag-highlight">Lark Mail API</span>
+          <span class="project-tag tag-highlight">Supabase SSO</span>
+          <span class="project-tag">Vanilla JS</span>
+          <span class="project-tag">Retro UI</span>
+          <span class="project-tag">Workspace Mail</span>
+        </div>
+        <div class="card-preview-btn">📸 View Interface Screenshots (2)</div>
+      </div>
+
+      <!-- 06 — Brewing placeholder -->
       <div class="project-card brewing">
         <div class="brewing-icon">☕</div>
         <div class="project-num" style="color:var(--steam)">
@@ -775,6 +1076,161 @@ async function handleBugSubmit(e){
 
 document.getElementById('contact-form-modal').addEventListener('click',(e)=>{if(e.target.id==='contact-form-modal')closeContactForm();});
 document.getElementById('bug-report-modal').addEventListener('click',(e)=>{if(e.target.id==='bug-report-modal')closeBugReport();});
+</script>
+
+<!-- ── SCREENSHOT GALLERY MODAL ── -->
+<div id="gallery-modal" class="gallery-modal" onclick="if(event.target===this)closeGallery()">
+  <div class="gallery-card">
+    <div class="gallery-header">
+      <div class="gallery-title-wrap">
+        <span style="display:inline-block;width:10px;height:10px;background:var(--caramel);box-shadow:2px 2px 0 var(--dark-roast)"></span>
+        <div id="gallery-title" class="gallery-title">Gallery</div>
+        <span id="gallery-badge" class="gallery-badge">Members Only</span>
+      </div>
+      <button class="gallery-close" onclick="closeGallery()" aria-label="Close">✕</button>
+    </div>
+
+    <div class="gallery-notice">
+      <span>🔒</span>
+      <span id="gallery-notice-text">Internal member-only service. Direct links are restricted to authenticated accounts.</span>
+    </div>
+
+    <div class="gallery-viewport">
+      <img id="gallery-img" class="gallery-img" src="" alt="Screenshot" />
+      <button class="gallery-nav-btn prev" onclick="prevSlide()" aria-label="Previous">‹</button>
+      <button class="gallery-nav-btn next" onclick="nextSlide()" aria-label="Next">›</button>
+    </div>
+
+    <div class="gallery-footer">
+      <div class="gallery-info">
+        <div>
+          <div id="gallery-slide-name" class="gallery-slide-name">Slide Title</div>
+          <div id="gallery-slide-desc" class="gallery-slide-desc">Slide description</div>
+        </div>
+        <div id="gallery-counter" class="gallery-counter">1 / 1</div>
+      </div>
+      <div id="gallery-dots" class="gallery-dots"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const GALLERIES = {
+  admin: {
+    title: 'CaffnCode Admin Portal',
+    badge: 'Internal Portal · Members Only',
+    notice: '🔒 Internal workspace management system. Direct access is restricted to verified CaffnCode team accounts.',
+    slides: [
+      {
+        src: 'img/screenshots/admin-dashboard.png',
+        title: 'Workspace Dashboard & Overview',
+        desc: 'Centralized workspace metrics, active site notice broadcasting, pending team tasks, and quick admin action triggers.'
+      },
+      {
+        src: 'img/screenshots/admin-users.png',
+        title: 'User Management & Lark Mailbox Provisioning',
+        desc: 'Directory of team members with automated Lark Suite mailbox allocation, role permissions (Super Admin / Member), department assignments, and welcome tour dispatch.'
+      },
+      {
+        src: 'img/screenshots/admin-tasks.png',
+        title: 'Team Tasks & Kanban Board',
+        desc: 'Workspace task tracking across To Do, In Progress, and Completed states with category tags, assignment info, and status updates.'
+      },
+      {
+        src: 'img/screenshots/admin-login.png',
+        title: 'Single Sign-On Login Interface',
+        desc: 'Left-aligned retro login interface with pixel branding, Supabase authentication, and secure credential handling.'
+      }
+    ]
+  },
+  email: {
+    title: 'CaffnCode Webmail',
+    badge: 'Workspace Mail · Members Only',
+    notice: '🔒 Internal webmail for CaffnCode members with @caffncode.com mailboxes. Access requires authorized SSO login.',
+    slides: [
+      {
+        src: 'img/screenshots/email-inbox.png',
+        title: '3-Pane Retro Webmail Interface',
+        desc: 'Streamlined webmail experience with folder sidebar (Inbox, Sent, Drafts, Trash), message thread list, and full reading pane powered by Lark Suite email APIs.'
+      },
+      {
+        src: 'img/screenshots/email-login.png',
+        title: 'Unified Single Sign-On Access',
+        desc: 'Dedicated login screen sharing authentication state and credentials with the admin portal for immediate inbox access.'
+      }
+    ]
+  }
+};
+
+let currentGallery = null;
+let currentSlideIndex = 0;
+
+function openGallery(key) {
+  const g = GALLERIES[key];
+  if (!g) return;
+  currentGallery = g;
+  currentSlideIndex = 0;
+
+  document.getElementById('gallery-title').textContent = g.title;
+  document.getElementById('gallery-badge').textContent = g.badge;
+  document.getElementById('gallery-notice-text').textContent = g.notice;
+
+  renderSlide();
+  const modal = document.getElementById('gallery-modal');
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeGallery() {
+  const modal = document.getElementById('gallery-modal');
+  modal.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function nextSlide() {
+  if (!currentGallery) return;
+  currentSlideIndex = (currentSlideIndex + 1) % currentGallery.slides.length;
+  renderSlide();
+}
+
+function prevSlide() {
+  if (!currentGallery) return;
+  currentSlideIndex = (currentSlideIndex - 1 + currentGallery.slides.length) % currentGallery.slides.length;
+  renderSlide();
+}
+
+function goToSlide(idx) {
+  if (!currentGallery) return;
+  currentSlideIndex = idx;
+  renderSlide();
+}
+
+function renderSlide() {
+  if (!currentGallery) return;
+  const slide = currentGallery.slides[currentSlideIndex];
+  const total = currentGallery.slides.length;
+
+  const imgEl = document.getElementById('gallery-img');
+  imgEl.src = slide.src;
+  imgEl.alt = slide.title;
+
+  document.getElementById('gallery-slide-name').textContent = slide.title;
+  document.getElementById('gallery-slide-desc').textContent = slide.desc;
+  document.getElementById('gallery-counter').textContent = `${currentSlideIndex + 1} / ${total}`;
+
+  const dotsEl = document.getElementById('gallery-dots');
+  dotsEl.innerHTML = currentGallery.slides.map((_, i) =>
+    `<div class="gallery-dot ${i === currentSlideIndex ? 'active' : ''}" onclick="goToSlide(${i})" title="Slide ${i+1}"></div>`
+  ).join('');
+}
+
+document.addEventListener('keydown', (e) => {
+  const modal = document.getElementById('gallery-modal');
+  if (!modal || !modal.classList.contains('active')) return;
+  if (e.key === 'Escape') closeGallery();
+  if (e.key === 'ArrowRight') nextSlide();
+  if (e.key === 'ArrowLeft') prevSlide();
+});
 </script>
 
 </body>
