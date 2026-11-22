@@ -444,6 +444,18 @@ const SUPABASE_URL = 'https://qjcnqslvoseyaabjjvkn.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_01TSfCXJMwGFVt2PxJQvSA_n8eL2zn7';
 
 async function submitFeedback(payload) {
+  try {
+    const res = await fetch('https://admin.caffncode.com/api/feedback', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json().catch(() => null);
+    if (res.ok && data?.success) return true;
+  } catch (err) {
+    console.warn('Feedback API unreachable, falling back to Supabase:', err);
+  }
+
   const res = await fetch(`${SUPABASE_URL}/rest/v1/messages`, {
     method: 'POST',
     headers: {
