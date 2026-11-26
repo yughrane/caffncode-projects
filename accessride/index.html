@@ -6,31 +6,31 @@
 <title>AccessRide Mumbai · CaffnCode</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,700&family=Outfit:wght@400;500;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@600;700;800;900&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,700&family=Outfit:wght@400;500;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@600;700;800;900&display=swap');
 :root{--bg:#fdf6f0;--surface:#f5ede3;--border:#e8c9a0;--ink:#2c1a0e;--ink-muted:#6b3d1e;--accent:#c87941;--accent-lt:#f5ede3;--warn:#8b3a1a;--warn-lt:#fdebd9;--blue:#3d6b8a;--blue-lt:#d4e8f0;--cream:#fdf6f0;--espresso:#2c1a0e;--caramel:#c87941;--latte:#e8c9a0;--foam:#f5ede3;--steam:#d4a574;--dark-roast:#1a0f07;--mocha:#6b3d1e;--r:8px;--r-lg:0px;--shadow:4px 4px 0 var(--latte);--shadow-lg:6px 6px 0 var(--caramel);--transition:0.2s cubic-bezier(0.4,0,0.2,1)}
 [data-theme="dark"]{--bg:#1a0f07;--surface:#2c1a0e;--border:#4a2c14;--ink:#fdf6f0;--ink-muted:#d4a574;--accent:#c87941;--accent-lt:#3d2010;--warn:#e8834a;--warn-lt:#2e1a0a;--blue:#7ab4d4;--blue-lt:#0a1e2e;--shadow:4px 4px 0 rgba(200,121,65,0.3);--shadow-lg:6px 6px 0 rgba(200,121,65,0.5)}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--ink);font-family:'Space Mono',monospace;font-size:14px;line-height:1.7;min-height:100vh;padding:0 0 60px;transition:background var(--transition),color var(--transition)}
+body{background:var(--bg);color:var(--ink);font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:14px;line-height:1.7;min-height:100vh;padding:0 0 60px;transition:background var(--transition),color var(--transition)}
 body::before{content:'';position:fixed;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(44,26,14,0.015) 2px,rgba(44,26,14,0.015) 4px),repeating-linear-gradient(90deg,transparent,transparent 2px,rgba(44,26,14,0.015) 2px,rgba(44,26,14,0.015) 4px);pointer-events:none;z-index:100}
 body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(var(--latte) 1px,transparent 1px),linear-gradient(90deg,var(--latte) 1px,transparent 1px);background-size:32px 32px;opacity:0.2;pointer-events:none;z-index:0}
-button{font-family:'Space Mono',monospace;cursor:pointer}
-input{font-family:'Space Mono',monospace}
+button{font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;cursor:pointer}
+input{font-family:'Helvetica Neue', Helvetica, Arial, sans-serif}
 .skip-link{position:fixed;top:-100px;left:16px;z-index:9999;background:var(--espresso);color:var(--cream);padding:10px 20px;border:2px solid var(--caramel);font-weight:700;text-decoration:none;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;transition:top .2s}
 .skip-link:focus{top:16px}
 .header{position:sticky;top:0;z-index:200;background:var(--bg);border-bottom:3px solid var(--espresso);padding:0 clamp(16px,4vw,48px);display:flex;align-items:center;justify-content:space-between;height:56px;animation:slideDown .4s ease both}
 [data-theme="dark"] .header{background:var(--bg);border-bottom-color:var(--border)}
 @keyframes slideDown{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:none}}
 .logo-wrap{display:flex;align-items:center;gap:0;text-decoration:none}
-.logo-caff{font-family:'Outfit',sans-serif;font-weight:800;font-size:1.05rem;color:var(--espresso);letter-spacing:-0.03em;display:flex;align-items:center;gap:6px}
+.logo-caff{font-family:'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:900;font-size:1.05rem;color:var(--espresso);letter-spacing:-0.04em;display:flex;align-items:center;gap:6px}
 [data-theme="dark"] .logo-caff{color:var(--ink)}
 .nav-icon{display:inline-block;flex-shrink:0;vertical-align:middle;box-shadow:2px 2px 0 var(--latte);}
-.logo-x{font-size:0.72rem;color:var(--steam);font-weight:400;letter-spacing:0.05em;margin:0 6px;font-family:'Space Mono',monospace}
-.logo-access{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:700;font-size:1.25rem;color:var(--caramel);letter-spacing:-0.01em}
+.logo-x{font-size:0.72rem;color:var(--steam);font-weight:400;letter-spacing:0.05em;margin:0 6px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif}
+.logo-access{font-family:'Instrument Serif', serif;font-style:italic;font-weight:400;font-size:1.28rem;color:var(--caramel);letter-spacing:-0.01em}
 .header-controls{display:flex;gap:6px;align-items:center}
-.icon-btn{height:32px;padding:0 10px;border:1.5px solid var(--espresso);background:var(--bg);color:var(--ink);display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:0.62rem;text-transform:uppercase;letter-spacing:0.08em;box-shadow:2px 2px 0 var(--latte);transition:all .15s;gap:4px}
+.icon-btn{height:32px;padding:0 10px;border:1.5px solid var(--espresso);background:var(--bg);color:var(--ink);display:flex;align-items:center;justify-content:center;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:0.62rem;text-transform:uppercase;letter-spacing:0.08em;box-shadow:2px 2px 0 var(--latte);transition:all .15s;gap:4px}
 .icon-btn:hover{background:var(--caramel);color:var(--cream);border-color:var(--caramel);box-shadow:2px 2px 0 var(--espresso)}
 .icon-btn:focus-visible{outline:2px solid var(--caramel);outline-offset:2px}
 .icon-btn.active{background:var(--espresso);color:var(--cream);border-color:var(--espresso);box-shadow:2px 2px 0 var(--caramel)}
@@ -38,9 +38,9 @@ input{font-family:'Space Mono',monospace}
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
 .hero-eyebrow{font-size:0.65rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--caramel);margin-bottom:0.6rem;display:flex;align-items:center;gap:8px}
 .hero-eyebrow::before{content:'';display:inline-block;width:20px;height:2px;background:var(--caramel)}
-.hero-title{font-family:'Outfit',sans-serif;font-weight:800;font-size:clamp(2rem,5vw,3.8rem);line-height:1.05;color:var(--espresso);letter-spacing:-0.03em;margin-bottom:0.5rem}
+.hero-title{font-family:'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:900;font-size:clamp(2rem,5vw,3.8rem);line-height:1.05;color:var(--espresso);letter-spacing:-0.04em;margin-bottom:0.5rem}
 [data-theme="dark"] .hero-title{color:var(--ink)}
-.hero-title em{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:700;color:var(--caramel);font-size:1.1em;letter-spacing:-0.01em}
+.hero-title em{font-family:'Instrument Serif', serif;font-style:italic;font-weight:400;color:var(--caramel);font-size:1.12em;letter-spacing:-0.01em}
 .hero-sub{color:var(--mocha);margin-bottom:1.8rem;max-width:560px;font-size:0.82rem;line-height:1.85}
 [data-theme="dark"] .hero-sub{color:var(--ink-muted)}
 .search-panel{background:var(--surface);border:2px solid var(--espresso);padding:18px;box-shadow:var(--shadow-lg);max-width:680px;display:flex;flex-direction:column;gap:10px;position:relative;z-index:1}
@@ -48,7 +48,7 @@ input{font-family:'Space Mono',monospace}
 .field-row{display:flex;align-items:center;gap:8px;background:var(--bg);border:1.5px solid var(--border);padding:10px 12px;transition:border-color .15s;position:relative}
 .field-row:focus-within{border-color:var(--caramel)}
 .field-icon{font-size:14px;flex-shrink:0;width:20px;text-align:center}
-.field-input{flex:1;border:none;background:transparent;font-size:0.82rem;color:var(--ink);outline:none;font-family:'Space Mono',monospace}
+.field-input{flex:1;border:none;background:transparent;font-size:0.82rem;color:var(--ink);outline:none;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif}
 .field-input::placeholder{color:var(--steam)}
 [data-theme="dark"] .field-input{color:var(--ink)}
 [data-theme="dark"] .field-input::placeholder{color:var(--ink-muted)}
@@ -62,7 +62,7 @@ input{font-family:'Space Mono',monospace}
 @keyframes spinBtn{to{transform:rotate(360deg)}}
 .ac-dropdown{position:absolute;top:100%;left:0;right:0;z-index:200;background:var(--surface);border:1.5px solid var(--caramel);border-top:none;box-shadow:4px 4px 0 var(--latte);max-height:220px;overflow-y:auto;display:none}
 .ac-dropdown.open{display:block}
-.ac-item{padding:9px 12px;font-size:0.75rem;cursor:pointer;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border);font-family:'Space Mono',monospace}
+.ac-item{padding:9px 12px;font-size:0.75rem;cursor:pointer;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border);font-family:'Helvetica Neue', Helvetica, Arial, sans-serif}
 .ac-item:last-child{border-bottom:none}
 .ac-item:hover,.ac-item.focused{background:var(--accent-lt);color:var(--caramel)}
 .ac-item-line{font-size:0.58rem;font-weight:700;letter-spacing:.5px;padding:1px 6px;flex-shrink:0;border:1px solid currentColor}
@@ -77,7 +77,7 @@ input{font-family:'Space Mono',monospace}
 .need-chip{padding:4px 10px;border:1.5px solid var(--espresso);background:var(--bg);color:var(--espresso);font-size:0.65rem;font-weight:700;letter-spacing:0.05em;box-shadow:2px 2px 0 var(--latte);transition:all .15s}
 .need-chip.selected{background:var(--espresso);color:var(--cream);box-shadow:2px 2px 0 var(--caramel)}
 .need-chip:hover:not(.selected){background:var(--caramel);color:var(--cream);border-color:var(--caramel)}
-.search-btn{margin-left:auto;padding:9px 20px;background:var(--espresso);color:var(--cream);border:none;font-family:'Space Mono',monospace;font-weight:700;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;display:flex;align-items:center;gap:7px;box-shadow:4px 4px 0 var(--caramel);transition:all .15s;white-space:nowrap}
+.search-btn{margin-left:auto;padding:9px 20px;background:var(--espresso);color:var(--cream);border:none;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:700;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;display:flex;align-items:center;gap:7px;box-shadow:4px 4px 0 var(--caramel);transition:all .15s;white-space:nowrap}
 .search-btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--caramel)}
 .search-btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--caramel)}
 .search-btn:focus-visible{outline:2px solid var(--caramel);outline-offset:3px}
@@ -92,7 +92,7 @@ input{font-family:'Space Mono',monospace}
 .mode-card.selected{border-color:var(--caramel);background:var(--accent-lt);box-shadow:4px 4px 0 var(--espresso)}
 .mode-card:focus-visible{outline:2px solid var(--caramel);outline-offset:2px}
 .mode-icon{font-size:22px}
-.mode-name{font-family:'Outfit',sans-serif;font-weight:800;font-size:0.82rem;color:var(--espresso);letter-spacing:-0.01em}
+.mode-name{font-family:'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:800;font-size:0.82rem;color:var(--espresso);letter-spacing:-0.01em}
 [data-theme="dark"] .mode-name{color:var(--ink)}
 .mode-badge{font-size:0.58rem;font-weight:700;letter-spacing:0.08em;padding:2px 7px;background:var(--latte);color:var(--espresso);border:1px solid var(--steam);text-transform:uppercase}
 .mode-badge.warn{background:var(--warn-lt);color:var(--warn);border-color:var(--warn)}
@@ -102,25 +102,25 @@ input{font-family:'Space Mono',monospace}
 .route-card:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-lg)}
 .route-header{padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px dashed var(--border);cursor:pointer}
 .route-left{display:flex;flex-direction:column;gap:4px}
-.route-name{font-family:'Outfit',sans-serif;font-weight:800;font-size:1rem;color:var(--espresso);letter-spacing:-0.02em}
+.route-name{font-family:'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:800;font-size:1rem;color:var(--espresso);letter-spacing:-0.02em}
 [data-theme="dark"] .route-name{color:var(--ink)}
 .route-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .route-pill{font-size:0.62rem;font-weight:700;padding:2px 8px;display:inline-flex;align-items:center;gap:4px;text-transform:uppercase;letter-spacing:0.06em;border:1px solid currentColor}
 .pill-green{color:var(--accent);background:var(--accent-lt)}.pill-orange{color:var(--warn);background:var(--warn-lt)}.pill-blue{color:var(--blue);background:var(--blue-lt)}.pill-gray{color:var(--ink-muted);background:var(--border)}.pill-yellow{color:#7A5800;background:#FFF4CC}
 .route-time{text-align:right;flex-shrink:0}
-.route-time .mins{font-family:'Outfit',sans-serif;font-weight:900;font-size:2.2rem;line-height:1;color:var(--caramel);letter-spacing:-0.03em}
+.route-time .mins{font-family:'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:900;font-size:2.2rem;line-height:1;color:var(--caramel);letter-spacing:-0.03em}
 .route-time .mins-label{font-size:0.6rem;color:var(--ink-muted);font-weight:700;text-transform:uppercase;letter-spacing:0.1em}
 .route-steps{padding:0 18px 16px;display:none}
 .route-steps.open{display:block}
 .step-list{list-style:none;margin-top:14px;position:relative}
 .step-list::before{content:'';position:absolute;left:14px;top:0;bottom:0;width:2px;background:repeating-linear-gradient(to bottom,var(--caramel) 0,var(--caramel) 4px,transparent 4px,transparent 8px)}
 .step-item{display:flex;gap:14px;align-items:flex-start;padding:9px 0;position:relative;animation:fadeUp .3s ease both}
-.step-dot{width:28px;height:28px;border:2px solid var(--caramel);background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;color:var(--caramel);position:relative;z-index:1;font-family:'Outfit',sans-serif;flex-shrink:0}
+.step-dot{width:28px;height:28px;border:2px solid var(--caramel);background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;color:var(--caramel);position:relative;z-index:1;font-family:'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;flex-shrink:0}
 .step-content{flex:1}
 .step-text{font-weight:700;font-size:0.82rem;color:var(--espresso)}
 [data-theme="dark"] .step-text{color:var(--ink)}
 .step-sub{font-size:0.7rem;color:var(--ink-muted);margin-top:2px}
-.speak-btn{margin-top:12px;padding:9px 16px;background:transparent;color:var(--caramel);border:1.5px solid var(--caramel);font-family:'Space Mono',monospace;font-weight:700;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.08em;display:inline-flex;align-items:center;gap:7px;box-shadow:2px 2px 0 var(--latte);transition:all .15s}
+.speak-btn{margin-top:12px;padding:9px 16px;background:transparent;color:var(--caramel);border:1.5px solid var(--caramel);font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:700;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.08em;display:inline-flex;align-items:center;gap:7px;box-shadow:2px 2px 0 var(--latte);transition:all .15s}
 .speak-btn:hover{background:var(--caramel);color:var(--cream);box-shadow:2px 2px 0 var(--espresso)}
 .live-bar{background:var(--surface);border:1.5px solid var(--border);border-left:4px solid var(--caramel);padding:10px 14px;display:flex;align-items:center;gap:10px;margin-bottom:20px;font-size:0.72rem;font-weight:700;position:relative;z-index:1}
 .live-dot{width:7px;height:7px;background:var(--caramel);animation:pulseDot 1.5s infinite;flex-shrink:0}
@@ -132,9 +132,9 @@ input{font-family:'Space Mono',monospace}
 .a11y-toggle:focus-visible{outline:2px solid var(--caramel);outline-offset:2px}
 .a11y-icon{font-size:20px;flex-shrink:0}
 .a11y-info{flex:1}
-.a11y-name{font-family:'Outfit',sans-serif;font-weight:800;font-size:0.82rem;color:var(--espresso);letter-spacing:-0.01em}
+.a11y-name{font-family:'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:800;font-size:0.82rem;color:var(--espresso);letter-spacing:-0.01em}
 [data-theme="dark"] .a11y-name{color:var(--ink)}
-.a11y-desc{font-size:0.65rem;color:var(--ink-muted);margin-top:2px;font-family:'Space Mono',monospace}
+.a11y-desc{font-size:0.65rem;color:var(--ink-muted);margin-top:2px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif}
 .toggle-pill{width:34px;height:18px;background:var(--border);position:relative;transition:background .2s;flex-shrink:0}
 .a11y-toggle.active .toggle-pill{background:var(--caramel)}
 .toggle-pill::after{content:'';position:absolute;width:12px;height:12px;background:#fff;top:3px;left:3px;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
@@ -148,24 +148,24 @@ input{font-family:'Space Mono',monospace}
 [data-theme="dark"] .sos-strip{background:#2A1008;border-color:var(--warn)}
 .sos-left{display:flex;align-items:center;gap:12px}
 .sos-icon{font-size:26px}
-.sos-title{font-family:'Outfit',sans-serif;font-weight:800;font-size:0.92rem;color:var(--warn);letter-spacing:-0.01em}
-.sos-sub{font-size:0.68rem;color:var(--ink-muted);font-family:'Space Mono',monospace}
-.sos-btn{padding:11px 20px;background:var(--warn);color:#fff;border:none;font-family:'Space Mono',monospace;font-weight:700;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;display:flex;align-items:center;gap:7px;box-shadow:3px 3px 0 rgba(139,58,26,.4);transition:all .15s}
+.sos-title{font-family:'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:800;font-size:0.92rem;color:var(--warn);letter-spacing:-0.01em}
+.sos-sub{font-size:0.68rem;color:var(--ink-muted);font-family:'Helvetica Neue', Helvetica, Arial, sans-serif}
+.sos-btn{padding:11px 20px;background:var(--warn);color:#fff;border:none;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:700;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;display:flex;align-items:center;gap:7px;box-shadow:3px 3px 0 rgba(139,58,26,.4);transition:all .15s}
 .sos-btn:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 rgba(139,58,26,.4)}
 .shimmer{background:linear-gradient(90deg,var(--border) 25%,var(--surface) 50%,var(--border) 75%);background-size:200% 100%;animation:shimmer 1.2s infinite;height:90px;margin-bottom:10px}
 @keyframes shimmer{from{background-position:200% 0}to{background-position:-200% 0}}
-#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--espresso);color:var(--cream);padding:9px 18px;border:1.5px solid var(--caramel);font-family:'Space Mono',monospace;font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;z-index:9999;white-space:nowrap;box-shadow:3px 3px 0 var(--caramel)}
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--espresso);color:var(--cream);padding:9px 18px;border:1.5px solid var(--caramel);font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;z-index:9999;white-space:nowrap;box-shadow:3px 3px 0 var(--caramel)}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .high-contrast{filter:contrast(1.35) saturate(0)}
 .reduce-motion *,.reduce-motion *::before,.reduce-motion *::after{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important}
 .mode-card:nth-child(1){animation-delay:.05s}.mode-card:nth-child(2){animation-delay:.1s}.mode-card:nth-child(3){animation-delay:.15s}.mode-card:nth-child(4){animation-delay:.2s}.mode-card:nth-child(5){animation-delay:.25s}.mode-card:nth-child(6){animation-delay:.3s}
 .line-picker{background:var(--surface);border:2px solid var(--espresso);padding:16px 18px;margin-top:12px;animation:fadeUp .3s ease both;box-shadow:var(--shadow)}
 .line-picker-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.line-picker-title{font-family:'Outfit',sans-serif;font-weight:800;font-size:0.85rem;display:flex;align-items:center;gap:8px;letter-spacing:-0.01em}
+.line-picker-title{font-family:'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:800;font-size:0.85rem;display:flex;align-items:center;gap:8px;letter-spacing:-0.01em}
 .line-picker-close{width:26px;height:26px;border:1.5px solid var(--espresso);background:none;color:var(--ink-muted);font-size:14px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s}
 .line-picker-close:hover{background:var(--warn-lt);color:var(--warn);border-color:var(--warn)}
 .station-pills{display:flex;flex-wrap:wrap;gap:6px;max-height:200px;overflow-y:auto}
-.station-pill{padding:4px 10px;border:1.5px solid var(--espresso);background:var(--bg);color:var(--espresso);font-family:'Space Mono',monospace;font-size:0.65rem;font-weight:700;cursor:pointer;transition:all .15s;white-space:nowrap;box-shadow:1px 1px 0 var(--latte)}
+.station-pill{padding:4px 10px;border:1.5px solid var(--espresso);background:var(--bg);color:var(--espresso);font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:0.65rem;font-weight:700;cursor:pointer;transition:all .15s;white-space:nowrap;box-shadow:1px 1px 0 var(--latte)}
 .station-pill:hover{border-color:var(--caramel);color:var(--caramel);background:var(--accent-lt);box-shadow:2px 2px 0 var(--caramel)}
 .station-pill.interchange{border-color:var(--caramel);color:var(--caramel)}
 .voice-modal{display:none;position:fixed;inset:0;z-index:500;background:rgba(26,15,7,.7);align-items:flex-end;justify-content:center}
@@ -175,10 +175,10 @@ input{font-family:'Space Mono',monospace}
 .voice-orb{width:64px;height:64px;background:var(--espresso);border:3px solid var(--caramel);display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 14px;box-shadow:4px 4px 0 var(--caramel)}
 .voice-orb.listening{animation:orbPulse 1s infinite}
 @keyframes orbPulse{0%,100%{box-shadow:4px 4px 0 var(--caramel),0 0 0 0 rgba(200,121,65,.4)}50%{box-shadow:4px 4px 0 var(--caramel),0 0 0 14px rgba(200,121,65,0)}}
-.voice-modal-title{font-family:'Outfit',sans-serif;font-weight:800;font-size:1rem;letter-spacing:-0.02em;margin-bottom:5px}
+.voice-modal-title{font-family:'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:800;font-size:1rem;letter-spacing:-0.02em;margin-bottom:5px}
 .voice-modal-sub{font-size:0.72rem;color:var(--ink-muted);margin-bottom:18px;min-height:18px}
-.voice-interim{font-size:0.9rem;color:var(--caramel);font-style:italic;min-height:22px;margin-bottom:14px;font-family:'Cormorant Garamond',serif;font-weight:700}
-.voice-cancel{padding:9px 22px;border:1.5px solid var(--espresso);background:none;color:var(--ink-muted);font-family:'Space Mono',monospace;font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;cursor:pointer;transition:all .15s}
+.voice-interim{font-size:0.95rem;color:var(--caramel);font-style:italic;min-height:22px;margin-bottom:14px;font-family:'Instrument Serif', serif;font-weight:400}
+.voice-cancel{padding:9px 22px;border:1.5px solid var(--espresso);background:none;color:var(--ink-muted);font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;cursor:pointer;transition:all .15s}
 .voice-cancel:hover{border-color:var(--warn);color:var(--warn)}
 footer{background:var(--dark-roast);color:var(--steam);text-align:center;padding:1.5rem 1rem;font-size:0.63rem;line-height:2.2;letter-spacing:0.06em;margin-top:3rem;position:relative;z-index:1}
 footer a{color:var(--caramel);text-decoration:none}
@@ -218,7 +218,7 @@ footer a:hover{text-decoration:underline}
 <section class="hero" aria-labelledby="heroTitle">
   <p class="hero-eyebrow">Mumbai Suburban Rail + Metro · 150+ Stations</p>
   <h1 class="hero-title" id="heroTitle">Where would you like<br><em>to travel today?</em></h1>
-  <p class="hero-sub">Accessible step-by-step directions across Western, Central, Harbour lines and all 4 Metro lines — voice-guided, tailored to your needs.</p>
+  <p class="hero-sub">Accessible step-by-step directions across Western, Central, Harbour lines and all 4 Metro lines. Voice-guided, tailored to your needs.</p>
 
   <div class="search-panel" role="search" aria-label="Journey planner">
     <div class="field-row" id="srcRow">
@@ -383,13 +383,13 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('gpsBtn').addEventListener('click',getGPS);
 });
 function setupAutocomplete(inputId,dropdownId){const input=document.getElementById(inputId),dropdown=document.getElementById(dropdownId);let focusIdx=-1;input.addEventListener('input',()=>{const q=input.value.trim().toLowerCase();if(q.length<1){closeDD();return;}const matches=ALL_STATIONS.filter(s=>normalize(s).includes(q)).slice(0,8);if(!matches.length){closeDD();return;}dropdown.innerHTML=matches.map(s=>{const lIds=(STATION_INDEX[normalize(s)]||[]).map(e=>e.lineId);const badges=[...new Set(lIds)].map(lid=>`<span class="ac-item-line ${LINES[lid].bgClass}">${LINES[lid].label.split(' ')[0]}</span>`).join('');return`<div class="ac-item" role="option" data-val="${escHtml(s)}">${badges}<span>${escHtml(s)}</span></div>`;}).join('');dropdown.querySelectorAll('.ac-item').forEach(item=>{item.addEventListener('mousedown',e=>{e.preventDefault();input.value=item.dataset.val;closeDD();if(state.voiceOn)speakText(input.value+' selected');});});dropdown.classList.add('open');input.setAttribute('aria-expanded','true');focusIdx=-1;});input.addEventListener('keydown',e=>{const items=dropdown.querySelectorAll('.ac-item');if(!items.length)return;if(e.key==='ArrowDown'){e.preventDefault();focusIdx=Math.min(focusIdx+1,items.length-1);hl(items,focusIdx);}else if(e.key==='ArrowUp'){e.preventDefault();focusIdx=Math.max(focusIdx-1,0);hl(items,focusIdx);}else if(e.key==='Enter'&&focusIdx>=0){e.preventDefault();input.value=items[focusIdx].dataset.val;closeDD();}else if(e.key==='Escape')closeDD();});input.addEventListener('blur',()=>setTimeout(closeDD,150));function hl(items,idx){items.forEach((it,i)=>it.classList.toggle('focused',i===idx));if(items[idx])items[idx].scrollIntoView({block:'nearest'});}function closeDD(){dropdown.classList.remove('open');input.setAttribute('aria-expanded','false');focusIdx=-1;}}
-function findRoutes(){const src=document.getElementById('source').value.trim(),dest=document.getElementById('destination').value.trim();if(!src){showToast('Please enter a starting station 📍');document.getElementById('source').focus();return;}if(!dest){showToast('Please enter a destination station 🗺️');document.getElementById('destination').focus();return;}if(normalize(src)===normalize(dest)){showToast('Source and destination are the same!');return;}const container=document.getElementById('routeResults');container.innerHTML=`<p class="section-label" style="margin-top:28px">Finding routes…</p><div class="shimmer"></div><div class="shimmer" style="height:70px;opacity:.5"></div>`;setTimeout(()=>{const result=findBestRoutes(src,dest);if(result.error){container.innerHTML=`<div style="background:var(--warn-lt);border:2px solid var(--warn);padding:18px 22px;margin-top:16px;box-shadow:3px 3px 0 rgba(139,58,26,.2)"><div style="font-family:'Outfit',sans-serif;font-weight:800;color:var(--warn);margin-bottom:6px">⚠ ${escHtml(result.error)}</div><div style="font-size:0.72rem;color:var(--ink-muted)">Try typing the station name more precisely — e.g. "Dadar" or "Andheri".</div></div>`;return;}let routes=result.routes;if(state.selectedNeeds.size>0){const a=routes.filter(r=>r.accessible);if(a.length)routes=a;}if(state.activeMode&&state.activeMode!=='accessible'){const f=routes.filter(r=>r.mode.toLowerCase().includes(state.activeMode));if(f.length)routes=f;}if(state.activeMode==='accessible'){const f=routes.filter(r=>r.accessible);if(f.length)routes=f;}renderRoutes(src,dest,routes,result.routes);},500);}
+function findRoutes(){const src=document.getElementById('source').value.trim(),dest=document.getElementById('destination').value.trim();if(!src){showToast('Please enter a starting station 📍');document.getElementById('source').focus();return;}if(!dest){showToast('Please enter a destination station 🗺️');document.getElementById('destination').focus();return;}if(normalize(src)===normalize(dest)){showToast('Source and destination are the same!');return;}const container=document.getElementById('routeResults');container.innerHTML=`<p class="section-label" style="margin-top:28px">Finding routes…</p><div class="shimmer"></div><div class="shimmer" style="height:70px;opacity:.5"></div>`;setTimeout(()=>{const result=findBestRoutes(src,dest);if(result.error){container.innerHTML=`<div style="background:var(--warn-lt);border:2px solid var(--warn);padding:18px 22px;margin-top:16px;box-shadow:3px 3px 0 rgba(139,58,26,.2)"><div style="font-family:'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:800;color:var(--warn);margin-bottom:6px">⚠ ${escHtml(result.error)}</div><div style="font-size:0.72rem;color:var(--ink-muted)">Try typing the station name more precisely, e.g. "Dadar" or "Andheri".</div></div>`;return;}let routes=result.routes;if(state.selectedNeeds.size>0){const a=routes.filter(r=>r.accessible);if(a.length)routes=a;}if(state.activeMode&&state.activeMode!=='accessible'){const f=routes.filter(r=>r.mode.toLowerCase().includes(state.activeMode));if(f.length)routes=f;}if(state.activeMode==='accessible'){const f=routes.filter(r=>r.accessible);if(f.length)routes=f;}renderRoutes(src,dest,routes,result.routes);},500);}
 function renderRoutes(src,dest,shown,all){const container=document.getElementById('routeResults'),filtered=shown.length<all.length;let html=`<p class="section-label" style="margin-top:28px">${escHtml(src)} → ${escHtml(dest)}<span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:0.7rem;color:var(--ink-muted)"> · ${shown.length} route${shown.length!==1?'s':''} found</span></p>`;shown.forEach((r,ri)=>{const pH=(r.pills||[]).map(p=>`<span class="route-pill pill-${escHtml(p.c)}">${escHtml(p.t)}</span>`).join('');const sH=(r.steps||[]).map((s,i)=>`<li class="step-item" style="animation-delay:${i*.07+.1}s"><div class="step-dot" aria-hidden="true">${i+1}</div><div class="step-content"><div class="step-text">${escHtml(s.icon||'')} ${escHtml(s.text||'')}</div><div class="step-sub">${escHtml(s.sub||'')}</div></div></li>`).join('');const rid='rc'+ri;html+=`<div class="route-card" id="${rid}"><div class="route-header" onclick="toggleSteps('${rid}')" role="button" tabindex="0" aria-expanded="false" aria-controls="${rid}s" onkeydown="if(event.key==='Enter'||event.key===' ')toggleSteps('${rid}')"><div class="route-left"><div class="route-name">${escHtml(r.name)}</div><div class="route-meta">${pH}</div></div><div class="route-time"><div class="mins">${r.mins}</div><div class="mins-label">min est.</div></div></div><div class="route-steps" id="${rid}s"><ol class="step-list">${sH}</ol><button class="speak-btn" onclick='speakVoice(${JSON.stringify(r.voiceText||'')})' aria-label="Read aloud: ${escHtml(r.name)}">🔊 Read Instructions Aloud</button></div></div>`;});if(filtered){window._allR=all;window._lastSrc=document.getElementById('source').value.trim();window._lastDst=document.getElementById('destination').value.trim();html+=`<p style="font-size:0.72rem;color:var(--ink-muted);margin-top:8px">♿ Showing accessible routes only. <button onclick="renderRoutes(window._lastSrc,window._lastDst,window._allR,window._allR)" style="color:var(--caramel);background:none;border:none;cursor:pointer;font-weight:700;font-size:0.72rem;text-decoration:underline">Show all routes</button></p>`;}container.innerHTML=html;if(state.voiceOn&&shown.length)speakText(`Found ${shown.length} route${shown.length!==1?'s':''} from ${src} to ${dest}.`);}
 function toggleSteps(cardId){const steps=document.getElementById(cardId+'s');if(!steps)return;const hdr=steps.previousElementSibling,open=steps.classList.toggle('open');hdr.setAttribute('aria-expanded',open);}
-function filterLine(mode){const was=state.activeMode===mode;document.querySelectorAll('.mode-card').forEach(c=>{c.classList.remove('selected');c.setAttribute('aria-pressed','false');});const picker=document.getElementById('linePicker');if(was){state.activeMode=null;picker.style.display='none';picker.innerHTML='';return;}state.activeMode=mode;const btn=document.querySelector(`[data-mode="${mode}"]`);btn.classList.add('selected');btn.setAttribute('aria-pressed','true');if(mode==='accessible'){picker.style.display='none';picker.innerHTML='';showToast('♿ Accessible routes filter active — search to apply');return;}const ld=LINES[mode];if(!ld)return;const pills=ld.stations.map(s=>{const isX=TRANSFERS.some(t=>normalize(t.station)===normalize(s)&&t.lines.includes(mode)&&t.lines.length>1);return`<button class="station-pill${isX?' interchange':''}" onclick="pickStation('${escHtml(s)}')" aria-label="Select ${escHtml(s)}">${escHtml(s)}${isX?' ⇄':''}</button>`;}).join('');picker.style.display='block';picker.innerHTML=`<div class="line-picker"><div class="line-picker-header"><div class="line-picker-title"><span>${ld.icon}</span><span>${ld.label}</span><span style="font-size:0.62rem;font-weight:700;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.08em">${ld.stations.length} stations</span></div><button class="line-picker-close" onclick="filterLine('${mode}')" aria-label="Close">✕</button></div><div class="station-pills">${pills}</div></div>`;picker.scrollIntoView({behavior:'smooth',block:'nearest'});showToast(`${ld.label} · ${ld.stations.length} stations`);}
+function filterLine(mode){const was=state.activeMode===mode;document.querySelectorAll('.mode-card').forEach(c=>{c.classList.remove('selected');c.setAttribute('aria-pressed','false');});const picker=document.getElementById('linePicker');if(was){state.activeMode=null;picker.style.display='none';picker.innerHTML='';return;}state.activeMode=mode;const btn=document.querySelector(`[data-mode="${mode}"]`);btn.classList.add('selected');btn.setAttribute('aria-pressed','true');if(mode==='accessible'){picker.style.display='none';picker.innerHTML='';showToast('♿ Accessible routes filter active. Search to apply');return;}const ld=LINES[mode];if(!ld)return;const pills=ld.stations.map(s=>{const isX=TRANSFERS.some(t=>normalize(t.station)===normalize(s)&&t.lines.includes(mode)&&t.lines.length>1);return`<button class="station-pill${isX?' interchange':''}" onclick="pickStation('${escHtml(s)}')" aria-label="Select ${escHtml(s)}">${escHtml(s)}${isX?' ⇄':''}</button>`;}).join('');picker.style.display='block';picker.innerHTML=`<div class="line-picker"><div class="line-picker-header"><div class="line-picker-title"><span>${ld.icon}</span><span>${ld.label}</span><span style="font-size:0.62rem;font-weight:700;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.08em">${ld.stations.length} stations</span></div><button class="line-picker-close" onclick="filterLine('${mode}')" aria-label="Close">✕</button></div><div class="station-pills">${pills}</div></div>`;picker.scrollIntoView({behavior:'smooth',block:'nearest'});showToast(`${ld.label} · ${ld.stations.length} stations`);}
 let _lpf='source';function pickStation(name){const s=document.getElementById('source'),d=document.getElementById('destination');if(!s.value){s.value=name;s.focus();_lpf='destination';showToast(`✅ Source: ${name}`);}else if(!d.value){d.value=name;d.focus();_lpf='source';showToast(`✅ Destination: ${name}`);}else{if(_lpf==='source'){s.value=name;_lpf='destination';showToast(`✅ Source: ${name}`);}else{d.value=name;_lpf='source';showToast(`✅ Destination: ${name}`);}}if(state.voiceOn)speakText(name+' selected');}
 let _vRec=null,_vField=null;
-function startVoice(fieldId){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){showToast('Voice input not supported — try Chrome or Edge');return;}_vField=fieldId;const modal=document.getElementById('voiceModal'),orb=document.getElementById('voiceOrb'),title=document.getElementById('voiceModalTitle'),sub=document.getElementById('voiceModalSub'),interim=document.getElementById('voiceInterim');modal.classList.add('open');orb.classList.add('listening');title.textContent=`Listening for ${fieldId==='source'?'Starting Station':'Destination'}`;sub.textContent='Speak clearly — say a Mumbai station name';interim.textContent='';if(_vRec){try{_vRec.abort();}catch(e){}}const rec=new SR();_vRec=rec;rec.lang='en-US';rec.continuous=true;rec.interimResults=true;rec.maxAlternatives=5;let finalT='',sT=null;rec.onstart=()=>{sub.textContent='Listening… speak now';};rec.onresult=(e)=>{let iT='';finalT='';for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)finalT+=e.results[i][0].transcript;else iT+=e.results[i][0].transcript;}interim.textContent=iT||finalT;if(finalT.trim()){clearTimeout(sT);sT=setTimeout(()=>commitVoice(finalT.trim()),800);}};rec.onerror=(e)=>{clearTimeout(sT);if(e.error==='not-allowed'||e.error==='service-not-allowed'){sub.textContent='🚫 Microphone permission denied';orb.classList.remove('listening');orb.textContent='🚫';setTimeout(cancelVoice,2000);}else if(e.error==='no-speech'){sub.textContent='🔇 No speech heard — try again';orb.classList.remove('listening');orb.textContent='🔇';setTimeout(()=>{orb.classList.add('listening');orb.textContent='🎙️';sub.textContent='Listening… speak now';rec.start();},1500);}else if(e.error==='network'){sub.textContent='📡 Network error';setTimeout(cancelVoice,2000);}else{sub.textContent=`Error: ${e.error}`;}};rec.onend=()=>{if(finalT.trim()&&_vField)commitVoice(finalT.trim());};try{rec.start();}catch(e){cancelVoice();showToast('Could not start microphone');}}
+function startVoice(fieldId){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){showToast('Voice input not supported. Try Chrome or Edge');return;}_vField=fieldId;const modal=document.getElementById('voiceModal'),orb=document.getElementById('voiceOrb'),title=document.getElementById('voiceModalTitle'),sub=document.getElementById('voiceModalSub'),interim=document.getElementById('voiceInterim');modal.classList.add('open');orb.classList.add('listening');title.textContent=`Listening for ${fieldId==='source'?'Starting Station':'Destination'}`;sub.textContent='Speak clearly and say a Mumbai station name';interim.textContent='';if(_vRec){try{_vRec.abort();}catch(e){}}const rec=new SR();_vRec=rec;rec.lang='en-US';rec.continuous=true;rec.interimResults=true;rec.maxAlternatives=5;let finalT='',sT=null;rec.onstart=()=>{sub.textContent='Listening… speak now';};rec.onresult=(e)=>{let iT='';finalT='';for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)finalT+=e.results[i][0].transcript;else iT+=e.results[i][0].transcript;}interim.textContent=iT||finalT;if(finalT.trim()){clearTimeout(sT);sT=setTimeout(()=>commitVoice(finalT.trim()),800);}};rec.onerror=(e)=>{clearTimeout(sT);if(e.error==='not-allowed'||e.error==='service-not-allowed'){sub.textContent='🚫 Microphone permission denied';orb.classList.remove('listening');orb.textContent='🚫';setTimeout(cancelVoice,2000);}else if(e.error==='no-speech'){sub.textContent='🔇 No speech heard. Try again';orb.classList.remove('listening');orb.textContent='🔇';setTimeout(()=>{orb.classList.add('listening');orb.textContent='🎙️';sub.textContent='Listening… speak now';rec.start();},1500);}else if(e.error==='network'){sub.textContent='📡 Network error';setTimeout(cancelVoice,2000);}else{sub.textContent=`Error: ${e.error}`;}};rec.onend=()=>{if(finalT.trim()&&_vField)commitVoice(finalT.trim());};try{rec.start();}catch(e){cancelVoice();showToast('Could not start microphone');}}
 function commitVoice(text){if(!_vField||!text){cancelVoice();return;}const lower=text.toLowerCase().trim(),exact=ALL_STATIONS.find(s=>normalize(s)===lower),fuzzy=exact||ALL_STATIONS.find(s=>normalize(s).includes(lower)||lower.includes(normalize(s))),best=fuzzy||text;const input=document.getElementById(_vField);input.value=best;input.dispatchEvent(new Event('input'));document.getElementById('voiceOrb').classList.remove('listening');document.getElementById('voiceOrb').textContent='✅';document.getElementById('voiceModalTitle').textContent='Got it!';document.getElementById('voiceModalSub').textContent=`"${best}"`;document.getElementById('voiceInterim').textContent='';if(_vRec){try{_vRec.stop();}catch(e){}_vRec=null;}if(state.voiceOn)speakText(best+' selected');setTimeout(cancelVoice,900);}
 function cancelVoice(){if(_vRec){try{_vRec.abort();}catch(e){}_vRec=null;}document.getElementById('voiceModal').classList.remove('open');document.getElementById('voiceOrb').classList.remove('listening');document.getElementById('voiceOrb').textContent='🎙️';document.getElementById('voiceModalTitle').textContent='Listening…';document.getElementById('voiceModalSub').textContent='Speak the station name clearly';document.getElementById('voiceInterim').textContent='';_vField=null;}
 function speakVoice(t){stopSpeech();speakText(t);}
@@ -410,14 +410,14 @@ function escHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt
 <!-- Contact Form Modal -->
 <div id="contact-form-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;justify-content:center;align-items:center">
   <div style="background:#fdf6f0;border:2px solid #2c1a0e;padding:2rem;max-width:400px;width:90%;box-shadow:6px 6px 0 #c87941">
-    <h3 style="margin:0 0 1rem;font-size:1.3rem;color:#2c1a0e">📬 Get in touch</h3>
+    <h3 style="margin:0 0 1rem;font-family:'Inter Tight','Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:900;letter-spacing:-0.03em;font-size:1.3rem;color:#2c1a0e">📬 Get in touch</h3>
     <form id="contact-form-element" onsubmit="handleContactSubmit(event)" style="display:flex;flex-direction:column;gap:1rem">
-      <input type="email" name="email" placeholder="Your email" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem">
-      <input type="text" name="name" placeholder="Your name" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem">
-      <textarea name="message" placeholder="Your message..." rows="5" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem;resize:vertical"></textarea>
+      <input type="email" name="email" placeholder="Your email" required style="padding:0.75rem;border:2px solid #c87941;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:0.9rem">
+      <input type="text" name="name" placeholder="Your name" required style="padding:0.75rem;border:2px solid #c87941;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:0.9rem">
+      <textarea name="message" placeholder="Your message..." rows="5" required style="padding:0.75rem;border:2px solid #c87941;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:0.9rem;resize:vertical"></textarea>
       <div style="display:flex;gap:1rem">
-        <button type="submit" style="flex:1;padding:0.75rem;background:#2c1a0e;color:#fdf6f0;border:none;cursor:pointer;font-weight:bold;font-family:monospace">Send</button>
-        <button type="button" onclick="closeContactForm()" style="flex:1;padding:0.75rem;background:transparent;border:2px solid #2c1a0e;color:#2c1a0e;cursor:pointer;font-weight:bold;font-family:monospace">Cancel</button>
+        <button type="submit" style="flex:1;padding:0.75rem;background:#2c1a0e;color:#fdf6f0;border:none;cursor:pointer;font-weight:700;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;text-transform:uppercase;letter-spacing:0.08em;font-size:0.78rem">Send</button>
+        <button type="button" onclick="closeContactForm()" style="flex:1;padding:0.75rem;background:transparent;border:2px solid #2c1a0e;color:#2c1a0e;cursor:pointer;font-weight:700;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;text-transform:uppercase;letter-spacing:0.08em;font-size:0.78rem">Cancel</button>
       </div>
     </form>
   </div>
@@ -426,14 +426,14 @@ function escHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt
 <!-- Bug Report Modal -->
 <div id="bug-report-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;justify-content:center;align-items:center">
   <div style="background:#fdf6f0;border:2px solid #2c1a0e;padding:2rem;max-width:400px;width:90%;box-shadow:6px 6px 0 #c87941">
-    <h3 style="margin:0 0 1rem;font-size:1.3rem;color:#2c1a0e">🐛 Report a bug</h3>
+    <h3 style="margin:0 0 1rem;font-family:'Inter Tight','Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:900;letter-spacing:-0.03em;font-size:1.3rem;color:#2c1a0e">🐛 Report a bug</h3>
     <form id="bug-report-element" onsubmit="handleBugSubmit(event)" style="display:flex;flex-direction:column;gap:1rem">
-      <input type="email" name="email" placeholder="Your email" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem">
-      <input type="text" name="title" placeholder="Bug title" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem">
-      <textarea name="description" placeholder="Describe the bug..." rows="5" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem;resize:vertical"></textarea>
+      <input type="email" name="email" placeholder="Your email" required style="padding:0.75rem;border:2px solid #c87941;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:0.9rem">
+      <input type="text" name="title" placeholder="Bug title" required style="padding:0.75rem;border:2px solid #c87941;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:0.9rem">
+      <textarea name="description" placeholder="Describe the bug..." rows="5" required style="padding:0.75rem;border:2px solid #c87941;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:0.9rem;resize:vertical"></textarea>
       <div style="display:flex;gap:1rem">
-        <button type="submit" style="flex:1;padding:0.75rem;background:#2c1a0e;color:#fdf6f0;border:none;cursor:pointer;font-weight:bold;font-family:monospace">Report</button>
-        <button type="button" onclick="closeBugReport()" style="flex:1;padding:0.75rem;background:transparent;border:2px solid #2c1a0e;color:#2c1a0e;cursor:pointer;font-weight:bold;font-family:monospace">Cancel</button>
+        <button type="submit" style="flex:1;padding:0.75rem;background:#2c1a0e;color:#fdf6f0;border:none;cursor:pointer;font-weight:700;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;text-transform:uppercase;letter-spacing:0.08em;font-size:0.78rem">Report</button>
+        <button type="button" onclick="closeBugReport()" style="flex:1;padding:0.75rem;background:transparent;border:2px solid #2c1a0e;color:#2c1a0e;cursor:pointer;font-weight:700;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;text-transform:uppercase;letter-spacing:0.08em;font-size:0.78rem">Cancel</button>
       </div>
     </form>
   </div>
@@ -544,7 +544,7 @@ async function handleBugSubmit(e){
       background:${c.bg};border:2px solid ${c.border};
       box-shadow:4px 4px 0 ${c.border};
       padding:14px 16px;display:flex;align-items:flex-start;gap:12px;
-      font-family:'Space Mono',monospace;font-size:0.72rem;
+      font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:0.72rem;
       color:${c.color};line-height:1.6;
       animation:noticeSlideUp 0.3s ease both;
     `;

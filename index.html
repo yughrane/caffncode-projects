@@ -8,9 +8,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>"/>
   <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>"/>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,700&family=Outfit:wght@400;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@600;700;800;900&display=swap" rel="stylesheet" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,700&family=Outfit:wght@400;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@600;700;800;900&display=swap');
 
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -28,7 +28,7 @@
 
     body {
       background: var(--cream);
-      font-family: 'Space Mono', monospace;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       color: var(--espresso);
       overflow-x: hidden;
     }
@@ -61,11 +61,11 @@
     .nav-icon{display:inline-block;flex-shrink:0;vertical-align:middle;box-shadow:2px 2px 0 var(--latte);}
 
     .nav-logo {
-      font-family: 'Outfit', sans-serif;
-      font-weight: 800;
+      font-family: 'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-weight: 900;
       font-size: 1.15rem;
       color: var(--espresso);
-      letter-spacing: -0.03em;
+      letter-spacing: -0.04em;
       text-decoration: none;
       display: flex;
       align-items: center;
@@ -134,18 +134,19 @@
     }
 
     .page-title {
-      font-family: 'Outfit', sans-serif;
-      font-weight: 800;
+      font-family: 'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-weight: 900;
       font-size: clamp(2.8rem, 7vw, 5.5rem);
       line-height: 1.0;
-      letter-spacing: -0.03em;
+      letter-spacing: -0.04em;
       color: var(--espresso);
       margin-bottom: 0.3rem;
     }
 
     .page-title .cursive {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Instrument Serif', serif;
       font-style: italic;
+      font-weight: 400;
       color: var(--caramel);
       font-size: 1.1em;
     }
@@ -223,7 +224,7 @@
     }
 
     .project-title {
-      font-family: 'Outfit', sans-serif;
+      font-family: 'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;
       font-weight: 800;
       font-size: 1.3rem;
       color: var(--espresso);
@@ -299,7 +300,7 @@
       transform: translate(3px, -3px);
     }
 
-    /* Featured card — bigger, full width on first row */
+    /* Featured card - bigger, full width on first row */
     .project-card.featured {
       border-color: var(--caramel);
       box-shadow: 5px 5px 0 var(--caramel);
@@ -344,7 +345,7 @@
     }
 
     .featured-stat strong {
-      font-family: 'Outfit', sans-serif;
+      font-family: 'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;
       font-weight: 800;
       font-size: 1.4rem;
       color: var(--caramel);
@@ -443,7 +444,7 @@
       color: var(--cream);
       border: 1.5px solid var(--espresso);
       padding: 6px 12px;
-      font-family: 'Space Mono', monospace;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       font-size: 0.65rem;
       font-weight: 700;
       text-transform: uppercase;
@@ -512,7 +513,7 @@
       gap: 10px;
     }
     .gallery-title {
-      font-family: 'Outfit', sans-serif;
+      font-family: 'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;
       font-weight: 800;
       font-size: 1.15rem;
       color: var(--cream);
@@ -532,7 +533,7 @@
       color: var(--cream);
       width: 32px;
       height: 32px;
-      font-family: 'Space Mono', monospace;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       font-size: 1rem;
       cursor: pointer;
       display: flex;
@@ -582,7 +583,7 @@
       width: 42px;
       height: 42px;
       font-size: 1.2rem;
-      font-family: 'Space Mono', monospace;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       font-weight: 700;
       cursor: pointer;
       display: flex;
@@ -614,7 +615,7 @@
       gap: 1rem;
     }
     .gallery-slide-name {
-      font-family: 'Outfit', sans-serif;
+      font-family: 'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;
       font-weight: 800;
       font-size: 1rem;
       color: var(--espresso);
@@ -715,7 +716,7 @@
       <span class="cursive">by Yug Rane</span>
     </h1>
     <p class="page-subtitle reveal">
-      A collection of things I've built — mostly frontend, always with intention.
+      A collection of things I've built. Mostly frontend, always with intention.
       Each one brewed slowly, with care. ☕
     </p>
     <div class="section-divider"></div>
@@ -725,7 +726,7 @@
   <div class="projects-section">
     <div class="projects-grid reveal-stagger">
 
-      <!-- 01 — ClipDrop (FEATURED) -->
+      <!-- 01 - ClipDrop (FEATURED) -->
       <a href="https://projects.caffncode.com/clipdrop" target="_blank" rel="noopener" class="project-card featured">
         <div class="project-stripe"></div>
 
@@ -734,14 +735,14 @@
           <div class="featured-badge">Cloudflare R2 + Supabase · Live</div>
           <div class="project-title">ClipDrop</div>
           <p class="project-desc">
-            Your browser is the pendrive. Create a room, drop your files, share the code —
+            Your browser is the pendrive. Create a room, drop your files, share the code,
             access them instantly on any device. No account, no install, no cloud storage.
             Files auto-delete when the room expires.
           </p>
           <ul class="project-features">
-            <li>Room-code based sharing — no login or account required</li>
-            <li>Direct Cloudflare R2 upload via edge worker — zero server bottlenecks</li>
-            <li>User-controlled expiry — 10m, 30m, 1h, 6h, 24h, or on tab close</li>
+            <li>Room-code based sharing, no login or account required</li>
+            <li>Direct Cloudflare R2 upload via edge worker for zero server bottlenecks</li>
+            <li>User-controlled expiry: 10m, 30m, 1h, 6h, 24h, or on tab close</li>
             <li>Automatic file & room expiration via edge workers & Supabase</li>
             <li>Supports any file format up to 500 MB per file</li>
             <li>Live countdown timer, real-time sync, in-browser preview & instant download</li>
@@ -766,14 +767,14 @@
         <div class="project-arrow">↗</div>
       </a>
 
-      <!-- 02 — AccessRide -->
+      <!-- 02 - AccessRide -->
       <a href="https://projects.caffncode.com/accessride" target="_blank" rel="noopener" class="project-card">
         <div class="project-stripe"></div>
         <div class="project-num">02 / accessride</div>
         <div class="project-title">AccessRide Mumbai</div>
         <p class="project-desc">
-          Accessibility-first rail navigation for Mumbai's 150+ stations across 9 lines —
-          fully client-side, with voice input, GPS, dark mode, and screen reader support.
+          Accessibility-first rail navigation for Mumbai's 150+ stations across 9 lines.
+          Fully client-side, with voice input, GPS, dark mode, and screen reader support.
         </p>
         <div class="project-tags">
           <span class="project-tag tag-highlight">Accessibility</span>
@@ -786,13 +787,13 @@
         <div class="project-arrow">↗</div>
       </a>
 
-      <!-- 03 — CaffnCode Website -->
+      <!-- 03 - CaffnCode Website -->
       <a href="https://caffncode.com" target="_blank" rel="noopener" class="project-card">
         <div class="project-stripe"></div>
         <div class="project-num">03 / caffncode.com</div>
         <div class="project-title">CaffnCode Website</div>
         <p class="project-desc">
-          My personal portfolio & landing page — pixel-themed,
+          My personal portfolio & landing page. Pixel-themed,
           cozy, and brewed from scratch with vanilla HTML, CSS, and JS.
           Scroll animations, cursive type, and a coffee-shop aesthetic throughout.
         </p>
@@ -805,7 +806,7 @@
         <div class="project-arrow">↗</div>
       </a>
 
-      <!-- 04 — CaffnCode Admin Portal (MEMBERS ONLY) -->
+      <!-- 04 - CaffnCode Admin Portal (MEMBERS ONLY) -->
       <div class="project-card members-card" onclick="openGallery('admin')" role="button" tabindex="0">
         <div class="project-stripe"></div>
         <div class="card-badge-members">🔒 Members Only · Internal Portal</div>
@@ -833,7 +834,7 @@
         <div class="card-preview-btn">📸 View Interface Screenshots (4)</div>
       </div>
 
-      <!-- 05 — CaffnCode Webmail (MEMBERS ONLY) -->
+      <!-- 05 - CaffnCode Webmail (MEMBERS ONLY) -->
       <div class="project-card members-card" onclick="openGallery('email')" role="button" tabindex="0">
         <div class="project-stripe"></div>
         <div class="card-badge-members">🔒 Members Only · Workspace Mail</div>
@@ -843,7 +844,7 @@
           Retro terminal webmail client designed specifically for CaffnCode team communication. Features seamless SSO session transfer directly from the admin portal, a 3-column responsive layout, and full integration with Lark Suite's Open Mail APIs.
         </p>
         <ul class="project-features">
-          <li>Custom espresso & foam terminal theme with high-contrast monospace typography</li>
+          <li>Custom espresso & foam retro theme with crisp Swiss grotesk typography</li>
           <li>Seamless SSO handoff: click 'Mail' in admin to jump into webmail authenticated</li>
           <li>3-column layout: folder navigation, message list with unread markers, and message body</li>
           <li>Lark Suite Open Platform integration for enterprise mailbox synchronization</li>
@@ -860,7 +861,7 @@
         <div class="card-preview-btn">📸 View Interface Screenshots (2)</div>
       </div>
 
-      <!-- 06 — Brewing placeholder -->
+      <!-- 06 - Brewing placeholder -->
       <div class="project-card brewing">
         <div class="brewing-icon">☕</div>
         <div class="project-num" style="color:var(--steam)">
@@ -952,7 +953,7 @@
       background:${c.bg};border:2px solid ${c.border};
       box-shadow:4px 4px 0 ${c.border};
       padding:14px 16px;display:flex;align-items:flex-start;gap:12px;
-      font-family:'Space Mono',monospace;font-size:0.72rem;
+      font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:0.72rem;
       color:${c.color};line-height:1.6;
       animation:noticeSlideUp 0.3s ease both;
     `;
@@ -987,14 +988,14 @@
 <!-- Contact Form Modal -->
 <div id="contact-form-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;justify-content:center;align-items:center">
   <div style="background:#fdf6f0;border:2px solid #2c1a0e;padding:2rem;max-width:400px;width:90%;box-shadow:6px 6px 0 #c87941">
-    <h3 style="margin:0 0 1rem;font-size:1.3rem;color:#2c1a0e">📬 Get in touch</h3>
+    <h3 style="margin:0 0 1rem;font-family:'Inter Tight','Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:900;letter-spacing:-0.03em;font-size:1.3rem;color:#2c1a0e">📬 Get in touch</h3>
     <form id="contact-form-element" onsubmit="handleContactSubmit(event)" style="display:flex;flex-direction:column;gap:1rem">
-      <input type="email" name="email" placeholder="Your email" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem">
-      <input type="text" name="name" placeholder="Your name" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem">
-      <textarea name="message" placeholder="Your message..." rows="5" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem;resize:vertical"></textarea>
+      <input type="email" name="email" placeholder="Your email" required style="padding:0.75rem;border:2px solid #c87941;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:0.9rem">
+      <input type="text" name="name" placeholder="Your name" required style="padding:0.75rem;border:2px solid #c87941;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:0.9rem">
+      <textarea name="message" placeholder="Your message..." rows="5" required style="padding:0.75rem;border:2px solid #c87941;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:0.9rem;resize:vertical"></textarea>
       <div style="display:flex;gap:1rem">
-        <button type="submit" style="flex:1;padding:0.75rem;background:#2c1a0e;color:#fdf6f0;border:none;cursor:pointer;font-weight:bold;font-family:monospace">Send</button>
-        <button type="button" onclick="closeContactForm()" style="flex:1;padding:0.75rem;background:transparent;border:2px solid #2c1a0e;color:#2c1a0e;cursor:pointer;font-weight:bold;font-family:monospace">Cancel</button>
+        <button type="submit" style="flex:1;padding:0.75rem;background:#2c1a0e;color:#fdf6f0;border:none;cursor:pointer;font-weight:700;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;text-transform:uppercase;letter-spacing:0.08em;font-size:0.78rem">Send</button>
+        <button type="button" onclick="closeContactForm()" style="flex:1;padding:0.75rem;background:transparent;border:2px solid #2c1a0e;color:#2c1a0e;cursor:pointer;font-weight:700;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;text-transform:uppercase;letter-spacing:0.08em;font-size:0.78rem">Cancel</button>
       </div>
     </form>
   </div>
@@ -1003,14 +1004,14 @@
 <!-- Bug Report Modal -->
 <div id="bug-report-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;justify-content:center;align-items:center">
   <div style="background:#fdf6f0;border:2px solid #2c1a0e;padding:2rem;max-width:400px;width:90%;box-shadow:6px 6px 0 #c87941">
-    <h3 style="margin:0 0 1rem;font-size:1.3rem;color:#2c1a0e">🐛 Report a bug</h3>
+    <h3 style="margin:0 0 1rem;font-family:'Inter Tight','Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:900;letter-spacing:-0.03em;font-size:1.3rem;color:#2c1a0e">🐛 Report a bug</h3>
     <form id="bug-report-element" onsubmit="handleBugSubmit(event)" style="display:flex;flex-direction:column;gap:1rem">
-      <input type="email" name="email" placeholder="Your email" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem">
-      <input type="text" name="title" placeholder="Bug title" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem">
-      <textarea name="description" placeholder="Describe the bug..." rows="5" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem;resize:vertical"></textarea>
+      <input type="email" name="email" placeholder="Your email" required style="padding:0.75rem;border:2px solid #c87941;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:0.9rem">
+      <input type="text" name="title" placeholder="Bug title" required style="padding:0.75rem;border:2px solid #c87941;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:0.9rem">
+      <textarea name="description" placeholder="Describe the bug..." rows="5" required style="padding:0.75rem;border:2px solid #c87941;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:0.9rem;resize:vertical"></textarea>
       <div style="display:flex;gap:1rem">
-        <button type="submit" style="flex:1;padding:0.75rem;background:#2c1a0e;color:#fdf6f0;border:none;cursor:pointer;font-weight:bold;font-family:monospace">Report</button>
-        <button type="button" onclick="closeBugReport()" style="flex:1;padding:0.75rem;background:transparent;border:2px solid #2c1a0e;color:#2c1a0e;cursor:pointer;font-weight:bold;font-family:monospace">Cancel</button>
+        <button type="submit" style="flex:1;padding:0.75rem;background:#2c1a0e;color:#fdf6f0;border:none;cursor:pointer;font-weight:700;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;text-transform:uppercase;letter-spacing:0.08em;font-size:0.78rem">Report</button>
+        <button type="button" onclick="closeBugReport()" style="flex:1;padding:0.75rem;background:transparent;border:2px solid #2c1a0e;color:#2c1a0e;cursor:pointer;font-weight:700;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;text-transform:uppercase;letter-spacing:0.08em;font-size:0.78rem">Cancel</button>
       </div>
     </form>
   </div>

@@ -9,9 +9,9 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>"/>
   <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>"/>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,700&family=Outfit:wght@400;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@600;700;800;900&display=swap" rel="stylesheet"/>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,700&family=Outfit:wght@400;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@600;700;800;900&display=swap');
 
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
     html{scroll-behavior:smooth}
@@ -24,7 +24,7 @@
 
     body{
       background:var(--cream);
-      font-family:'Space Mono',monospace;
+      font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
       color:var(--espresso);
       min-height:100vh;
       overflow-x:hidden;
@@ -52,14 +52,14 @@
     .nav-icon{display:inline-block;flex-shrink:0;vertical-align:middle;box-shadow:2px 2px 0 var(--latte);}
 
     .nav-logo{
-      font-family:'Outfit',sans-serif;font-weight:800;font-size:1.05rem;
-      letter-spacing:-0.03em;display:flex;align-items:center;gap:6px;
+      font-family:'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:900;font-size:1.05rem;
+      letter-spacing:-0.04em;display:flex;align-items:center;gap:6px;
       text-decoration:none;color:var(--espresso);
     }
 
     .nav-x{font-size:0.7rem;color:var(--steam);margin:0 4px;font-weight:400}
-    .nav-clip{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:700;font-size:1.25rem;color:var(--caramel)}
-    .nav-badge{font-size:0.55rem;text-transform:uppercase;letter-spacing:0.12em;background:var(--espresso);color:var(--cream);padding:2px 8px;box-shadow:2px 2px 0 var(--caramel)}
+    .nav-clip{font-family:'Instrument Serif', serif;font-style:italic;font-weight:400;font-size:1.28rem;color:var(--caramel)}
+    .nav-badge{font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;background:var(--espresso);color:var(--cream);padding:2px 8px;box-shadow:2px 2px 0 var(--caramel)}
 
     /* ── SCREENS ── */
     .screen{display:none;position:relative;z-index:1;padding:2.5rem 2rem;animation:fadeUp 0.3s ease both;max-width:700px;margin:0 auto}
@@ -67,21 +67,21 @@
     @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 
     /* ── TYPOGRAPHY ── */
-    .eyebrow{font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--caramel);margin-bottom:0.5rem;display:flex;align-items:center;gap:8px}
+    .eyebrow{font-size:0.65rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--caramel);margin-bottom:0.5rem;display:flex;align-items:center;gap:8px}
     .eyebrow::before{content:'';width:16px;height:2px;background:var(--caramel);display:inline-block}
-    .page-title{font-family:'Outfit',sans-serif;font-weight:900;font-size:clamp(2rem,6vw,3.5rem);line-height:1;letter-spacing:-0.03em;margin-bottom:0.4rem}
+    .page-title{font-family:'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:900;font-size:clamp(2rem,6vw,3.5rem);line-height:1;letter-spacing:-0.04em;margin-bottom:0.4rem}
     .page-title span{color:var(--caramel)}
-    .page-sub{font-size:0.75rem;color:var(--mocha);line-height:1.85;max-width:500px;margin-bottom:2rem}
-    .section-tag{font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--caramel);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+    .page-sub{font-size:0.78rem;color:var(--mocha);line-height:1.85;max-width:500px;margin-bottom:2rem}
+    .section-tag{font-size:0.62rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--caramel);margin-bottom:10px;display:flex;align-items:center;gap:6px}
     .section-tag::before{content:'';width:6px;height:6px;background:var(--caramel);box-shadow:2px 2px 0 var(--espresso);display:inline-block}
 
     /* ── WARNING BOX ── */
     .warning-box{background:rgba(200,121,65,0.08);border:1.5px solid var(--caramel);border-left:4px solid var(--caramel);padding:1rem 1.2rem;margin:1.5rem 0 2rem;border-radius:3px}
     .warning-box-header{display:flex;align-items:flex-start;gap:10px;margin-bottom:0.8rem}
     .warning-icon{font-size:1.1rem;flex-shrink:0;margin-top:2px}
-    .warning-title{font-family:'Outfit',sans-serif;font-weight:700;font-size:0.8rem;color:var(--caramel);text-transform:uppercase;letter-spacing:0.08em}
+    .warning-title{font-family:'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:700;font-size:0.8rem;color:var(--caramel);text-transform:uppercase;letter-spacing:0.08em}
     .warning-text{font-size:0.7rem;color:var(--mocha);line-height:1.8;margin-bottom:0.6rem}
-    .warning-time{font-family:'Space Mono',monospace;font-size:0.65rem;background:rgba(255,255,255,0.6);padding:0.6rem;border-radius:2px;margin:0.6rem 0;border-left:2px solid var(--caramel)}
+    .warning-time{font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:0.65rem;background:rgba(255,255,255,0.6);padding:0.6rem;border-radius:2px;margin:0.6rem 0;border-left:2px solid var(--caramel)}
     .time-label{color:var(--caramel);font-weight:700;font-size:0.62rem;text-transform:uppercase;letter-spacing:0.05em;display:block;margin-bottom:3px}
     .time-value{color:var(--espresso);font-weight:700;font-size:0.75rem}
     .warning-contact{font-size:0.7rem;color:var(--mocha);margin-top:0.8rem}
@@ -89,15 +89,15 @@
     .warning-contact a:hover{text-decoration:underline}
 
     /* ── BUTTONS ── */
-    .btn-primary{background:var(--espresso);color:var(--cream);border:none;padding:10px 20px;font-family:'Space Mono',monospace;font-weight:700;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;box-shadow:4px 4px 0 var(--caramel);cursor:pointer;transition:all 0.12s;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+    .btn-primary{background:var(--espresso);color:var(--cream);border:none;padding:10px 20px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:700;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;box-shadow:4px 4px 0 var(--caramel);cursor:pointer;transition:all 0.12s;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
     .btn-primary:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--caramel)}
     .btn-primary:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--caramel)}
     .btn-primary:disabled{opacity:0.5;transform:none;box-shadow:none;cursor:not-allowed}
-    .btn-secondary{background:transparent;color:var(--espresso);border:2px solid var(--espresso);padding:10px 20px;font-family:'Space Mono',monospace;font-weight:700;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;box-shadow:4px 4px 0 var(--latte);cursor:pointer;transition:all 0.12s;display:inline-flex;align-items:center;gap:6px}
+    .btn-secondary{background:transparent;color:var(--espresso);border:2px solid var(--espresso);padding:10px 20px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:700;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;box-shadow:4px 4px 0 var(--latte);cursor:pointer;transition:all 0.12s;display:inline-flex;align-items:center;gap:6px}
     .btn-secondary:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--latte)}
     .btn-icon{background:transparent;border:2px solid var(--espresso);padding:8px 12px;font-size:1.2rem;cursor:pointer;transition:all 0.12s;display:inline-flex;align-items:center;justify-content:center;box-shadow:4px 4px 0 var(--latte)}
     .btn-icon:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--caramel)}
-    .back-btn{background:none;border:none;font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--steam);cursor:pointer;text-transform:uppercase;letter-spacing:0.1em;display:flex;align-items:center;gap:4px;padding:0;margin-bottom:1.4rem}
+    .back-btn{background:none;border:none;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:0.65rem;color:var(--steam);cursor:pointer;text-transform:uppercase;letter-spacing:0.1em;display:flex;align-items:center;gap:4px;padding:0;margin-bottom:1.4rem}
     .back-btn:hover{color:var(--caramel)}
 
     /* ── LANDING ── */
@@ -106,25 +106,25 @@
     .action-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:repeating-linear-gradient(90deg,var(--caramel) 0,var(--caramel) 6px,var(--espresso) 6px,var(--espresso) 9px)}
     .action-card:hover{transform:translate(-3px,-3px);box-shadow:7px 7px 0 var(--caramel)}
     .card-icon{font-size:1.8rem;margin-bottom:0.6rem}
-    .card-title{font-family:'Outfit',sans-serif;font-weight:800;font-size:0.95rem;letter-spacing:-0.02em;margin-bottom:0.3rem}
+    .card-title{font-family:'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:800;font-size:0.95rem;letter-spacing:-0.02em;margin-bottom:0.3rem}
     .card-desc{font-size:0.65rem;color:var(--mocha);line-height:1.7}
 
     .divider-row{display:flex;align-items:center;gap:12px;margin:0.5rem 0 1.2rem;color:var(--steam);font-size:0.62rem;text-transform:uppercase;letter-spacing:0.15em}
     .divider-row::before,.divider-row::after{content:'';flex:1;height:1px;background:var(--latte)}
 
     .join-row{display:flex;gap:8px}
-    .code-input{flex:1;border:2px solid var(--espresso);background:var(--cream);padding:11px 14px;font-family:'Space Mono',monospace;font-size:1rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--espresso);outline:none;transition:border-color 0.15s}
+    .code-input{flex:1;border:2px solid var(--espresso);background:var(--cream);padding:11px 14px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:1rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--espresso);outline:none;transition:border-color 0.15s}
     .code-input:focus{border-color:var(--caramel)}
     .code-input::placeholder{color:var(--latte);font-weight:400;text-transform:none;letter-spacing:0.05em;font-size:0.8rem}
 
     /* ── FORM FIELDS ── */
     .field{display:flex;flex-direction:column;gap:6px;margin-bottom:1.2rem}
     .field label{font-size:0.62rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--mocha);font-weight:700}
-    .field input[type=text]{border:2px solid var(--espresso);background:var(--cream);padding:10px 12px;font-family:'Space Mono',monospace;font-size:0.82rem;color:var(--espresso);outline:none;transition:border-color 0.15s}
+    .field input[type=text]{border:2px solid var(--espresso);background:var(--cream);padding:10px 12px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:0.82rem;color:var(--espresso);outline:none;transition:border-color 0.15s}
     .field input:focus{border-color:var(--caramel)}
 
     .chip-group{display:flex;gap:6px;flex-wrap:wrap}
-    .chip{padding:5px 12px;border:1.5px solid var(--espresso);background:var(--cream);font-family:'Space Mono',monospace;font-size:0.65rem;font-weight:700;cursor:pointer;box-shadow:2px 2px 0 var(--latte);transition:all 0.12s;user-select:none}
+    .chip{padding:5px 12px;border:1.5px solid var(--espresso);background:var(--cream);font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:0.65rem;font-weight:700;cursor:pointer;box-shadow:2px 2px 0 var(--latte);transition:all 0.12s;user-select:none}
     .chip:hover{border-color:var(--caramel)}
     .chip.selected{background:var(--espresso);color:var(--cream);box-shadow:2px 2px 0 var(--caramel)}
 
@@ -135,13 +135,13 @@
     .room-header::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:repeating-linear-gradient(90deg,var(--caramel) 0,var(--caramel) 6px,rgba(255,255,255,0.15) 6px,rgba(255,255,255,0.15) 9px)}
     .room-code-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
     .room-label{font-size:0.58rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--steam);margin-bottom:3px}
-    .room-code{font-family:'Outfit',sans-serif;font-weight:900;font-size:2.2rem;letter-spacing:0.15em;color:var(--caramel)}
+    .room-code{font-family:'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:900;font-size:2.2rem;letter-spacing:0.15em;color:var(--caramel)}
     .room-pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
     .room-pill{font-size:0.58rem;text-transform:uppercase;letter-spacing:0.1em;padding:3px 9px;border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.6);display:inline-flex;align-items:center;gap:5px}
     .room-pill.live{border-color:var(--caramel);color:var(--caramel)}
     .pulse{width:6px;height:6px;background:var(--caramel);border-radius:50%;animation:pulse 1.4s infinite;display:inline-block;flex-shrink:0}
     @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(200,121,65,.5)}50%{box-shadow:0 0 0 5px rgba(200,121,65,0)}}
-    .copy-btn{margin-left:auto;background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.2);color:var(--cream);font-family:'Space Mono',monospace;font-size:0.62rem;text-transform:uppercase;letter-spacing:0.08em;padding:6px 12px;cursor:pointer;transition:all 0.12s;white-space:nowrap}
+    .copy-btn{margin-left:auto;background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.2);color:var(--cream);font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:0.62rem;text-transform:uppercase;letter-spacing:0.08em;padding:6px 12px;cursor:pointer;transition:all 0.12s;white-space:nowrap}
     .copy-btn:hover{background:var(--caramel);border-color:var(--caramel)}
 
     /* ── DROP ZONE ── */
@@ -149,7 +149,7 @@
     .drop-zone:hover,.drop-zone.dragging{border-color:var(--caramel);background:var(--cream)}
     .drop-zone.dragging{border-style:solid}
     .drop-icon{font-size:2.2rem;margin-bottom:0.5rem}
-    .drop-title{font-family:'Outfit',sans-serif;font-weight:800;font-size:1rem;letter-spacing:-0.02em;margin-bottom:0.3rem}
+    .drop-title{font-family:'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:800;font-size:1rem;letter-spacing:-0.02em;margin-bottom:0.3rem}
     .drop-sub{font-size:0.65rem;color:var(--mocha);line-height:1.7}
     .drop-sub span{color:var(--caramel);text-decoration:underline}
     .file-input-hidden{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
@@ -160,7 +160,7 @@
     .file-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--caramel)}
     .file-icon{font-size:1.3rem;flex-shrink:0}
     .file-info{flex:1;min-width:0}
-    .file-name{font-family:'Outfit',sans-serif;font-weight:700;font-size:0.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:-0.01em}
+    .file-name{font-family:'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:700;font-size:0.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:-0.01em}
     .file-meta{font-size:0.6rem;color:var(--steam);margin-top:2px}
     .file-actions{display:flex;gap:5px;flex-shrink:0}
     .file-btn{width:28px;height:28px;border:1.5px solid var(--espresso);background:var(--foam);font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.12s}
@@ -185,11 +185,11 @@
     @keyframes spin{to{transform:rotate(360deg)}}
 
     /* ── TOAST ── */
-    #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(12px);background:var(--espresso);color:var(--cream);border:1.5px solid var(--caramel);font-family:'Space Mono',monospace;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:9px 18px;box-shadow:3px 3px 0 var(--caramel);opacity:0;pointer-events:none;transition:all 0.25s;z-index:9999;white-space:nowrap}
+    #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(12px);background:var(--espresso);color:var(--cream);border:1.5px solid var(--caramel);font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:9px 18px;box-shadow:3px 3px 0 var(--caramel);opacity:0;pointer-events:none;transition:all 0.25s;z-index:9999;white-space:nowrap}
     #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
     /* ── COUNTDOWN TIMER ── */
-    .countdown{font-family:'Outfit',sans-serif;font-weight:800;font-size:1rem;color:var(--caramel);letter-spacing:0.05em}
+    .countdown{font-family:'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:800;font-size:1rem;color:var(--caramel);letter-spacing:0.05em}
 
     /* ── RESPONSIVE ── */
     @media(max-width:600px){
@@ -244,14 +244,14 @@ footer a:hover { text-decoration: underline; }
 <div class="screen active" id="screen-landing">
   <div class="eyebrow">Temporary file transfer</div>
   <h1 class="page-title">Your browser is<br><span>the pendrive</span></h1>
-  <p class="page-sub">Create a room, drop your files, share the code. Access them on any device — no account, no install. Files vanish when the room expires.</p>
+  <p class="page-sub">Create a room, drop your files, share the code. Access them on any device. No account, no install. Files vanish when the room expires.</p>
 
   <div class="warning-box">
     <div class="warning-box-header">
       <div class="warning-icon">⏰</div>
       <div class="warning-title">Data Deletion Schedule</div>
     </div>
-    <div class="warning-text">Files are automatically deleted when your room expires. Keep your room code safe — once deleted, files cannot be recovered. If you need to download files, do so before expiry.</div>
+    <div class="warning-text">Files are automatically deleted when your room expires. Keep your room code safe. Once deleted, files cannot be recovered. If you need to download files, do so before expiry.</div>
     <div class="warning-time">
       <span class="time-label">E.g: Default expiry (30 min from creation)</span>
       <span class="time-value" id="retention-time">Loading...</span>
@@ -398,7 +398,7 @@ footer a:hover { text-decoration: underline; }
     <div class="room-pills">
       <span class="room-pill live"><span class="pulse"></span> Connected</span>
       <span class="room-pill">Guest · read only</span>
-      <span class="room-pill" id="guest-expiry-pill">—</span>
+      <span class="room-pill" id="guest-expiry-pill">-</span>
     </div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center">
       <button class="btn-icon" id="guest-host-portal-btn" onclick="openHostPortal()" style="display:none" title="Re-enter as host">🔑</button>
@@ -1015,7 +1015,7 @@ function escHtml(s){
       background:${c.bg};border:2px solid ${c.border};
       box-shadow:4px 4px 0 ${c.border};
       padding:14px 16px;display:flex;align-items:flex-start;gap:12px;
-      font-family:'Space Mono',monospace;font-size:0.72rem;
+      font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:0.72rem;
       color:${c.color};line-height:1.6;
       animation:noticeSlideUp 0.3s ease both;
     `;
@@ -1050,14 +1050,14 @@ function escHtml(s){
 <!-- Contact Form Modal -->
 <div id="contact-form-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;justify-content:center;align-items:center">
   <div style="background:#fdf6f0;border:2px solid #2c1a0e;padding:2rem;max-width:400px;width:90%;box-shadow:6px 6px 0 #c87941">
-    <h3 style="margin:0 0 1rem;font-size:1.3rem;color:#2c1a0e">📬 Get in touch</h3>
+    <h3 style="margin:0 0 1rem;font-family:'Inter Tight','Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:900;letter-spacing:-0.03em;font-size:1.3rem;color:#2c1a0e">📬 Get in touch</h3>
     <form id="contact-form-element" onsubmit="handleContactSubmit(event)" style="display:flex;flex-direction:column;gap:1rem">
-      <input type="email" name="email" placeholder="Your email" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem">
-      <input type="text" name="name" placeholder="Your name" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem">
-      <textarea name="message" placeholder="Your message..." rows="5" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem;resize:vertical"></textarea>
+      <input type="email" name="email" placeholder="Your email" required style="padding:0.75rem;border:2px solid #c87941;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:0.9rem">
+      <input type="text" name="name" placeholder="Your name" required style="padding:0.75rem;border:2px solid #c87941;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:0.9rem">
+      <textarea name="message" placeholder="Your message..." rows="5" required style="padding:0.75rem;border:2px solid #c87941;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:0.9rem;resize:vertical"></textarea>
       <div style="display:flex;gap:1rem">
-        <button type="submit" style="flex:1;padding:0.75rem;background:#2c1a0e;color:#fdf6f0;border:none;cursor:pointer;font-weight:bold;font-family:monospace">Send</button>
-        <button type="button" onclick="closeContactForm()" style="flex:1;padding:0.75rem;background:transparent;border:2px solid #2c1a0e;color:#2c1a0e;cursor:pointer;font-weight:bold;font-family:monospace">Cancel</button>
+        <button type="submit" style="flex:1;padding:0.75rem;background:#2c1a0e;color:#fdf6f0;border:none;cursor:pointer;font-weight:700;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;text-transform:uppercase;letter-spacing:0.08em;font-size:0.78rem">Send</button>
+        <button type="button" onclick="closeContactForm()" style="flex:1;padding:0.75rem;background:transparent;border:2px solid #2c1a0e;color:#2c1a0e;cursor:pointer;font-weight:700;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;text-transform:uppercase;letter-spacing:0.08em;font-size:0.78rem">Cancel</button>
       </div>
     </form>
   </div>
@@ -1066,14 +1066,14 @@ function escHtml(s){
 <!-- Bug Report Modal -->
 <div id="bug-report-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;justify-content:center;align-items:center">
   <div style="background:#fdf6f0;border:2px solid #2c1a0e;padding:2rem;max-width:400px;width:90%;box-shadow:6px 6px 0 #c87941">
-    <h3 style="margin:0 0 1rem;font-size:1.3rem;color:#2c1a0e">🐛 Report a bug</h3>
+    <h3 style="margin:0 0 1rem;font-family:'Inter Tight','Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:900;letter-spacing:-0.03em;font-size:1.3rem;color:#2c1a0e">🐛 Report a bug</h3>
     <form id="bug-report-element" onsubmit="handleBugSubmit(event)" style="display:flex;flex-direction:column;gap:1rem">
-      <input type="email" name="email" placeholder="Your email" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem">
-      <input type="text" name="title" placeholder="Bug title" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem">
-      <textarea name="description" placeholder="Describe the bug..." rows="5" required style="padding:0.75rem;border:2px solid #c87941;font-family:monospace;font-size:0.9rem;resize:vertical"></textarea>
+      <input type="email" name="email" placeholder="Your email" required style="padding:0.75rem;border:2px solid #c87941;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:0.9rem">
+      <input type="text" name="title" placeholder="Bug title" required style="padding:0.75rem;border:2px solid #c87941;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:0.9rem">
+      <textarea name="description" placeholder="Describe the bug..." rows="5" required style="padding:0.75rem;border:2px solid #c87941;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:0.9rem;resize:vertical"></textarea>
       <div style="display:flex;gap:1rem">
-        <button type="submit" style="flex:1;padding:0.75rem;background:#2c1a0e;color:#fdf6f0;border:none;cursor:pointer;font-weight:bold;font-family:monospace">Report</button>
-        <button type="button" onclick="closeBugReport()" style="flex:1;padding:0.75rem;background:transparent;border:2px solid #2c1a0e;color:#2c1a0e;cursor:pointer;font-weight:bold;font-family:monospace">Cancel</button>
+        <button type="submit" style="flex:1;padding:0.75rem;background:#2c1a0e;color:#fdf6f0;border:none;cursor:pointer;font-weight:700;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;text-transform:uppercase;letter-spacing:0.08em;font-size:0.78rem">Report</button>
+        <button type="button" onclick="closeBugReport()" style="flex:1;padding:0.75rem;background:transparent;border:2px solid #2c1a0e;color:#2c1a0e;cursor:pointer;font-weight:700;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;text-transform:uppercase;letter-spacing:0.08em;font-size:0.78rem">Cancel</button>
       </div>
     </form>
   </div>
